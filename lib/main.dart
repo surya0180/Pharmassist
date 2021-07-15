@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Map<String, String>> _pages = [];
+  List<Map<String, String>> _pages;
 
   int _selectedPageIndex = 0;
 
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     print(_pages[_selectedPageIndex]['title']);
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pages[_selectedPageIndex]['title'].toString()),
+        title: Text(_pages[_selectedPageIndex]['title']),
       ),
       drawer: SideDrawer(),
       bottomNavigationBar: BottomNavigationBar(

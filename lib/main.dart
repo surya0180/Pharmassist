@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/chat_screen.dart';
+import 'package:pharmassist/screens/feed_screen.dart';
+import 'package:pharmassist/screens/profile_screen.dart';
+import 'package:pharmassist/screens/request_screen.dart';
+import 'package:pharmassist/screens/search_screen.dart';
+import 'package:pharmassist/widgets/BottomNavBar.dart';
 
 import 'widgets/SideDrawer.dart';
 
@@ -7,7 +13,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Map<String, String>> _pages;
+  List<Map<String, Object>> _pages;
 
   int _selectedPageIndex = 0;
 
@@ -44,23 +49,23 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     _pages = [
       {
-        'page': '',
+        'page': ProfileScreen(),
         'title': 'Profile',
       },
       {
-        'page': '',
+        'page': RequestScreen(),
         'title': 'Requests',
       },
       {
-        'page': '',
+        'page': FeedScreen(),
         'title': 'Feed',
       },
       {
-        'page': '',
+        'page': SearchScreen(),
         'title': 'Search',
       },
       {
-        'page': '',
+        'page': ChatScreen(),
         'title': 'Chat',
       },
     ];
@@ -70,41 +75,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_pages[_selectedPageIndex]['title']);
     return Scaffold(
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['title']),
       ),
+      body: _pages[_selectedPageIndex]['page'],
       drawer: SideDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blue,
-        currentIndex: _selectedPageIndex,
-        // type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box_rounded),
-            title: Text('Profile'),
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.feed),
-            title: Text('Requests'),
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.mode),
-            title: Text('Feed'),
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search'),
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble),
-            title: Text('Chat'),
-          ),
-        ],
+      bottomNavigationBar: BottomNavBar(
+        selectPage: _selectPage,
+        selectedPageIndex: _selectedPageIndex,
       ),
+      floatingActionButton: _pages[_selectedPageIndex]['title'] == 'Feed'
+          ? FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => null,
+            )
+          : null,
     );
   }
 }

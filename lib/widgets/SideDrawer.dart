@@ -4,13 +4,16 @@ class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 20,
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Pharmassist'),
+            title: Text(
+              'Pharmassist',
+              style: Theme.of(context).textTheme.title,
+            ),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Logout'),
@@ -31,8 +34,7 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('About'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed('/');
             },
           ),
         ],

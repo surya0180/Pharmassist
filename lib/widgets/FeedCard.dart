@@ -11,7 +11,7 @@ class FeedCard extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: InkWell(
         onTap: () {},
-        splashColor: Colors.greenAccent,
+        splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(15),
         child: Container(
           height: 260,

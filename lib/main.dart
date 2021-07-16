@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/feed_screen.dart';
 import 'package:pharmassist/screens/profile_screen.dart';
@@ -17,9 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pharmassist',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: MyThemeData,
       home: MyHomePage(title: 'Pharmassist'),
     );
   }
@@ -77,9 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pages[_selectedPageIndex]['title']),
+        title: Text(
+          _pages[_selectedPageIndex]['title'],
+          style: Theme.of(context).textTheme.title,
+        ),
       ),
       body: _pages[_selectedPageIndex]['page'],
+      backgroundColor: Theme.of(context).backgroundColor,
       drawer: SideDrawer(),
       bottomNavigationBar: BottomNavBar(
         selectPage: _selectPage,
@@ -89,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ? FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () => null,
+              backgroundColor: Theme.of(context).accentColor,
             )
           : null,
     );

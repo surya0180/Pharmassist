@@ -19,23 +19,46 @@ class _AuthScreenState extends State<AuthScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: double.infinity,
-            child: Center(
-                child: Text(
-              "Please get Signed in to proceed",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            )),
+          Image.asset(
+            'assets/images/splashlogo.png',
+            height: 150,
           ),
           Container(
-            alignment: Alignment.center,
+            padding: EdgeInsets.all(10),
             width: double.infinity,
-            child: OutlineButton(
-              textColor: Colors.grey, // foreground
-              onPressed: () {
-                Navigator.of(context).pushNamed(MyHomePage.routeName);
-              },
-              child: Text('Sign in With Google'),
+            child: Center(
+              child: Text(
+                "Please get Signed in to proceed",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColorDark),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 200,
+              child: RaisedButton(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+
+                color: Colors.orange,
+                textColor: Colors.pink, // foreground
+                onPressed: () {
+                  Navigator.of(context).pushNamed(MyHomePage.routeName);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Sign in With Google',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],

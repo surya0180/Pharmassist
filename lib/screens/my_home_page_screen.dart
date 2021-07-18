@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/feed_screen.dart';
 import 'package:pharmassist/screens/profile_screen.dart';
@@ -62,6 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
           _pages[_selectedPageIndex]['title'],
           style: Theme.of(context).textTheme.title,
         ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AuthScreen.routeName);
+                },
+                child: Icon(Icons.logout),
+              )),
+        ],
       ),
       body: _pages[_selectedPageIndex]['page'],
       backgroundColor: Theme.of(context).backgroundColor,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "310095393555",
+    "project_id": "pharmassist-f911e",
+    "storage_bucket": "pharmassist-f911e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310095393555:android:dfa9e37c53e640982e20e6",
+        "android_client_info": {
+          "package_name": "com.example.pharmassist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310095393555-nuv0ehr0rra105u2966fm79hpb79v3h2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHWb5pdQnyPwOgHmuQSZMv6b5zlnC3uJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310095393555-nuv0ehr0rra105u2966fm79hpb79v3h2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

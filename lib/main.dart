@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/getting_started.dart';
+import 'package:pharmassist/forms/medical_request_form.dart';
+import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
@@ -16,12 +18,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pharmassist',
       theme: MyThemeData,
-      home: signIn ? AuthScreen() : TabScreen(),
+      home: signIn ? AuthScreen() : GettingStarted(),
       routes: {
         AuthScreen.routeName: (ctx) => AuthScreen(),
+        GettingStarted.routeName: (ctx) => GettingStarted(),
         TabScreen.routeName: (ctx) => TabScreen(),
         ChatScreen.routeName: (ctx) => ChatScreen(),
-        GettingStarted.routeName: (ctx) => GettingStarted(),
+        MedicalRequestForm.routeName: (ctx) => MedicalRequestForm(),
+        PharmacistRequestForm.routeName: (ctx) => PharmacistRequestForm(),
       },
     );
   }

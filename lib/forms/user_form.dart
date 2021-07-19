@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/tab_screen.dart';
 
 class UserFormPart1 extends StatefulWidget {
   const UserFormPart1(this.nextPage, {Key key}) : super(key: key);
@@ -172,7 +173,9 @@ class _UserFormPart2State extends State<UserFormPart2> {
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
+            },
             style: ElevatedButton.styleFrom(primary: Colors.green),
             child: Text(
               'Submit',

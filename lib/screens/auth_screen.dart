@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 textColor: Colors.white, // foreground
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(TabScreen.routeName);
+                      .pushReplacementNamed(GettingStarted.routeName);
                 },
                 child: Row(
                   children: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/screens/my_home_page_screen.dart';
+import 'package:pharmassist/screens/tab_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth-screen';
@@ -48,7 +48,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 textColor: Colors.white, // foreground
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(MyHomePage.routeName);
+                      .pushReplacementNamed(TabScreen.routeName);
                 },
                 child: Row(
                   children: [

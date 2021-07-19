@@ -8,6 +8,8 @@ import '../widgets/SideDrawer.dart';
 class TabScreen extends StatefulWidget {
   const TabScreen({Key key}) : super(key: key);
 
+  static const routeName = '/tabs-screen';
+
   @override
   _TabScreenState createState() => _TabScreenState();
 }

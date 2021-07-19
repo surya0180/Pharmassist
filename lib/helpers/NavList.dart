@@ -1,4 +1,4 @@
-import 'package:pharmassist/screens/chat_screen.dart';
+import 'package:pharmassist/screens/chat_list_screen.dart';
 import 'package:pharmassist/screens/feed_screen.dart';
 import 'package:pharmassist/screens/profile_screen.dart';
 import 'package:pharmassist/screens/request_screen.dart';
@@ -22,7 +22,7 @@ final pages = [
         'title': 'Search',
       },
       {
-        'page': ChatScreen(),
+        'page': ChatListScreen(),
         'title': 'Chat',
       },
     ];

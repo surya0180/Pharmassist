@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem(this.name, this.message, this.number, {Key key})
@@ -14,7 +15,16 @@ class ChatItem extends StatelessWidget {
       color: Theme.of(context).cardColor,
       elevation: 3,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          print("I tapped this");
+          Navigator.of(context).pushNamed(
+            ChatScreen.routeName,
+            arguments: {
+              'name': name,
+              'messages': [],
+            },
+          );
+        },
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
+import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => TabScreen(),
         AuthScreen.routeName: (ctx) => AuthScreen(),
+        ChatScreen.routeName: (ctx) => ChatScreen(),
       },
     );
   }

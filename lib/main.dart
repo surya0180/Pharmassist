@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         AuthScreen.routeName: (ctx) => AuthScreen(),
         TabScreen.routeName: (ctx) => TabScreen(),
         ChatScreen.routeName: (ctx) => ChatScreen(),
+        GettingStarted.routeName: (ctx) => GettingStarted(),
       },
     );
   }

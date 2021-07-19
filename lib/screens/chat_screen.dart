@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Messages(),
+              child: Messages(userMessages),
             ),
             NewMessage(),
           ],

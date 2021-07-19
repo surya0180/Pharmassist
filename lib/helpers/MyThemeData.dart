@@ -7,6 +7,7 @@ final MyThemeData = ThemeData(
   canvasColor: Colors.blue[50],
   backgroundColor: Colors.white,
   cardColor: Colors.amber[50],
+  buttonColor: Colors.green,
   fontFamily: 'Poppins',
   textTheme: ThemeData.light().textTheme.copyWith(
         body1: TextStyle(

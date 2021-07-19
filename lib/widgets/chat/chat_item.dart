@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/SampleMessages.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
@@ -21,7 +22,7 @@ class ChatItem extends StatelessWidget {
             ChatScreen.routeName,
             arguments: {
               'name': name,
-              'messages': [],
+              'messages': sample,
             },
           );
         },
@@ -31,9 +32,21 @@ class ChatItem extends StatelessWidget {
           height: 73,
           padding: EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              number != 0 ?
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).accentColor,
+                  child: Text(
+                    '$number',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
+                ) : CircleAvatar(child: Icon(Icons.check_circle),),
+              SizedBox(
+                width: 20,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,18 +60,6 @@ class ChatItem extends StatelessWidget {
                   Text(message),
                 ],
               ),
-              if (number != 0)
-                CircleAvatar(
-                  radius: 15,
-                  backgroundColor: Theme.of(context).accentColor,
-                  child: Text(
-                    '$number',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
             ],
           ),
         ),

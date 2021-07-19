@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import './message_bubble.dart';
 
 class Messages extends StatelessWidget {
-  const Messages({Key key}) : super(key: key);
+  const Messages(this.messages, {Key key}) : super(key: key);
+
+  final List messages;
 
   @override
   Widget build(BuildContext context) {
+    String userId = '2';
+
     return ListView.builder(
       reverse: true,
-      itemCount: 4,
+      itemCount: 2,
       itemBuilder: (ctx, index) => MessageBubble(
-        'Hi there',
-        'surya0180',
-        true,
-        key: ValueKey('Hi there'),
+        messages[index]['text'],
+        messages[index]['username'],
+        messages[index]['uid'] == userId,
+        key: ValueKey(messages[index]['uid']),
       ),
     );
   }

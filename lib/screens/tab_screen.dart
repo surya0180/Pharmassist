@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
-import 'package:pharmassist/widgets/MyDropdown.dart';
 
 import '../widgets/SideDrawer.dart';
 
@@ -40,7 +39,7 @@ class _TabScreenState extends State<TabScreen> {
           _pages[_selectedPageIndex]['title'],
           style: Theme.of(context).textTheme.title,
         ),
-        actions: [MyDropDown()],
+        actions: [],
       ),
       body: _pages[_selectedPageIndex]['page'],
       backgroundColor: Theme.of(context).backgroundColor,

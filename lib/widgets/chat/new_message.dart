@@ -12,6 +12,7 @@ class _NewMessageState extends State<NewMessage> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
+    print('I am here');
     _controller.clear();
   }
 
@@ -20,15 +21,26 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: 8, bottom: 12),
       padding: EdgeInsets.all(8),
       child: Row(
         children: [
-          Expanded(
+          SizedBox(
+            width: 4,
+          ),
+          Container(
+            height: 42,
+            width: 280,
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: 'Send a message .....',
+                fillColor: Colors.grey[300],
+                filled: true,
+                labelText: 'Type a message',
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                ),
               ),
               onChanged: (value) {
                 setState(() {
@@ -37,11 +49,20 @@ class _NewMessageState extends State<NewMessage> {
               },
             ),
           ),
-          IconButton(
-            onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,
-            icon: Icon(Icons.send),
-            color: Theme.of(context).primaryColor,
-          )
+          SizedBox(
+            width: 15,
+          ),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).buttonColor,
+            child: IconButton(
+              onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,
+              icon: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
         ],
       ),
     );

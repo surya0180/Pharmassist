@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/my_home_page_screen.dart';
+import 'package:pharmassist/screens/tab_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,12 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const signIn = true;
     return MaterialApp(
-        title: 'Pharmassist',
-        theme: MyThemeData,
-        home: signIn ? AuthScreen() : MyHomePage(),
-        routes: {
-          AuthScreen.routeName: (ctx) => AuthScreen(),
-          MyHomePage.routeName: (ctx) => MyHomePage(),
-        });
+      title: 'Pharmassist',
+      theme: MyThemeData,
+      home: signIn ? AuthScreen() : MyHomePage(),
+      initialRoute: AuthScreen.routeName,
+      routes: {
+        AuthScreen.routeName: (ctx) => AuthScreen(),
+        MyHomePage.routeName: (ctx) => MyHomePage(),
+        '/': (ctx) => TabScreen(),
+      },
+    );
   }
 }

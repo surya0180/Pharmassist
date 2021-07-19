@@ -45,9 +45,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
 
                 color: Colors.orange,
-                textColor: Colors.pink, // foreground
+                textColor: Colors.white, // foreground
                 onPressed: () {
-                  Navigator.of(context).pushNamed(MyHomePage.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(MyHomePage.routeName);
                 },
                 child: Row(
                   children: [

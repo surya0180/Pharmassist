@@ -68,7 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(AuthScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(AuthScreen.routeName);
                 },
                 child: Icon(Icons.logout),
               )),

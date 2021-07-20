@@ -1,5 +1,7 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pharmassist/helpers/Colors.dart';
 import 'package:pharmassist/widgets/FeedCard.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 
@@ -13,14 +15,24 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  Color _generateRandomColor() {
+    var rc = Random();
+    return themeColors[rc.nextInt(10)];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 1.17,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
         itemBuilder: (ctx, index) {
-          return FeedCard();
+          return FeedCard(randomColor: _generateRandomColor(),);
         },
         itemCount: 5,
       ),

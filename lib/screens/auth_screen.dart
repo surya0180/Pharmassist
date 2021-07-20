@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -32,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 text: "Sign up with Google",
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(TabScreen.routeName);
+                      .pushReplacementNamed(GettingStarted.routeName);
                 },
               ),
             ),

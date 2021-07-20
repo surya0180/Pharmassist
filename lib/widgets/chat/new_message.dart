@@ -26,11 +26,11 @@ class _NewMessageState extends State<NewMessage> {
       child: Row(
         children: [
           SizedBox(
-            width: 4,
+            width: MediaQuery.of(context).size.width*0.01,
           ),
           Container(
-            height: 42,
-            width: 280,
+            height: MediaQuery.of(context).size.height*0.06,
+            width: MediaQuery.of(context).size.width*0.8,
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
@@ -50,9 +50,9 @@ class _NewMessageState extends State<NewMessage> {
             ),
           ),
           SizedBox(
-            width: 15,
+            width: MediaQuery.of(context).size.width*0.03,
           ),
-          CircleAvatar(
+          CircleAvatar( 
             backgroundColor: Theme.of(context).buttonColor,
             child: IconButton(
               onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,

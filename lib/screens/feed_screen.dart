@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pharmassist/widgets/FeedCard.dart';
+import 'package:pharmassist/widgets/new_feed_form.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key key}) : super(key: key);
@@ -23,7 +25,9 @@ class _FeedScreenState extends State<FeedScreen> {
         itemCount: 5,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(NewFeedForm.routeName);
+        },
         child: Icon(Icons.add),
       ),
     );

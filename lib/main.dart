@@ -5,6 +5,7 @@ import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
+import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         MedicalRequestForm.routeName: (ctx) => MedicalRequestForm(),
         PharmacistRequestForm.routeName: (ctx) => PharmacistRequestForm(),
         NewFeedForm.routeName: (ctx) => NewFeedForm(),
+        FeedDetailScreen.routeName: (ctx) => FeedDetailScreen(),
       },
     );
   }

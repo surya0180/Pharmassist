@@ -10,6 +10,8 @@ import 'package:pharmassist/screens/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 
+import 'helpers/user_info.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -21,10 +23,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pharmassist',
       theme: MyThemeData,
-      home: signIn ? AuthScreen() : GettingStarted(),
+      home: signIn
+          ? userInfo['isAddedInfo']
+              ? GettingStarted()
+              : AuthScreen()
+          : TabScreen(),
       routes: {
         AuthScreen.routeName: (ctx) => AuthScreen(),
-        GettingStarted.routeName: (ctx) => GettingStarted(),
         TabScreen.routeName: (ctx) => TabScreen(),
         ChatScreen.routeName: (ctx) => ChatScreen(),
         MedicalRequestForm.routeName: (ctx) => MedicalRequestForm(),

@@ -33,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 text: "Sign up with Google",
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(GettingStarted.routeName);
+                      .pushReplacementNamed(TabScreen.routeName);
                 },
               ),
             ),

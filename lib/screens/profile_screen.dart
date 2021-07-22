@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import '../helpers/user_info.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -21,6 +22,21 @@ class MapScreenState extends State<ProfilePage>
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!userInfo['isAddedInfo']) {
+        showDialog(
+          context: context,
+          builder: (_) => GettingStarted(),
+        );
+      }
+      userInfo['isAddedInfo'] = true;
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(
@@ -38,7 +54,7 @@ class MapScreenState extends State<ProfilePage>
                       padding: EdgeInsets.only(top: 20.0),
                       child: Center(
                         child: Text(
-                          userInfo["userName"],
+                          userInfo["fullname"],
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
@@ -64,21 +80,6 @@ class MapScreenState extends State<ProfilePage>
                                 )),
                           ],
                         ),
-                        // Padding(
-                        //     padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                        //     child: new Row(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: <Widget>[
-                        //         new CircleAvatar(
-                        //           backgroundColor: Colors.red,
-                        //           radius: 25.0,
-                        //           child: new Icon(
-                        //             Icons.camera_alt,
-                        //             color: Colors.white,
-                        //           ),
-                        //         )
-                        //       ],
-                        //     )),
                       ]),
                     )
                   ],

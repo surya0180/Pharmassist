@@ -1,61 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/forms/user_form.dart';
 
-class GettingStarted extends StatefulWidget {
+class GettingStarted extends StatelessWidget {
   const GettingStarted({Key key}) : super(key: key);
-
-  static const routeName = '/getting-started';
-
-  @override
-  _GettingStartedState createState() => _GettingStartedState();
-}
-
-class _GettingStartedState extends State<GettingStarted> {
-  int _pageNo = 0;
-
-  void _nextPage() {
-    setState(() {
-      _pageNo = 1;
-    });
-  }
-
-  void _prevPage() {
-    setState(() {
-      _pageNo = 0;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Center(
-        child: AnimatedContainer(
-          curve: Curves.easeIn,
-          duration: Duration(milliseconds: 300),
-          height: _pageNo == 0
-              ? MediaQuery.of(context).size.height * 0.50
-              : MediaQuery.of(context).size.height * 0.55,
-          width: MediaQuery.of(context).size.width * 0.9,
-          padding: EdgeInsets.all(15),
-          constraints: BoxConstraints(
-            minHeight: 320,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 13,
-                offset: Offset(6, 7),
-                spreadRadius: 1,
-                color: Colors.blueGrey,
+    return AlertDialog(
+      contentPadding: EdgeInsets.all(0),
+      backgroundColor: Theme.of(context).canvasColor,
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+              child: Text(
+                'Getting Started . .',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                ),
               ),
-            ],
-          ),
-          child: _pageNo == 0
-              ? UserFormPart1(_nextPage)
-              : UserFormPart2(_prevPage),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, \n\nwhen an unknown printer took a galley of type and scrambled it to make a type, specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \n\nIt was popularised in the 1960s with the release of Letraset sheets',
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+          ],
         ),
       ),
     );

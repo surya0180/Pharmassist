@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/helpers/NavList.dart';
+import 'package:pharmassist/helpers/user_info.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
 
 import '../widgets/SideDrawer.dart';
@@ -27,7 +29,13 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     _pages = pages;
-    _selectedPageIndex = 2;
+    print(!userInfo['isAddedInfo']);
+    if (!userInfo['isAddedInfo']) {
+      _selectedPageIndex = 0;
+    }
+    else {
+      _selectedPageIndex = 2;
+    }
     super.initState();
   }
 

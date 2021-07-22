@@ -1,0 +1,38 @@
+var stores = [
+  {
+    "name": "medical shop 1",
+    "firm_id": "12345",
+    "establishment_year": "12/12/2020",
+    "street": "Kaveri Nager",
+    "town": "Nellore",
+    "district": "Nellore",
+    "state": "Andhra pradesh",
+  },
+  {
+    "name": "medical shop 2",
+    "firm_id": "12345",
+    "establishment_year": "12/12/2020",
+    "street": "Kaveri Nager",
+    "town": "Nellore",
+    "district": "Nellore",
+    "state": "Andhra pradesh",
+  },
+  {
+    "name": "medical shop 3",
+    "firm_id": "12345",
+    "establishment_year": "12/12/2020",
+    "street": "Kaveri Nager",
+    "town": "Nellore",
+    "district": "Nellore",
+    "state": "Andhra pradesh",
+  },
+  {
+    "name": "medical shop 4",
+    "firm_id": "12345",
+    "establishment_year": "12/12/2020",
+    "street": "Kaveri Nager",
+    "town": "Nellore",
+    "district": "Nellore",
+    "state": "Andhra pradesh",
+  },
+];

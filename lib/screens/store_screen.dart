@@ -21,6 +21,7 @@ class StoreScreen extends StatelessWidget {
           stores[i]["town"],
           stores[i]["district"],
           stores[i]["state"],
+          stores[i]["isNew"],
 
           // loadedProducts[i].id,
           // loadedProducts[i].title,
@@ -33,12 +34,6 @@ class StoreScreen extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: new Color(0xFFE57373),
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

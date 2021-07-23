@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/store_screen.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
@@ -19,6 +20,14 @@ class SideDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.store),
+            title: Text('Add Store'),
+            onTap: () {
+              Navigator.of(context).pushNamed(StoreScreen.routeName);
             },
           ),
           Divider(),

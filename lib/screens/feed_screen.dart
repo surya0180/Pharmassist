@@ -2,8 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pharmassist/helpers/Colors.dart';
+import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/widgets/FeedCard.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
+import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key key}) : super(key: key);
@@ -22,6 +24,8 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _feedData = Provider.of<FeedProvider>(context).feedItems;
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: GridView.builder(
@@ -31,10 +35,11 @@ class _FeedScreenState extends State<FeedScreen> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        itemBuilder: (ctx, index) {
-          return FeedCard(randomColor: _generateRandomColor(),);
-        },
-        itemCount: 5,
+        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+          child: FeedCard(),
+          value: _feedData[index],
+        ),
+        itemCount: _feedData.length,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

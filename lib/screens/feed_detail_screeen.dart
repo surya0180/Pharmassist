@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/widgets/FeedStamp.dart';
+import 'package:provider/provider.dart';
 
 class FeedDetailScreen extends StatefulWidget {
   const FeedDetailScreen({Key key}) : super(key: key);
@@ -11,27 +13,18 @@ class FeedDetailScreen extends StatefulWidget {
 }
 
 class _FeedDetailScreenState extends State<FeedDetailScreen> {
-  String title, content;
-  Color color;
-
-  @override
-  void didChangeDependencies() {
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    title = routeArgs['title'];
-    content = routeArgs['content'];
-    color = routeArgs['color'];
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final feedId = ModalRoute.of(context).settings.arguments as String;
+    final _feedData =
+        Provider.of<FeedProvider>(context, listen: false).findById(feedId);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: color,
+        backgroundColor: _feedData.color,
         title: Text(
-          title,
+          _feedData.title,
           style: Theme.of(context).textTheme.title,
         ),
       ),
@@ -42,8 +35,8 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
             height: 150,
             width: 350,
             child: FeedStamp(
-              title: title,
-              color: color,
+              title: _feedData.title,
+              color: _feedData.color,
             ),
           ),
           Container(
@@ -51,7 +44,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
               borderRadius: BorderRadius.all(
                 Radius.circular(7),
               ),
-              color: color,
+              color: _feedData.color,
             ),
             padding: EdgeInsets.all(5),
             child: Text(
@@ -62,10 +55,10 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
           Container(
             padding: EdgeInsets.all(15),
             child: Card(
-              color: color,
+              color: _feedData.color,
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text(content),
+                child: Text(_feedData.content),
               ),
             ),
           ),

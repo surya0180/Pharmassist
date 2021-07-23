@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/feed.dart';
+import 'package:pharmassist/screens/comments_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
+import 'package:provider/provider.dart';
 
 class FeedCard extends StatefulWidget {
-  const FeedCard({this.randomColor, Key key}) : super(key: key);
-
-  final Color randomColor;
+  const FeedCard({Key key}) : super(key: key);
 
   @override
   _FeedCardState createState() => _FeedCardState();
 }
 
 class _FeedCardState extends State<FeedCard> {
-  bool _liked = false;
-  String title = 'About covaxin supply';
-  String content =
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type, specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets';
-
   @override
   Widget build(BuildContext context) {
+    final feed = Provider.of<Feed>(context, listen: false);
     var device = MediaQuery.of(context).size;
+
     return Card(
-      color: widget.randomColor,
+      color: feed.color,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(device.height * 0.02)),
       elevation: 4,
@@ -37,7 +35,7 @@ class _FeedCardState extends State<FeedCard> {
           ),
           height: device.height * 0.059,
           child: Text(
-            title,
+            feed.title,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -47,9 +45,10 @@ class _FeedCardState extends State<FeedCard> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.of(context).pushNamed(FeedDetailScreen.routeName,
-                arguments: {'title': title, 'content': content, 'color': widget.randomColor});
-            print("Hello");
+            Navigator.of(context).pushNamed(
+              FeedDetailScreen.routeName,
+              arguments: feed.id,
+            );
           },
           splashColor: Theme.of(context).splashColor,
           borderRadius: BorderRadius.circular(device.height * 0.02),
@@ -61,7 +60,7 @@ class _FeedCardState extends State<FeedCard> {
                   right: device.height * 0.027,
                   top: device.height * 0.0828,
                   bottom: device.height * 0.018),
-              child: Text(content),
+              child: Text(feed.content),
             ),
           ),
         ),
@@ -75,33 +74,47 @@ class _FeedCardState extends State<FeedCard> {
             )
           ]),
           child: GridTileBar(
-            leading: IconButton(
-              icon: Icon(
-                _liked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
-                color: widget.randomColor,
+            leading: Consumer<Feed>(
+              builder: (ctx, feed, _) => IconButton(
+                icon: Icon(
+                  feed.isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                  color: feed.color,
+                ),
+                onPressed: () {
+                  feed.isLikedStatus();
+                },
+                color: Theme.of(context).accentColor,
               ),
-              onPressed: () {
-                setState(() {
-                  _liked = !_liked;
-                });
-              },
-              color: Theme.of(context).accentColor,
             ),
             backgroundColor: Colors.black87,
             title: Align(
               child: Text(
-                '1.6k',
+                '${feed.likes}',
                 textAlign: TextAlign.center,
               ),
               alignment: Alignment(-1.1, 0),
             ),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.edit,
-                color: widget.randomColor,
-              ),
-              onPressed: () {},
-              color: Theme.of(context).accentColor,
+            trailing: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.comment,
+                    color: feed.color,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CommentScreen.routeName);
+                  },
+                  color: Theme.of(context).accentColor,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: feed.color,
+                  ),
+                  onPressed: () {},
+                  color: Theme.of(context).accentColor,
+                ),
+              ],
             ),
           ),
         ),

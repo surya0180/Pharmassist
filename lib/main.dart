@@ -6,6 +6,7 @@ import 'package:pharmassist/helpers/MyThemeData.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
+import 'package:pharmassist/screens/store_detail_screen.dart';
 import 'package:pharmassist/screens/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         NewFeedForm.routeName: (ctx) => NewFeedForm(),
         FeedDetailScreen.routeName: (ctx) => FeedDetailScreen(),
         StoreScreen.routeName: (ctx) => StoreScreen(),
+        StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
       },
     );
   }

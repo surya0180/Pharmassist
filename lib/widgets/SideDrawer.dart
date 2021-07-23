@@ -27,7 +27,7 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.store),
             title: Text('Add Store'),
             onTap: () {
-              Navigator.of(context).pushNamed(StoreScreen.routeName);
+              Navigator.popAndPushNamed(context, StoreScreen.routeName);
             },
           ),
           Divider(),

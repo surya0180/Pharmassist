@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/store_detail_screen.dart';
 
 class StoreCard extends StatelessWidget {
   final String name;
@@ -8,6 +9,7 @@ class StoreCard extends StatelessWidget {
   final String town;
   final String district;
   final String state;
+  final bool isNew;
 
   StoreCard(
     this.name,
@@ -17,6 +19,7 @@ class StoreCard extends StatelessWidget {
     this.town,
     this.district,
     this.state,
+    this.isNew,
   );
 
   @override
@@ -25,10 +28,29 @@ class StoreCard extends StatelessWidget {
       height: 250,
       child: GridTile(
         child: GestureDetector(
-          onTap: () {},
-          child: Card(
-            child: Center(child: Text(name)),
-          ),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              StoreDetailScreen.routeName,
+              arguments: firm_id,
+            );
+          },
+          child: isNew
+              ? Card(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Add Store"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Icon(Icons.add),
+                    ],
+                  ),
+                )
+              : Card(
+                  child: Center(child: Text(name)),
+                ),
         ),
       ),
     );

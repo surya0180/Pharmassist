@@ -6,9 +6,10 @@ class CommentHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.lightBlue.shade900),
+          bottom: BorderSide(width: 1.0, color: Colors.black26),
         ),
         color: Colors.white,
       ),

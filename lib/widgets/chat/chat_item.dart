@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/Colors.dart';
 import 'package:pharmassist/helpers/SampleMessages.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 
@@ -12,9 +15,18 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).cardColor,
-      elevation: 3,
+    Color _generateRandomColor() {
+      var rc = Random();
+      return themeColors[rc.nextInt(10)];
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        border: Border(
+          bottom: BorderSide(width: 1.0, color: Colors.black26),
+        ),
+      ),
       child: InkWell(
         onTap: () {
           print("I tapped this");
@@ -33,17 +45,21 @@ class ChatItem extends StatelessWidget {
           padding: EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             children: [
-              number != 0 ?
-                CircleAvatar(
-                  backgroundColor: Theme.of(context).accentColor,
-                  child: Text(
-                    '$number',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
+              number != 0
+                  ? CircleAvatar(
+                      backgroundColor: Colors.green[300],
+                      child: Text(
+                        '$number',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: Colors.blue[200],
+                      child: Icon(Icons.check),
                     ),
-                  ),
-                ) : CircleAvatar(child: Icon(Icons.check_circle),),
               SizedBox(
                 width: 20,
               ),

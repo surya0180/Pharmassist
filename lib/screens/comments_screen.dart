@@ -23,14 +23,26 @@ class _CommentScreenState extends State<CommentScreen> {
       body: Column(
         children: [
           Container(
-            height: 60,
+            // height: 60,
+            margin: EdgeInsets.all(10),
             padding: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
               color: Colors.white,
-              border: Border.all(color: Colors.blue),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 1,
+                  color: Colors.black12,
+                  offset: Offset(2, 3),
+                  spreadRadius: 1,
+                ),
+              ],
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
             ),
             child: ListTile(
               title: TextField(
+                maxLines: 2,
                 controller: null,
                 decoration: InputDecoration(
                   labelText: 'Comment here',

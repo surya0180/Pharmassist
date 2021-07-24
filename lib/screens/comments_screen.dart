@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/comment.dart';
+import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/widgets/CommentHolder.dart';
+import 'package:provider/provider.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({Key key}) : super(key: key);
@@ -11,8 +14,22 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  var _comment = '';
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _feedId = ModalRoute.of(context).settings.arguments as String;
+    final _commentsData = Provider.of<CommentProvider>(context);
+    final _comments = _commentsData.findById(_feedId);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -23,7 +40,6 @@ class _CommentScreenState extends State<CommentScreen> {
       body: Column(
         children: [
           Container(
-            // height: 60,
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
@@ -43,17 +59,33 @@ class _CommentScreenState extends State<CommentScreen> {
             child: ListTile(
               title: TextField(
                 maxLines: 2,
-                controller: null,
+                controller: _controller,
                 decoration: InputDecoration(
                   labelText: 'Comment here',
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                 ),
-                onChanged: (value) {
-                  setState(() {});
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
                 },
               ),
               trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _comment = _controller.text;
+                  });
+                  print(_comment);
+                  _commentsData.addComment(
+                    _feedId,
+                    Comment(
+                      id: 'c4',
+                      username: 'Surya teja',
+                      comment: _comment,
+                    ),
+                  );
+                  _controller.clear();
+                  FocusScope.of(context).unfocus();
+                },
                 icon: Icon(
                   Icons.send,
                   color: Colors.black,
@@ -69,8 +101,11 @@ class _CommentScreenState extends State<CommentScreen> {
             child: ListView.builder(
               shrinkWrap: true,
               padding: EdgeInsets.all(0),
-              itemBuilder: (ctx, index) => CommentHolder(),
-              itemCount: 3,
+              itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                value: _comments[index],
+                child: CommentHolder(),
+              ),
+              itemCount: _comments.length,
             ),
           ),
         ],

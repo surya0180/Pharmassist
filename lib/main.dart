@@ -3,6 +3,7 @@ import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
+import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => FeedProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => CommentProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'Pharmassist',

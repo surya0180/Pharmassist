@@ -102,7 +102,7 @@ class _FeedCardState extends State<FeedCard> {
                     color: feed.color,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(CommentScreen.routeName);
+                    Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: feed.id);
                   },
                   color: Theme.of(context).accentColor,
                 ),

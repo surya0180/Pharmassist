@@ -15,9 +15,9 @@ class FeedDetailScreen extends StatefulWidget {
 class _FeedDetailScreenState extends State<FeedDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final feedId = ModalRoute.of(context).settings.arguments as String;
+    final _feedId = ModalRoute.of(context).settings.arguments as String;
     final _feedData =
-        Provider.of<FeedProvider>(context, listen: false).findById(feedId);
+        Provider.of<FeedProvider>(context, listen: false).findById(_feedId);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,

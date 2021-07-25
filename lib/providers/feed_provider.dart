@@ -61,12 +61,24 @@ class FeedProvider with ChangeNotifier {
   ];
 
   List<Feed> get feedItems {
-    return [..._feedItems];
+    return [..._feedItems.reversed];
   }
 
   Feed findById(String id) {
     return _feedItems.firstWhere(
       (feed) => feed.id == id,
     );
+  }
+
+  void addFeed(Feed feed) {
+    _feedItems.add(feed);
+    notifyListeners();
+  }
+
+  void updateFeed(String id, Feed feed) {
+    var before = _feedItems.firstWhere((element) => element.id == id);
+    _feedItems.remove(before);
+    _feedItems.add(feed);
+    notifyListeners();
   }
 }

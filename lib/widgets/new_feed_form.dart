@@ -1,4 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pharmassist/helpers/Colors.dart';
+import 'package:pharmassist/providers/comment_provider.dart';
+import 'package:pharmassist/providers/feed.dart';
+import 'package:pharmassist/providers/feed_provider.dart';
+import 'package:provider/provider.dart';
 
 class NewFeedForm extends StatefulWidget {
   static const routeName = "/add-feed";
@@ -8,14 +16,80 @@ class NewFeedForm extends StatefulWidget {
 
 class _NewFeedFormState extends State<NewFeedForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  String email = "";
-  String password = "";
+
+  var _isInit = true;
+
+  String _id = '';
+  String _title = "";
+  String _description = "";
+  int _likes = 0;
+  Color _color;
+
+  Color _generateRandomColor() {
+    var rc = Random();
+    return themeColors[rc.nextInt(10)];
+  }
 
   void _submit() {
-    // you can write your
-    // own code according to
-    // whatever you want to submit;
+    final isValid = _formKey.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState.save();
+    FocusScope.of(context).unfocus();
+    var myid = DateTime.now().toString();
+    if (_id == null) {
+      Provider.of<FeedProvider>(context, listen: false).addFeed(
+        Feed(
+          id: myid,
+          title: _title,
+          content: _description,
+          likes: 0,
+          color: _generateRandomColor(),
+        ),
+      );
+      Provider.of<CommentProvider>(context, listen: false).addCommentSection(
+        myid,
+        [],
+      );
+    } else {
+      print(_id);
+      print(_title);
+      print(_description);
+      print(_likes);
+      print(_color);
+      Provider.of<FeedProvider>(context, listen: false).updateFeed(
+        _id,
+        Feed(
+          id: _id,
+          title: _title,
+          content: _description,
+          likes: _likes,
+          color: _color,
+        ),
+      );
+    }
+    Navigator.of(context).pop();
   }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_isInit) {
+      _id = ModalRoute.of(context).settings.arguments as String;
+      if (_id != null) {
+        final feed =
+            Provider.of<FeedProvider>(context, listen: false).findById(_id);
+        _title = feed.title;
+        _description = feed.content;
+        _likes = feed.likes;
+        _color = feed.color;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +106,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      initialValue: _title,
                       decoration: InputDecoration(
                         hintText: 'Title',
                         hintStyle: TextStyle(color: Colors.grey),
@@ -45,10 +120,17 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         height: 1.5,
                         color: Colors.black,
                       ),
+                      validator: (value) {
+                        if (value.trim().length > 28) {
+                          return 'Length must be less that or equal to 18';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.text,
-                      onFieldSubmitted: (value) {
+                      textInputAction: TextInputAction.next,
+                      onSaved: (value) {
                         setState(() {
-                          email = value;
+                          _title = value;
                         });
                       },
                     ),
@@ -60,6 +142,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                     // input goes
 
                     TextFormField(
+                      initialValue: _description,
                       minLines: 4,
                       maxLines: 6,
                       keyboardType: TextInputType.multiline,
@@ -68,6 +151,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         height: 1.5,
                         color: Colors.black,
                       ),
+                      textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(bottom: 100),
@@ -79,9 +163,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                       ),
-                      onFieldSubmitted: (value) {
+                      onSaved: (value) {
                         setState(() {
-                          password = value;
+                          _description = value;
                         });
                       },
                     ),

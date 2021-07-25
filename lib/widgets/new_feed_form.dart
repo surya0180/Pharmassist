@@ -23,6 +23,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
   String _title = "";
   String _description = "";
   int _likes = 0;
+  bool _isLiked;
   Color _color;
 
   Color _generateRandomColor() {
@@ -53,11 +54,6 @@ class _NewFeedFormState extends State<NewFeedForm> {
         [],
       );
     } else {
-      print(_id);
-      print(_title);
-      print(_description);
-      print(_likes);
-      print(_color);
       Provider.of<FeedProvider>(context, listen: false).updateFeed(
         _id,
         Feed(
@@ -66,6 +62,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
           content: _description,
           likes: _likes,
           color: _color,
+          isLiked: _isLiked,
         ),
       );
     }
@@ -84,6 +81,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
         _description = feed.content;
         _likes = feed.likes;
         _color = feed.color;
+        _isLiked = feed.isLiked;
       }
     }
     _isInit = false;

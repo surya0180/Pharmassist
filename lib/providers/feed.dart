@@ -18,6 +18,10 @@ class Feed with ChangeNotifier{
     this.isLiked = false,
   });
 
+  bool getIsLiked() {
+    return isLiked;
+  }
+
   void isLikedStatus() {
     isLiked = !isLiked;
     notifyListeners();

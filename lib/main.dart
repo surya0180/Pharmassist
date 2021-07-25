@@ -16,6 +16,7 @@ import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
 
 import 'helpers/user_info.dart';
+import 'providers/user.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,7 +33,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => CommentProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => UserProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Pharmassist',

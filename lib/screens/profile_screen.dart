@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/forms/getting_started.dart';
+import 'package:pharmassist/providers/user.dart';
+import 'package:provider/provider.dart';
 import '../helpers/user_info.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,7 +15,7 @@ class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -38,6 +40,8 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    final userinfo = Provider.of<UserProvider>(context, listen: false).user;
+    print(userinfo);
     return new Scaffold(
         body: new Container(
       color: Colors.white,
@@ -54,7 +58,7 @@ class MapScreenState extends State<ProfilePage>
                       padding: EdgeInsets.only(top: 20.0),
                       child: Center(
                         child: Text(
-                          userInfo["fullname"],
+                          userinfo.fullname,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
@@ -90,6 +94,7 @@ class MapScreenState extends State<ProfilePage>
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 25.0),
                   child: Form(
+                    key: _formKey,
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -150,7 +155,7 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["fullname"],
+                                    initialValue: userinfo.fullname,
                                     decoration: const InputDecoration(
                                       hintText: "Enter Your Name",
                                     ),
@@ -188,7 +193,7 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["registration_no"],
+                                    initialValue: userinfo.registrationNo,
                                     decoration: const InputDecoration(
                                         hintText: "Enter registration no"),
                                     enabled: !_status,
@@ -224,7 +229,7 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["renewal_datee"],
+                                    initialValue: userinfo.renewalDate,
                                     decoration: const InputDecoration(
                                         hintText: "Enter renewal_date"),
                                     enabled: !_status,
@@ -274,7 +279,7 @@ class MapScreenState extends State<ProfilePage>
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: new TextFormField(
-                                      initialValue: userInfo["street"],
+                                      initialValue: userinfo.street,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Street"),
                                       enabled: !_status,
@@ -284,7 +289,7 @@ class MapScreenState extends State<ProfilePage>
                                 ),
                                 Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["town"],
+                                    initialValue: userinfo.town,
                                     decoration: const InputDecoration(
                                         hintText: "Enter Town"),
                                     enabled: !_status,
@@ -335,7 +340,7 @@ class MapScreenState extends State<ProfilePage>
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: new TextFormField(
-                                      initialValue: userInfo["district"],
+                                      initialValue: userinfo.district,
                                       decoration: const InputDecoration(
                                           hintText: "Enter District"),
                                       enabled: !_status,
@@ -345,7 +350,7 @@ class MapScreenState extends State<ProfilePage>
                                 ),
                                 Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["state"],
+                                    initialValue: userinfo.state,
                                     decoration: const InputDecoration(
                                         hintText: "Enter State"),
                                     enabled: !_status,

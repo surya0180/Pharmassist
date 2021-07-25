@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 
-class MedicalRequestForm extends StatelessWidget {
+class MedicalRequestForm extends StatefulWidget {
   const MedicalRequestForm({Key key}) : super(key: key);
 
   static const routeName = '/medical-form';
+
+  @override
+  _MedicalRequestFormState createState() => _MedicalRequestFormState();
+}
+
+class _MedicalRequestFormState extends State<MedicalRequestForm> {
+  final _form = GlobalKey<FormState>();
+
+  String _title;
+  String _request;
+
+  void _saveForm() {
+    _form.currentState.save();
+    FocusScope.of(context).unfocus();
+    Navigator.of(context).pop();
+    print(_title);
+    print(_request);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +32,7 @@ class MedicalRequestForm extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: _form,
           child: ListView(
             children: [
               CircleAvatar(
@@ -41,6 +60,12 @@ class MedicalRequestForm extends StatelessWidget {
                   fillColor: Colors.white,
                   enabledBorder: InputBorder.none,
                 ),
+                textInputAction: TextInputAction.next,
+                onSaved: (value)  {
+                  setState(() {
+                    _title = value;
+                  });
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
@@ -57,7 +82,7 @@ class MedicalRequestForm extends StatelessWidget {
               ),
               TextFormField(
                 keyboardType: TextInputType.multiline,
-                maxLines: 10,
+                maxLines: 8,
                 decoration: InputDecoration(
                   labelStyle: TextStyle(),
                   border: OutlineInputBorder(),
@@ -66,12 +91,18 @@ class MedicalRequestForm extends StatelessWidget {
                   fillColor: Colors.white,
                   enabledBorder: InputBorder.none,
                 ),
+                textInputAction: TextInputAction.none,
+                onSaved: (value) {
+                  setState(() {
+                    _request = value;
+                  });
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _saveForm,
                 child: Text(
                   'Send request',
                   style: TextStyle(

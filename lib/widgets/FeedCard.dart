@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed.dart';
 import 'package:pharmassist/screens/comments_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
+import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
 
 class FeedCard extends StatefulWidget {
@@ -82,17 +83,24 @@ class _FeedCardState extends State<FeedCard> {
                 ),
                 onPressed: () {
                   feed.isLikedStatus();
+                  if (feed.isLiked) {
+                    feed.addLike();
+                  } else {
+                    feed.removeLike();
+                  }
                 },
                 color: Theme.of(context).accentColor,
               ),
             ),
             backgroundColor: Colors.black87,
-            title: Align(
-              child: Text(
-                '${feed.likes}',
-                textAlign: TextAlign.center,
+            title: Consumer<Feed>(
+              builder: (ctx, feed, _) => Align(
+                child: Text(
+                  '${feed.likes}',
+                  textAlign: TextAlign.center,
+                ),
+                alignment: Alignment(-1.1, 0),
               ),
-              alignment: Alignment(-1.1, 0),
             ),
             trailing: Row(
               children: [
@@ -102,7 +110,8 @@ class _FeedCardState extends State<FeedCard> {
                     color: feed.color,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: feed.id);
+                    Navigator.of(context)
+                        .pushNamed(CommentScreen.routeName, arguments: feed.id);
                   },
                   color: Theme.of(context).accentColor,
                 ),
@@ -111,7 +120,10 @@ class _FeedCardState extends State<FeedCard> {
                     Icons.edit,
                     color: feed.color,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(NewFeedForm.routeName, arguments: feed.id);
+                  },
                   color: Theme.of(context).accentColor,
                 ),
               ],

@@ -21,7 +21,33 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.feed),
+          icon: Stack(
+            children: <Widget>[
+              Icon(Icons.feed),
+              Positioned(
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 12,
+                    minHeight: 12,
+                  ),
+                  child: Text(
+                    '5',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          ),
           title: Text(
             'Requests',
             style: Theme.of(context).textTheme.bodyText1,
@@ -42,7 +68,33 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble),
+          icon: Stack(
+            children: <Widget>[
+              Icon(Icons.chat_bubble),
+              Positioned(
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 12,
+                    minHeight: 12,
+                  ),
+                  child: Text(
+                    '5',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          ),
           title: Text(
             'Chat',
             style: Theme.of(context).textTheme.bodyText1,

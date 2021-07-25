@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 
-class PharmacistRequestForm extends StatelessWidget {
+class PharmacistRequestForm extends StatefulWidget {
   const PharmacistRequestForm({Key key}) : super(key: key);
 
   static const routeName = '/pharmacist-form';
+
+  @override
+  _PharmacistRequestFormState createState() => _PharmacistRequestFormState();
+}
+
+class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
+  final _form = GlobalKey<FormState>();
+
+  String _title;
+  String _request;
+
+  void _saveForm() {
+    _form.currentState.save();
+    FocusScope.of(context).unfocus();
+    Navigator.of(context).pop();
+    print(_title);
+    print(_request);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +32,7 @@ class PharmacistRequestForm extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: _form,
           child: ListView(
             children: [
               CircleAvatar(
@@ -41,6 +60,12 @@ class PharmacistRequestForm extends StatelessWidget {
                   fillColor: Colors.white,
                   enabledBorder: InputBorder.none,
                 ),
+                textInputAction: TextInputAction.next,
+                onSaved: (value) {
+                  setState(() {
+                    _title = value;
+                  });
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
@@ -66,12 +91,17 @@ class PharmacistRequestForm extends StatelessWidget {
                   fillColor: Colors.white,
                   enabledBorder: InputBorder.none,
                 ),
+                onSaved: (value) {
+                  setState(() {
+                    _request = value;
+                  });
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _saveForm,
                 child: Text(
                   'Send request',
                   style: TextStyle(

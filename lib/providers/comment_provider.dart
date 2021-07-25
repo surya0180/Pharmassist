@@ -82,4 +82,9 @@ class CommentProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void addCommentSection(String id, List<Comment> cnt) {
+    _commentSets['$id'] = cnt;
+    notifyListeners();
+  }
 }

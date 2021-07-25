@@ -17,11 +17,6 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-  Color _generateRandomColor() {
-    var rc = Random();
-    return themeColors[rc.nextInt(10)];
-  }
-
   @override
   Widget build(BuildContext context) {
     final _feedData = Provider.of<FeedProvider>(context).feedItems;

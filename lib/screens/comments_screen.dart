@@ -29,6 +29,9 @@ class _CommentScreenState extends State<CommentScreen> {
     final _feedId = ModalRoute.of(context).settings.arguments as String;
     final _commentsData = Provider.of<CommentProvider>(context);
     final _comments = _commentsData.findById(_feedId);
+    print(_comments);
+    print(_feedId);
+    print(_commentsData.comments);
 
     return Scaffold(
       appBar: AppBar(

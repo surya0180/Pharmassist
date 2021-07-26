@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "310095393555-5e1ftg4tm8gfifas5l5c7pee28brc3ba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pharmassist",
+            "certificate_hash": "41014a927162ab2cd1e0c4afe1104aea943dc788"
+          }
+        },
+        {
+          "client_id": "310095393555-9qkb28vkof35vavhb0ugnlhn15rlc7bg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pharmassist",
+            "certificate_hash": "eb88e7f300208ffad151494542542a675d4f37a1"
+          }
+        },
+        {
           "client_id": "310095393555-nuv0ehr0rra105u2966fm79hpb79v3h2.apps.googleusercontent.com",
           "client_type": 3
         }

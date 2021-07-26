@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/screens/store_screen.dart';
+import 'package:provider/provider.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
@@ -19,7 +21,8 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              Provider.of<GoogleSignInProvider>(context, listen: false)
+                  .logout();
             },
           ),
           Divider(),

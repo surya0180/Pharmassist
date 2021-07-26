@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/getting_started.dart';
+import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth-screen';
@@ -32,8 +34,11 @@ class _AuthScreenState extends State<AuthScreen> {
                 Buttons.GoogleDark,
                 text: "Sign up with Google",
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(TabScreen.routeName);
+                  final authProvider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  authProvider.googleLogIn();
+                  //   Navigator.of(context)
+                  //       .pushReplacementNamed(TabScreen.routeName);
                 },
               ),
             ),

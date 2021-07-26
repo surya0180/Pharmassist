@@ -3,6 +3,7 @@ import 'package:pharmassist/helpers/user_info.dart';
 
 class User {
   bool isAdded;
+  bool isAdmin;
   final String fullname;
   final String registrationNo;
   final String renewalDate;
@@ -13,6 +14,7 @@ class User {
 
   User({
     this.isAdded = false,
+    this.isAdmin = true,
     @required this.fullname,
     @required this.registrationNo,
     @required this.renewalDate,
@@ -36,5 +38,10 @@ class UserProvider with ChangeNotifier {
 
   User get user {
     return _user;
+  }
+
+  void updateUser(User newUser) {
+    _user = newUser;
+    notifyListeners();
   }
 }

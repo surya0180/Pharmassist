@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/forms/getting_started.dart';
-import '../helpers/user_info.dart';
+import 'package:pharmassist/providers/user.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   static final routeName = "/profile-page";
@@ -13,7 +14,16 @@ class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
+  bool _isAdded = false;
+  String _fullname = "";
+  String _registrationNo = "";
+  String _renewalDate = "";
+  String _street = "";
+  String _town = "";
+  String _district = "";
+  String _state = "";
 
   @override
   void initState() {
@@ -24,20 +34,54 @@ class MapScreenState extends State<ProfilePage>
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
+    final userinfo = Provider.of<UserProvider>(context, listen: false).user;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!userInfo['isAddedInfo']) {
+      _isAdded = userinfo.isAdded;
+      if (!_isAdded) {
         showDialog(
           context: context,
           builder: (_) => GettingStarted(),
         );
       }
-      userInfo['isAddedInfo'] = true;
+      _isAdded = true;
     });
+    _isAdded = true;
+    _fullname = userinfo.fullname;
+    _registrationNo = userinfo.registrationNo;
+    _renewalDate = userinfo.renewalDate;
+    _street = userinfo.street;
+    _town = userinfo.town;
+    _district = userinfo.district;
+    _state = userinfo.state;
     super.didChangeDependencies();
+  }
+
+  _onSubmit() {
+    final isValid = true;
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState.save();
+    Provider.of<UserProvider>(context, listen: false).updateUser(User(
+      isAdded: _isAdded,
+      fullname: _fullname,
+      registrationNo: _registrationNo,
+      renewalDate: _renewalDate,
+      street: _street,
+      town: _town,
+      district: _district,
+      state: _street,
+    ));
+    setState(() {
+      _status = true;
+      FocusScope.of(context).requestFocus(new FocusNode());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final userinfo = Provider.of<UserProvider>(context).user;
+    print(userinfo);
     return new Scaffold(
         body: new Container(
       color: Colors.white,
@@ -54,7 +98,7 @@ class MapScreenState extends State<ProfilePage>
                       padding: EdgeInsets.only(top: 20.0),
                       child: Center(
                         child: Text(
-                          userInfo["fullname"],
+                          userinfo.fullname,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
@@ -90,6 +134,7 @@ class MapScreenState extends State<ProfilePage>
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 25.0),
                   child: Form(
+                    key: _formKey,
                     child: new Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -150,7 +195,12 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["fullname"],
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _fullname = value;
+                                      });
+                                    },
+                                    initialValue: _fullname,
                                     decoration: const InputDecoration(
                                       hintText: "Enter Your Name",
                                     ),
@@ -188,7 +238,12 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["registration_no"],
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _registrationNo = value;
+                                      });
+                                    },
+                                    initialValue: _registrationNo,
                                     decoration: const InputDecoration(
                                         hintText: "Enter registration no"),
                                     enabled: !_status,
@@ -224,7 +279,12 @@ class MapScreenState extends State<ProfilePage>
                               children: <Widget>[
                                 new Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["renewal_datee"],
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _renewalDate = value;
+                                      });
+                                    },
+                                    initialValue: _renewalDate,
                                     decoration: const InputDecoration(
                                         hintText: "Enter renewal_date"),
                                     enabled: !_status,
@@ -274,7 +334,12 @@ class MapScreenState extends State<ProfilePage>
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: new TextFormField(
-                                      initialValue: userInfo["street"],
+                                      onSaved: (value) {
+                                        setState(() {
+                                          _street = value;
+                                        });
+                                      },
+                                      initialValue: _street,
                                       decoration: const InputDecoration(
                                           hintText: "Enter Street"),
                                       enabled: !_status,
@@ -284,7 +349,12 @@ class MapScreenState extends State<ProfilePage>
                                 ),
                                 Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["town"],
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _town = value;
+                                      });
+                                    },
+                                    initialValue: _town,
                                     decoration: const InputDecoration(
                                         hintText: "Enter Town"),
                                     enabled: !_status,
@@ -335,7 +405,12 @@ class MapScreenState extends State<ProfilePage>
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: new TextFormField(
-                                      initialValue: userInfo["district"],
+                                      onSaved: (value) {
+                                        setState(() {
+                                          _district = value;
+                                        });
+                                      },
+                                      initialValue: _district,
                                       decoration: const InputDecoration(
                                           hintText: "Enter District"),
                                       enabled: !_status,
@@ -345,7 +420,12 @@ class MapScreenState extends State<ProfilePage>
                                 ),
                                 Flexible(
                                   child: new TextFormField(
-                                    initialValue: userInfo["state"],
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _state = value;
+                                      });
+                                    },
+                                    initialValue: _state,
                                     decoration: const InputDecoration(
                                         hintText: "Enter State"),
                                     enabled: !_status,
@@ -389,12 +469,7 @@ class MapScreenState extends State<ProfilePage>
                 child: new Text("Save"),
                 textColor: Colors.white,
                 color: Colors.green,
-                onPressed: () {
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                  });
-                },
+                onPressed: _onSubmit,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
               )),
@@ -409,12 +484,7 @@ class MapScreenState extends State<ProfilePage>
                 child: new Text("Cancel"),
                 textColor: Colors.white,
                 color: Colors.red,
-                onPressed: () {
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                  });
-                },
+                onPressed: () {},
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
               )),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/helpers/NavList.dart';
@@ -32,8 +33,7 @@ class _TabScreenState extends State<TabScreen> {
     print(!userInfo['isAddedInfo']);
     if (!userInfo['isAddedInfo']) {
       _selectedPageIndex = 0;
-    }
-    else {
+    } else {
       _selectedPageIndex = 2;
     }
     super.initState();
@@ -41,6 +41,7 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text(

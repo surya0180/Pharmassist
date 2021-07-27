@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/getting_started.dart';
@@ -18,7 +19,7 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   List<Map<String, Object>> _pages;
-
+  final firestoreInstance = FirebaseFirestore.instance;
   int _selectedPageIndex = 0;
 
   void _selectPage(int index) {

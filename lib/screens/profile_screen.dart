@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/forms/getting_started.dart';
+import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +73,7 @@ class MapScreenState extends State<ProfilePage>
       district: _district,
       state: _street,
     ));
+    // Provider.of<GoogleSignInProvider>(context, listen: false).updateUser();
     setState(() {
       _status = true;
       FocusScope.of(context).requestFocus(new FocusNode());

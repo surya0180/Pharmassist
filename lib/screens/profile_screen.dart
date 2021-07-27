@@ -18,14 +18,6 @@ class MapScreenState extends State<ProfilePage>
   final FocusNode myFocusNode = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  // bool _isAdded = false;
-  // String _fullname = "";
-  // String _registrationNo = "";
-  // String _renewalDate = "";
-  // String _street = "";
-  // String _town = "";
-  // String _district = "";
-  // String _state = "";
   var _editedUser = User(
     isAdded: false,
     fullname: '',
@@ -50,17 +42,6 @@ class MapScreenState extends State<ProfilePage>
   @override
   void initState() {
     // TODO: implement initState
-    // final userinfo = Provider.of<UserProvider>(context, listen: false).user;
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _isAdded = userinfo.isAdded;
-    //   if (!_isAdded) {
-    //     showDialog(
-    //       context: context,
-    //       builder: (_) => GettingStarted(),
-    //     );
-    //   }
-    //   _isAdded = true;
-    // });
 
     super.initState();
   }
@@ -71,25 +52,7 @@ class MapScreenState extends State<ProfilePage>
 
     if (_isInit) {
       final userinfo = Provider.of<UserProvider>(context, listen: false).user;
-      // while (userinfo != null) {
-      //   _initValues = {
-      //     "fullName": userinfo.fullname,
-      //     "registrationNo": userinfo.registrationNo,
-      //     "renewalDate": userinfo.renewalDate,
-      //     "street": userinfo.street,
-      //     "town": userinfo.town,
-      //     "district": userinfo.district,
-      //     "state": userinfo.state,
-      //   };
 
-      //   setState(() {
-      //     _isLoading = false;
-      //     _isInit = false;
-      //   });
-      // }
-      // setState(() {
-      //   _isLoading = true;
-      // });
       if (userinfo != null) {
         _initValues = {
           "fullName": userinfo.fullname,

@@ -9,6 +9,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount _user;
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
+  User signedUser = FirebaseAuth.instance.currentUser;
   GoogleSignInAccount get user => _user;
   Future googleLogIn() async {
     try {
@@ -21,12 +22,13 @@ class GoogleSignInProvider extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      User signedUser = FirebaseAuth.instance.currentUser;
-      createUserData(
-        signedUser.uid,
-        signedUser.email,
-        signedUser.photoURL,
-      );
+
+      var doc = await users.doc(signedUser.uid).get();
+      var isExist = doc.exists;
+      if (!isExist) {
+        createUserData(signedUser.uid, signedUser.email, signedUser.photoURL,
+            signedUser.displayName);
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -38,7 +40,8 @@ class GoogleSignInProvider extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<void> createUserData(String uid, String email, String photoUrl) async {
+  Future<void> createUserData(
+      String uid, String email, String photoUrl, String displayName) async {
     return await users.doc(uid).set({
       'uid': uid,
       "email": email,
@@ -52,22 +55,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       "town": "",
       "district": "",
       "state": "",
-    });
-  }
-
-  Future updateUser(
-    bool isAdded,
-    String fullName,
-    String reg,
-    String ren,
-    String street,
-    String town,
-    String district,
-    String state,
-  ) async {
-    User signedUser = FirebaseAuth.instance.currentUser;
-    return await users.doc(signedUser.uid).update({
-      "isAdded": true,
+      "displayName": displayName,
     });
   }
 }

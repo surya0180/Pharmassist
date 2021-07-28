@@ -37,43 +37,40 @@ class MapScreenState extends State<ProfilePage>
     "district": '',
     "state": '',
   };
+  var userinfo;
   var _isInit = true;
   var _isLoading = false;
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-
     if (_isInit) {
-      final userinfo = Provider.of<UserProvider>(context, listen: false).user;
-
-      if (userinfo != null) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<UserProvider>(context, listen: false).getData().then((value) {
+        userinfo = Provider.of<UserProvider>(context, listen: false).user;
         _initValues = {
-          "fullName": userinfo.fullname,
-          "registrationNo": userinfo.registrationNo,
-          "renewalDate": userinfo.renewalDate,
-          "street": userinfo.street,
-          "town": userinfo.town,
-          "district": userinfo.district,
-          "state": userinfo.state,
+          "fullName": userinfo['fullName'],
+          "registrationNo": userinfo['registrationNo'],
+          "renewalDate": userinfo['renewalDate'],
+          "street": userinfo['street'],
+          "town": userinfo['town'],
+          "district": userinfo['district'],
+          "state": userinfo['state'],
         };
+        _isInit = false;
         setState(() {
+          print('i am here');
           _isLoading = false;
-          _isInit = false;
         });
-      } else {
-        setState(() {
-          _isLoading = true;
-        });
-      }
+      });
     }
-    // _isInit = false;
 
     super.didChangeDependencies();
   }
@@ -115,7 +112,7 @@ class MapScreenState extends State<ProfilePage>
                             padding: EdgeInsets.only(top: 20.0),
                             child: Center(
                               child: Text(
-                                userinfo.fullname,
+                                userinfo['fullName'],
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
                               ),

@@ -37,10 +37,9 @@ class UserProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
   var signedUser = FirebaseAuth.instance.currentUser;
 
-  User _user;
+  Map<String, dynamic> _user;
 
-  User get user {
-    getData();
+  Map<String, dynamic> get user {
     return _user;
   }
 
@@ -48,27 +47,15 @@ class UserProvider with ChangeNotifier {
     final _uid = FirebaseAuth.instance.currentUser.uid;
     final _userData =
         await FirebaseFirestore.instance.collection('users/').doc(_uid).get();
-    User temp = User(
-      isAdded: _userData["isAdded"],
-      isAdmin: _userData["isAdmin"],
-      uid: _userData["uid"],
-      fullname: _userData["fullName"],
-      registrationNo: _userData["registrationNo"],
-      renewalDate: _userData["renewalDate"],
-      street: _userData["street"],
-      town: _userData["town"],
-      district: _userData["district"],
-      state: _userData["state"],
-    );
-    _user = temp;
+    _user = _userData.data();
     notifyListeners();
   }
 
   Future updateUser(
     User newUser,
   ) async {
-    _user = newUser;
-    notifyListeners();
+    // _user = newUser;
+    // notifyListeners();
     return await users.doc(signedUser.uid).update({
       "isAdded": true,
       "fullName": newUser.fullname,

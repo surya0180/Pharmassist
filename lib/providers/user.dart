@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:pharmassist/helpers/user_info.dart';
 
 class User {
   bool isAdded;
@@ -37,25 +36,44 @@ class UserProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
   var signedUser = FirebaseAuth.instance.currentUser;
 
-  Map<String, dynamic> _user;
+  User _user;
 
-  Map<String, dynamic> get user {
+  User get user {
     return _user;
+  }
+
+  bool get getIsAdminStatus {
+    return _user.isAdmin;
+  }
+
+  bool get getIsAddedStatus {
+    return _user.isAdded;
   }
 
   Future getData() async {
     final _uid = FirebaseAuth.instance.currentUser.uid;
     final _userData =
         await FirebaseFirestore.instance.collection('users/').doc(_uid).get();
-    _user = _userData.data();
+    _user = User(
+      isAdded: _userData.data()['isAdded'],
+      isAdmin: _userData.data()['isAdmin'],
+      uid: _userData.data()['uid'],
+      fullname: _userData.data()['fullName'],
+      registrationNo: _userData.data()['registrationNo'],
+      renewalDate: _userData.data()['renewalDate'],
+      street: _userData.data()['street'],
+      town: _userData.data()['town'],
+      district: _userData.data()['district'],
+      state: _userData.data()['state'],
+      email: _userData.data()['email'],
+      photoUrl: _userData.data()['photoUrl'],
+    );
     notifyListeners();
   }
 
   Future updateUser(
     User newUser,
   ) async {
-    // _user = newUser;
-    // notifyListeners();
     return await users.doc(signedUser.uid).update({
       "isAdded": true,
       "fullName": newUser.fullname,

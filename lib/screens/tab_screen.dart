@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/helpers/NavList.dart';
 import 'package:pharmassist/helpers/user_info.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/SideDrawer.dart';
 
@@ -21,6 +21,8 @@ class _TabScreenState extends State<TabScreen> {
   List<Map<String, Object>> _pages;
   final firestoreInstance = FirebaseFirestore.instance;
   int _selectedPageIndex = 0;
+  var _isInit = true;
+  var _isLoading = false;
 
   void _selectPage(int index) {
     setState(() {
@@ -30,8 +32,9 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   void initState() {
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    print(_isAdmin);
     _pages = pages;
-    print(!userInfo['isAddedInfo']);
     if (!userInfo['isAddedInfo']) {
       _selectedPageIndex = 0;
     } else {
@@ -41,8 +44,24 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<UserProvider>(context, listen: false).getData().then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final authUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -51,7 +70,7 @@ class _TabScreenState extends State<TabScreen> {
         ),
         actions: [],
       ),
-      body: _pages[_selectedPageIndex]['page'],
+      body: _isLoading ? Center(child: CircularProgressIndicator(),) : _pages[_selectedPageIndex]['page'],
       backgroundColor: Theme.of(context).backgroundColor,
       drawer: SideDrawer(),
       bottomNavigationBar: BottomNavBar(

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
@@ -17,8 +16,6 @@ import 'package:pharmassist/screens/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'helpers/user_info.dart';
 import 'providers/user.dart';
 
 void main() async {

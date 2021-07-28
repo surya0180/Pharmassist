@@ -1,8 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pharmassist/helpers/Colors.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/FeedCard.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,7 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     final _feedData = Provider.of<FeedProvider>(context).feedItems;
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -36,12 +36,12 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         itemCount: _feedData.length,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _isAdmin ? FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(NewFeedForm.routeName);
         },
         child: Icon(Icons.add),
-      ),
+      ) : null,
     );
   }
 }

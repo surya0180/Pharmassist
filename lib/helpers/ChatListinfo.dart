@@ -1,4 +1,4 @@
-final list = [
+final adminList = [
   {
     'name': 'Vimal',
     'message': 'Good morning sir!',
@@ -17,6 +17,14 @@ final list = [
   {
     'name': 'Binod',
     'message': 'Arrived just now sir!',
+    'msg_num': 0
+  },
+];
+
+final userList = [
+  {
+    'name': 'Admin',
+    'message': 'Good morning sir!',
     'msg_num': 0
   },
 ];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class MapScreenState extends State<ProfilePage>
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   var _editedUser = User(
-    isAdded: false,
+    isAdded: true,
     fullname: '',
     registrationNo: "",
     renewalDate: '',
@@ -38,6 +39,7 @@ class MapScreenState extends State<ProfilePage>
   @override
   void initState() {
     // TODO: implement initState
+    var _isAdded = Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
     final userinfo = Provider.of<UserProvider>(context, listen: false).user;
     setState(() {
       _initValues = {
@@ -49,6 +51,14 @@ class MapScreenState extends State<ProfilePage>
         "district": userinfo.district,
         "state": userinfo.state,
       };
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_isAdded) {
+        showDialog(
+          context: context,
+          builder: (_) => GettingStarted(),
+        );
+      }
     });
     super.initState();
   }

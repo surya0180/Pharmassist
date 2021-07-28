@@ -27,7 +27,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const signIn = true;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

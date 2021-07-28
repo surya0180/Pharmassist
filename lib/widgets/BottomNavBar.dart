@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/user.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatelessWidget {
   final Function selectPage;
@@ -8,6 +10,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     return BottomNavigationBar(
       onTap: selectPage,
       elevation: 10,
@@ -21,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Stack(
+          icon: _isAdmin ? Stack(
             children: <Widget>[
               Icon(Icons.feed),
               Positioned(
@@ -47,7 +50,7 @@ class BottomNavBar extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          ) : Icon(Icons.feed),
           title: Text(
             'Requests',
             style: Theme.of(context).textTheme.bodyText1,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/store_screen.dart';
 import 'package:provider/provider.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     return Drawer(
       elevation: 20,
       child: Column(
@@ -26,7 +28,13 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
+          _isAdmin ? ListTile(
+            leading: Icon(Icons.dashboard),
+            title: Text('Dashboard'),
+            onTap: () {
+              Navigator.popAndPushNamed(context, StoreScreen.routeName);
+            },
+          ) : ListTile(
             leading: Icon(Icons.store),
             title: Text('Add Store'),
             onTap: () {

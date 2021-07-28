@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/comments_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
@@ -17,6 +18,7 @@ class _FeedCardState extends State<FeedCard> {
   Widget build(BuildContext context) {
     final feed = Provider.of<Feed>(context, listen: false);
     var device = MediaQuery.of(context).size;
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
 
     return Card(
       color: feed.color,
@@ -115,17 +117,18 @@ class _FeedCardState extends State<FeedCard> {
                   },
                   color: Theme.of(context).accentColor,
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: feed.color,
+                if (_isAdmin)
+                  IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: feed.color,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed(NewFeedForm.routeName, arguments: feed.id);
+                    },
+                    color: Theme.of(context).accentColor,
                   ),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(NewFeedForm.routeName, arguments: feed.id);
-                  },
-                  color: Theme.of(context).accentColor,
-                ),
               ],
             ),
           ),

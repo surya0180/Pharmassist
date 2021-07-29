@@ -17,23 +17,4 @@ class Feed with ChangeNotifier{
     @required this.color,
     this.isLiked = false,
   });
-
-  bool getIsLiked() {
-    return isLiked;
-  }
-
-  void isLikedStatus() {
-    isLiked = !isLiked;
-    notifyListeners();
-  }
-
-  void addLike() {
-    likes = likes + 1;
-    notifyListeners();
-  }
-
-  void removeLike() {
-    likes = likes - 1;
-    notifyListeners();
-  }
 }

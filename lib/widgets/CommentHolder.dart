@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/providers/comment.dart';
-import 'package:provider/provider.dart';
 
 class CommentHolder extends StatelessWidget {
-  const CommentHolder({Key key}) : super(key: key);
+  const CommentHolder({this.id, this.username, this.comment, Key key})
+      : super(key: key);
+
+  final String id;
+  final String username;
+  final String comment;
 
   @override
   Widget build(BuildContext context) {
-    final comment = Provider.of<Comment>(context, listen: false);
-
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
@@ -27,7 +28,7 @@ class CommentHolder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  comment.username,
+                  username,
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(
@@ -40,7 +41,7 @@ class CommentHolder extends StatelessWidget {
                 ),
               ],
             ),
-            Text(comment.comment),
+            Text(comment),
           ],
         ),
       ),

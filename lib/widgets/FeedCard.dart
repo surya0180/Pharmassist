@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/providers/feed.dart';
+import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/comments_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
@@ -7,7 +7,22 @@ import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
 
 class FeedCard extends StatefulWidget {
-  const FeedCard({Key key}) : super(key: key);
+  const FeedCard(
+      {this.id,
+      this.title,
+      this.content,
+      this.color,
+      this.likes,
+      this.isLiked,
+      Key key})
+      : super(key: key);
+
+  final String id;
+  final String title;
+  final String content;
+  final int likes;
+  final bool isLiked;
+  final Color color;
 
   @override
   _FeedCardState createState() => _FeedCardState();
@@ -16,12 +31,13 @@ class FeedCard extends StatefulWidget {
 class _FeedCardState extends State<FeedCard> {
   @override
   Widget build(BuildContext context) {
-    final feed = Provider.of<Feed>(context, listen: false);
+    final feed = Provider.of<FeedProvider>(context, listen: false);
     var device = MediaQuery.of(context).size;
-    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
 
     return Card(
-      color: feed.color,
+      color: widget.color,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(device.height * 0.02)),
       elevation: 4,
@@ -38,7 +54,7 @@ class _FeedCardState extends State<FeedCard> {
           ),
           height: device.height * 0.059,
           child: Text(
-            feed.title,
+            widget.title,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -50,7 +66,7 @@ class _FeedCardState extends State<FeedCard> {
           onTap: () {
             Navigator.of(context).pushNamed(
               FeedDetailScreen.routeName,
-              arguments: feed.id,
+              arguments: widget.id,
             );
           },
           splashColor: Theme.of(context).splashColor,
@@ -63,7 +79,7 @@ class _FeedCardState extends State<FeedCard> {
                   right: device.height * 0.027,
                   top: device.height * 0.0828,
                   bottom: device.height * 0.018),
-              child: Text(feed.content),
+              child: Text(widget.content),
             ),
           ),
         ),
@@ -77,43 +93,35 @@ class _FeedCardState extends State<FeedCard> {
             )
           ]),
           child: GridTileBar(
-            leading: Consumer<Feed>(
-              builder: (ctx, feed, _) => IconButton(
-                icon: Icon(
-                  feed.isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
-                  color: feed.color,
-                ),
-                onPressed: () {
-                  feed.isLikedStatus();
-                  if (feed.isLiked) {
-                    feed.addLike();
-                  } else {
-                    feed.removeLike();
-                  }
-                },
-                color: Theme.of(context).accentColor,
+            leading: IconButton(
+              icon: Icon(
+                widget.isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                color: widget.color,
               ),
+              onPressed: () {
+                feed.changeIsLikedStatus(
+                    widget.isLiked, widget.id, widget.likes);
+              },
+              color: Theme.of(context).accentColor,
             ),
             backgroundColor: Colors.black87,
-            title: Consumer<Feed>(
-              builder: (ctx, feed, _) => Align(
-                child: Text(
-                  '${feed.likes}',
-                  textAlign: TextAlign.center,
-                ),
-                alignment: Alignment(-1.1, 0),
+            title: Align(
+              child: Text(
+                '${widget.likes}',
+                textAlign: TextAlign.center,
               ),
+              alignment: Alignment(-1.1, 0),
             ),
             trailing: Row(
               children: [
                 IconButton(
                   icon: Icon(
                     Icons.comment,
-                    color: feed.color,
+                    color: widget.color,
                   ),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(CommentScreen.routeName, arguments: feed.id);
+                    Navigator.of(context).pushNamed(CommentScreen.routeName,
+                        arguments: widget.id);
                   },
                   color: Theme.of(context).accentColor,
                 ),
@@ -121,11 +129,15 @@ class _FeedCardState extends State<FeedCard> {
                   IconButton(
                     icon: Icon(
                       Icons.edit,
-                      color: feed.color,
+                      color: widget.color,
                     ),
                     onPressed: () {
                       Navigator.of(context)
-                          .pushNamed(NewFeedForm.routeName, arguments: feed.id);
+                          .pushNamed(NewFeedForm.routeName, arguments: {
+                        'id': widget.id,
+                        'title': widget.title,
+                        'content': widget.content,
+                      });
                     },
                     color: Theme.of(context).accentColor,
                   ),

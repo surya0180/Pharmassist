@@ -22,9 +22,6 @@ class _NewFeedFormState extends State<NewFeedForm> {
   String _id = '';
   String _title = "";
   String _description = "";
-  int _likes = 0;
-  bool _isLiked;
-  Color _color;
 
   Color _generateRandomColor() {
     var rc = Random();
@@ -39,32 +36,22 @@ class _NewFeedFormState extends State<NewFeedForm> {
     _formKey.currentState.save();
     FocusScope.of(context).unfocus();
     var myid = DateTime.now().toString();
-    if (_id == null) {
+    if (_id == '') {
       Provider.of<FeedProvider>(context, listen: false).addFeed(
-        Feed(
-          id: myid,
-          title: _title,
-          content: _description,
-          likes: 0,
-          color: _generateRandomColor(),
-        ),
-      );
-      Provider.of<CommentProvider>(context, listen: false).addCommentSection(
+          Feed(
+            id: myid,
+            title: _title,
+            content: _description,
+            likes: 0,
+            color: _generateRandomColor(),
+          ),
+          myid);
+      Provider.of<CommentProvider>(context, listen: false).createCommentSection(
         myid,
-        [],
       );
     } else {
-      Provider.of<FeedProvider>(context, listen: false).updateFeed(
-        _id,
-        Feed(
-          id: _id,
-          title: _title,
-          content: _description,
-          likes: _likes,
-          color: _color,
-          isLiked: _isLiked,
-        ),
-      );
+      Provider.of<FeedProvider>(context, listen: false)
+          .updateFeed(_id, _title, _description);
     }
     Navigator.of(context).pop();
   }
@@ -73,15 +60,12 @@ class _NewFeedFormState extends State<NewFeedForm> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_isInit) {
-      _id = ModalRoute.of(context).settings.arguments as String;
-      if (_id != null) {
-        final feed =
-            Provider.of<FeedProvider>(context, listen: false).findById(_id);
-        _title = feed.title;
-        _description = feed.content;
-        _likes = feed.likes;
-        _color = feed.color;
-        _isLiked = feed.isLiked;
+      var routeArgs =
+          ModalRoute.of(context).settings.arguments as Map<String, String>;
+      if (routeArgs != null) {
+        _id = routeArgs['id'];
+        _title = routeArgs['title'];
+        _description = routeArgs['content'];
       }
     }
     _isInit = false;

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
@@ -18,30 +19,66 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
-    final _feedData = Provider.of<FeedProvider>(context).feedItems;
-    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: 1.17,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-          child: FeedCard(),
-          value: _feedData[index],
-        ),
-        itemCount: _feedData.length,
-      ),
-      floatingActionButton: _isAdmin ? FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(NewFeedForm.routeName);
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('feed/')
+            .orderBy('id', descending: true)
+            .snapshots(),
+        builder: (ctx, feedSnapShot) {
+          if (feedSnapShot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final feedDocs = feedSnapShot.data.docs;
+          return feedDocs.length == 0
+              ? _isAdmin
+                  ? Center(
+                      child: Text('No feed posts yet! Create one?'),
+                    )
+                  : Center(
+                      child: Text('No feed posts published'),
+                    )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: 1.17,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: feedDocs.length,
+                  itemBuilder: (ctx, index) {
+                    String valueString = feedDocs[index]
+                        .data()['color']
+                        .split('(0x')[1]
+                        .split(')')[0];
+                    int value = int.parse(valueString, radix: 16);
+                    Color otherColor = new Color(value);
+                    return FeedCard(
+                      id: feedDocs[index].data()['id'],
+                      title: feedDocs[index].data()['title'],
+                      content: feedDocs[index].data()['content'],
+                      color: otherColor,
+                      likes: feedDocs[index].data()['likes'],
+                      isLiked: feedDocs[index].data()['isLiked'],
+                    );
+                  },
+                );
         },
-        child: Icon(Icons.add),
-      ) : null,
+      ),
+      floatingActionButton: _isAdmin
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(NewFeedForm.routeName);
+              },
+              child: Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

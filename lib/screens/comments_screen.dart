@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/comment.dart';
 import 'package:pharmassist/providers/comment_provider.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/CommentHolder.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +30,8 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget build(BuildContext context) {
     final _feedId = ModalRoute.of(context).settings.arguments as String;
     final _commentsData = Provider.of<CommentProvider>(context);
-    final _comments = _commentsData.findById(_feedId);
-    print(_comments);
-    print(_feedId);
-    print(_commentsData.comments);
+    final _username =
+        Provider.of<UserProvider>(context, listen: false).user.fullname;
 
     return Scaffold(
       appBar: AppBar(
@@ -77,14 +77,11 @@ class _CommentScreenState extends State<CommentScreen> {
                   setState(() {
                     _comment = _controller.text;
                   });
-                  print(_comment);
                   _commentsData.addComment(
                     _feedId,
-                    Comment(
-                      id: 'c4',
-                      username: 'Surya teja',
-                      comment: _comment,
-                    ),
+                    DateTime.now().toIso8601String(),
+                    _comment,
+                    _username,
                   );
                   _controller.clear();
                   FocusScope.of(context).unfocus();
@@ -101,14 +98,38 @@ class _CommentScreenState extends State<CommentScreen> {
             height: 10,
           ),
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(0),
-              itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-                value: _comments[index],
-                child: CommentHolder(),
-              ),
-              itemCount: _comments.length,
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('commentSections/')
+                  .doc(_feedId)
+                  .collection('comments/')
+                  .orderBy('id', descending: true)
+                  .snapshots(),
+              builder: (ctx, commentSnapShot) {
+                if (commentSnapShot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final commentDocs = commentSnapShot.data.docs;
+                return commentDocs.length == 0
+                    ? Center(
+                        child: Text('No comments so far!'),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(0),
+                        itemBuilder: (ctx, index) {
+                          return CommentHolder(
+                            id: commentDocs[index].data()['id'],
+                            username: commentDocs[index].data()['username'],
+                            comment: commentDocs[index].data()['comment'],
+                          );
+                        },
+                        itemCount: commentDocs.length,
+                      );
+              },
             ),
           ),
         ],

@@ -39,6 +39,7 @@ class _TabScreenState extends State<TabScreen> {
     super.initState();
   }
 
+  var temp = 1;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -46,13 +47,21 @@ class _TabScreenState extends State<TabScreen> {
       setState(() {
         _isLoading = true;
       });
+
       Provider.of<UserProvider>(context, listen: false).getData().then((value) {
-        setState(() {
-          _isLoading = false;
-        });
+        if (value) {
+          print("i am in line 52");
+          _isInit = false;
+          setState(() {
+            _isLoading = false;
+          });
+        } else {
+          print("i am else");
+          didChangeDependencies();
+        }
       });
     }
-    _isInit = false;
+
     super.didChangeDependencies();
   }
 

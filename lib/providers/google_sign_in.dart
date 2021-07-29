@@ -9,7 +9,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount _user;
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
-  User signedUser = FirebaseAuth.instance.currentUser;
+
   GoogleSignInAccount get user => _user;
   Future googleLogIn() async {
     try {
@@ -22,7 +22,7 @@ class GoogleSignInProvider extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-
+      User signedUser = FirebaseAuth.instance.currentUser;
       var doc = await users.doc(signedUser.uid).get();
       var isExist = doc.exists;
       if (!isExist) {
@@ -33,6 +33,13 @@ class GoogleSignInProvider extends ChangeNotifier {
       print(e.toString());
     }
     notifyListeners();
+  }
+
+  Future<bool> isDocExist() async {
+    User signedUser = FirebaseAuth.instance.currentUser;
+    var doc = await users.doc(signedUser.uid).get();
+    var isExist = doc.exists;
+    return isExist;
   }
 
   Future logout() async {

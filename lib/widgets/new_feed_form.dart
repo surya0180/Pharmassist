@@ -35,23 +35,25 @@ class _NewFeedFormState extends State<NewFeedForm> {
     }
     _formKey.currentState.save();
     FocusScope.of(context).unfocus();
-    var myid = DateTime.now().toString();
+    var timeStamp = DateTime.now();
     if (_id == '') {
       Provider.of<FeedProvider>(context, listen: false).addFeed(
           Feed(
-            id: myid,
+            id: timeStamp.toIso8601String(),
             title: _title,
             content: _description,
             likes: 0,
             color: _generateRandomColor(),
+            createdOn: timeStamp,
           ),
-          myid);
+          timeStamp.toIso8601String());
       Provider.of<CommentProvider>(context, listen: false).createCommentSection(
-        myid,
+        timeStamp.toIso8601String(),
       );
     } else {
+      var timeStamp = DateTime.now();
       Provider.of<FeedProvider>(context, listen: false)
-          .updateFeed(_id, _title, _description);
+          .updateFeed(_id, _title, _description, timeStamp);
     }
     Navigator.of(context).pop();
   }

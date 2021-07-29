@@ -6,38 +6,45 @@ import 'package:pharmassist/providers/feed.dart';
 
 class FeedProvider with ChangeNotifier {
   void addFeed(Feed feed, String id) {
+    var uid = FirebaseAuth.instance.currentUser.uid;
     FirebaseFirestore.instance.collection('feed/').doc(id).set({
       'id': feed.id,
       'title': feed.title,
       'content': feed.content,
       'likes': int.parse(feed.likes.toString()),
-      'isLiked': feed.isLiked,
       'color': feed.color.toString(),
+      'createdOn': feed.createdOn,
+      'updatedOn': null,
+      'likedUsers': {
+        '$uid': {
+          'uid': '',
+          'isLiked': false,
+        }
+      },
     });
   }
 
-  void updateFeed(String id, String title, String content) {
+  void updateFeed(String id, String title, String content, DateTime updatedOn) {
     FirebaseFirestore.instance.collection('feed/').doc(id).update({
       'title': title,
       'content': content,
+      'updatedOn': updatedOn,
     });
   }
 
-  void changeIsLikedStatus(bool isLiked, String id, int likes) {
+  void addToLikedUsers(
+      bool isLiked, String id, int likes, Map<String, dynamic> likedUsers) {
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    likedUsers['$uid'] = {'uid': uid, 'isLiked': isLiked};
+    if(isLiked) {
+      likes = likes + 1;
+    }
+    else {
+      likes = likes - 1;
+    }
     FirebaseFirestore.instance.collection('feed/').doc(id).update({
-      'isLiked': !isLiked,
-      'likes': !isLiked ? likes + 1 : likes - 1,
+      'likes': likes,
+      'likedUsers': likedUsers,
     });
-  }
-
-  Feed findById(id) {
-    return Feed(
-      color: Colors.amber,
-      content: '',
-      id: '',
-      likes: 5,
-      title: '',
-      isLiked: false,
-    );
   }
 }

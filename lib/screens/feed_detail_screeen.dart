@@ -15,16 +15,14 @@ class FeedDetailScreen extends StatefulWidget {
 class _FeedDetailScreenState extends State<FeedDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final _feedId = ModalRoute.of(context).settings.arguments as String;
-    final _feedData =
-        Provider.of<FeedProvider>(context, listen: false).findById(_feedId);
+    final _feedData = ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: _feedData.color,
+        backgroundColor: _feedData['color'],
         title: Text(
-          _feedData.title,
+          _feedData['title'],
           style: Theme.of(context).textTheme.title,
         ),
       ),
@@ -35,8 +33,10 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
             height: 150,
             width: 350,
             child: FeedStamp(
-              title: _feedData.title,
-              color: _feedData.color,
+              title: _feedData['title'],
+              color: _feedData['color'],
+              createdOn: _feedData['createdOn'],
+              updatedOn: _feedData['updatedOn'],
             ),
           ),
           Container(
@@ -44,7 +44,7 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
               borderRadius: BorderRadius.all(
                 Radius.circular(7),
               ),
-              color: _feedData.color,
+              color: _feedData['color'],
             ),
             padding: EdgeInsets.all(5),
             child: Text(
@@ -55,10 +55,10 @@ class _FeedDetailScreenState extends State<FeedDetailScreen> {
           Container(
             padding: EdgeInsets.all(15),
             child: Card(
-              color: _feedData.color,
+              color: _feedData['color'],
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text(_feedData.content),
+                child: Text(_feedData['content']),
               ),
             ),
           ),

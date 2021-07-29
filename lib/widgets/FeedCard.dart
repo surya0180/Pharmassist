@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/providers/user.dart';
@@ -13,7 +15,9 @@ class FeedCard extends StatefulWidget {
       this.content,
       this.color,
       this.likes,
-      this.isLiked,
+      this.createdOn,
+      this.updatedOn,
+      this.likedUsers,
       Key key})
       : super(key: key);
 
@@ -21,8 +25,10 @@ class FeedCard extends StatefulWidget {
   final String title;
   final String content;
   final int likes;
-  final bool isLiked;
   final Color color;
+  final Timestamp createdOn;
+  final Timestamp updatedOn;
+  final Map<String, dynamic> likedUsers;
 
   @override
   _FeedCardState createState() => _FeedCardState();
@@ -35,6 +41,13 @@ class _FeedCardState extends State<FeedCard> {
     var device = MediaQuery.of(context).size;
     final _isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final uid = FirebaseAuth.instance.currentUser.uid;
+    var _isLiked;
+    if (widget.likedUsers['$uid'] == null) {
+      _isLiked = false;
+    } else {
+      _isLiked = widget.likedUsers['$uid']['isLiked'];
+    }
 
     return Card(
       color: widget.color,
@@ -66,7 +79,13 @@ class _FeedCardState extends State<FeedCard> {
           onTap: () {
             Navigator.of(context).pushNamed(
               FeedDetailScreen.routeName,
-              arguments: widget.id,
+              arguments: {
+                'title': widget.title,
+                'content': widget.content,
+                'color': widget.color,
+                'createdOn': widget.createdOn,
+                'updatedOn': widget.updatedOn,
+              },
             );
           },
           splashColor: Theme.of(context).splashColor,
@@ -95,12 +114,16 @@ class _FeedCardState extends State<FeedCard> {
           child: GridTileBar(
             leading: IconButton(
               icon: Icon(
-                widget.isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+                _isLiked == null
+                    ? Icons.thumb_up_alt_outlined
+                    : _isLiked
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_alt_outlined,
                 color: widget.color,
               ),
               onPressed: () {
-                feed.changeIsLikedStatus(
-                    widget.isLiked, widget.id, widget.likes);
+                feed.addToLikedUsers(
+                    !_isLiked, widget.id, widget.likes, widget.likedUsers);
               },
               color: Theme.of(context).accentColor,
             ),

@@ -7,7 +7,8 @@ class Feed with ChangeNotifier{
   final String content;
   int likes;
   final Color color;
-  bool isLiked;
+  final DateTime createdOn;
+  DateTime updatedOn;
 
   Feed({
     @required this.id,
@@ -15,6 +16,7 @@ class Feed with ChangeNotifier{
     @required this.content,
     @required this.likes,
     @required this.color,
-    this.isLiked = false,
+    @required this.createdOn,
+    this.updatedOn,
   });
 }

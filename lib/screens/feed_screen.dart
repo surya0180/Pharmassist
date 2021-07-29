@@ -36,6 +36,7 @@ class _FeedScreenState extends State<FeedScreen> {
             );
           }
           final feedDocs = feedSnapShot.data.docs;
+          // print(feedDocs[0].data()['likedUsers']['h9khKSLwKfXn2S9k35Z4DbBHgBj1']);
           return feedDocs.length == 0
               ? _isAdmin
                   ? Center(
@@ -64,8 +65,10 @@ class _FeedScreenState extends State<FeedScreen> {
                       title: feedDocs[index].data()['title'],
                       content: feedDocs[index].data()['content'],
                       color: otherColor,
+                      likedUsers: feedDocs[index].data()['likedUsers'],
                       likes: feedDocs[index].data()['likes'],
-                      isLiked: feedDocs[index].data()['isLiked'],
+                      createdOn: feedDocs[index].data()['createdOn'],
+                      updatedOn: feedDocs[index].data()['updatedOn'],
                     );
                   },
                 );

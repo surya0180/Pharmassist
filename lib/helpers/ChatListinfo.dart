@@ -25,6 +25,7 @@ final userList = [
   {
     'name': 'Admin',
     'message': 'Good morning sir!',
-    'msg_num': 0
+    'msg_num': 0,
+    'uid': 'sSQe9WnddKdcgSqJ5uYT9mTlOj32',
   },
 ];

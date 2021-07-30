@@ -32,17 +32,16 @@ class User {
 }
 
 class UserProvider with ChangeNotifier {
-  final CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
-  var signedUser = FirebaseAuth.instance.currentUser;
-
   User _user;
 
   User get user {
     return _user;
   }
 
-  bool get getIsAdminStatus {
+  dynamic get getIsAdminStatus {
+    if (_user == null) {
+      return null;
+    }
     return _user.isAdmin;
   }
 
@@ -80,7 +79,25 @@ class UserProvider with ChangeNotifier {
   Future updateUser(
     User newUser,
   ) async {
-    return await users.doc(signedUser.uid).update({
+    _user = User(
+      isAdded: newUser.isAdded,
+      isAdmin: _user.isAdmin,
+      uid: newUser.uid,
+      fullname: newUser.fullname,
+      registrationNo: newUser.registrationNo,
+      renewalDate: newUser.renewalDate,
+      street: newUser.street,
+      town: newUser.town,
+      district: newUser.district,
+      state: newUser.state,
+      email: newUser.email,
+      photoUrl: newUser.photoUrl,
+    );
+    notifyListeners();
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({
       "isAdded": true,
       "fullName": newUser.fullname,
       "registrationNo": newUser.registrationNo,
@@ -90,5 +107,10 @@ class UserProvider with ChangeNotifier {
       "district": newUser.district,
       "state": newUser.state,
     });
+  }
+
+  void clearState() {
+    _user = null;
+    notifyListeners();
   }
 }

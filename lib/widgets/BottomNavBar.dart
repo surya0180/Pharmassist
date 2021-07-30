@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: _isAdmin ? Stack(
+          icon: _isAdmin == null ? Center(child: CircularProgressIndicator(),) : _isAdmin ? Stack(
             children: <Widget>[
               Icon(Icons.feed),
               Positioned(

@@ -6,12 +6,13 @@ import 'package:pharmassist/helpers/SampleMessages.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
-  const ChatItem(this.name, this.message, this.number, {Key key})
+  const ChatItem(this.name, this.message, this.number, this.uid, {Key key})
       : super(key: key);
 
   final String name;
   final String message;
   final int number;
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,8 @@ class ChatItem extends StatelessWidget {
       var rc = Random();
       return themeColors[rc.nextInt(10)];
     }
+
+    print(uid);
 
     return Container(
       decoration: BoxDecoration(
@@ -34,7 +37,7 @@ class ChatItem extends StatelessWidget {
             ChatScreen.routeName,
             arguments: {
               'name': name,
-              'messages': sample,
+              'userId': uid,
             },
           );
         },

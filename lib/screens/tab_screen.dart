@@ -28,7 +28,7 @@ class _TabScreenState extends State<TabScreen> {
     });
   }
 
-  bool _isAdminStatus() {
+  dynamic _isAdminStatus() {
     final _isAdmin = Provider.of<UserProvider>(context).getIsAdminStatus;
     return _isAdmin;
   }
@@ -74,14 +74,14 @@ class _TabScreenState extends State<TabScreen> {
         : Scaffold(
             appBar: AppBar(
               title: Text(
-                _isAdminStatus()
+                _isAdminStatus() == null ? 'Logging out . .' : _isAdminStatus()
                     ? adminPages[_selectedPageIndex]['title']
                     : userPages[_selectedPageIndex]['title'],
                 style: Theme.of(context).textTheme.title,
               ),
               actions: [],
             ),
-            body: _isAdminStatus()
+            body: _isAdminStatus() == null ? Center(child: CircularProgressIndicator(),) : _isAdminStatus()
                 ? adminPages[_selectedPageIndex]['page']
                 : userPages[_selectedPageIndex]['page'],
             backgroundColor: Theme.of(context).backgroundColor,

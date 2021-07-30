@@ -24,11 +24,11 @@ class SideDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               Provider.of<GoogleSignInProvider>(context, listen: false)
-                  .logout();
+                  .logout(context);
             },
           ),
           Divider(),
-          _isAdmin ? ListTile(
+          _isAdmin == null ? ListTile(title: Text('logging out'),) : _isAdmin ? ListTile(
             leading: Icon(Icons.dashboard),
             title: Text('Dashboard'),
             onTap: () {

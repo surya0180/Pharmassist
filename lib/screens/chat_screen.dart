@@ -13,16 +13,16 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String userName;
-  List userMessages;
+  String userId;
 
   @override
   void didChangeDependencies() {
     final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, Object>;
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
     userName = routeArgs['name'];
-    userMessages = routeArgs['messages'];
+    userId = routeArgs['userId'];
     print(userName);
-    print(userMessages);
+    print(userId);
     super.didChangeDependencies();
   }
 
@@ -39,9 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Messages(userMessages),
+              child: Messages(userId),
             ),
-            NewMessage(),
+            NewMessage(userId),
           ],
         ),
       ),

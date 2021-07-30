@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pharmassist/providers/user.dart' as up;
+import 'package:provider/provider.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
@@ -42,9 +44,10 @@ class GoogleSignInProvider extends ChangeNotifier {
     return isExist;
   }
 
-  Future logout() async {
+  Future logout(BuildContext context) async {
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
+    Provider.of<up.UserProvider>(context, listen: false).clearState();
   }
 
   Future<void> createUserData(

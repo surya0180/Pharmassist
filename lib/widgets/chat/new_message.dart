@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage({Key key}) : super(key: key);
+  const NewMessage(this.userId, {Key key}) : super(key: key);
+
+  final String userId;
 
   @override
   _NewMessageState createState() => _NewMessageState();
@@ -12,7 +16,28 @@ class _NewMessageState extends State<NewMessage> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    print('I am here');
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    // print(adminUid.data()['uid'] + user.uid);
+    FirebaseFirestore.instance
+        .collection('Chat')
+        .doc(widget.userId)
+        .collection('messages')
+        .add({
+      'text': _enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': user.uid,
+      'username': userData.data()['fullName'],
+    });
+    await FirebaseFirestore.instance
+        .collection('Chat')
+        .doc(widget.userId)
+        .update({
+          'latestMessage': _enteredMessage
+        });
     _controller.clear();
   }
 
@@ -26,11 +51,11 @@ class _NewMessageState extends State<NewMessage> {
       child: Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.01,
+            width: MediaQuery.of(context).size.width * 0.01,
           ),
           Container(
-            height: MediaQuery.of(context).size.height*0.06,
-            width: MediaQuery.of(context).size.width*0.8,
+            height: MediaQuery.of(context).size.height * 0.06,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
@@ -50,9 +75,9 @@ class _NewMessageState extends State<NewMessage> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.03,
+            width: MediaQuery.of(context).size.width * 0.03,
           ),
-          CircleAvatar( 
+          CircleAvatar(
             backgroundColor: Theme.of(context).buttonColor,
             child: IconButton(
               onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,

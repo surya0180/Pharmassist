@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PharmacistRequestForm extends StatefulWidget {
@@ -19,6 +21,13 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
     _form.currentState.save();
     FocusScope.of(context).unfocus();
     Navigator.of(context).pop();
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    var timeStamp = DateTime.now().toIso8601String();
+    var docName = uid + timeStamp;
+    FirebaseFirestore.instance
+        .collection('pharmacist requests')
+        .doc('$docName')
+        .set({'about': _title, 'request': _request});
     print(_title);
     print(_request);
   }

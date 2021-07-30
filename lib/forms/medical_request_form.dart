@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MedicalRequestForm extends StatefulWidget {
@@ -19,6 +21,13 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
     _form.currentState.save();
     FocusScope.of(context).unfocus();
     Navigator.of(context).pop();
+    var uid = FirebaseAuth.instance.currentUser.uid;
+    var timeStamp = DateTime.now().toIso8601String();
+    var docName = uid + timeStamp;
+    FirebaseFirestore.instance
+        .collection('medical requests')
+        .doc('$docName')
+        .set({'about': _title, 'request': _request});
     print(_title);
     print(_request);
   }
@@ -36,8 +45,11 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
           child: ListView(
             children: [
               CircleAvatar(
-                radius: MediaQuery.of(context).size.height*0.08,
-                child: Icon(Icons.medical_services, size: MediaQuery.of(context).size.height*0.1,),
+                radius: MediaQuery.of(context).size.height * 0.08,
+                child: Icon(
+                  Icons.medical_services,
+                  size: MediaQuery.of(context).size.height * 0.1,
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,
@@ -61,7 +73,7 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
                   enabledBorder: InputBorder.none,
                 ),
                 textInputAction: TextInputAction.next,
-                onSaved: (value)  {
+                onSaved: (value) {
                   setState(() {
                     _title = value;
                   });

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/user.dart';
+import 'package:provider/provider.dart';
 
 class NewMessage extends StatefulWidget {
   const NewMessage(this.userId, {Key key}) : super(key: key);
@@ -16,12 +18,12 @@ class _NewMessageState extends State<NewMessage> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
+    _controller.clear();
     final user = FirebaseAuth.instance.currentUser;
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
-    // print(adminUid.data()['uid'] + user.uid);
     FirebaseFirestore.instance
         .collection('Chat')
         .doc(widget.userId)
@@ -32,13 +34,25 @@ class _NewMessageState extends State<NewMessage> {
       'userId': user.uid,
       'username': userData.data()['fullName'],
     });
-    await FirebaseFirestore.instance
-        .collection('Chat')
-        .doc(widget.userId)
-        .update({
-          'latestMessage': _enteredMessage
-        });
-    _controller.clear();
+    var _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    if (_isAdmin) {
+      await FirebaseFirestore.instance
+          .collection('Chat')
+          .doc(widget.userId)
+          .update({
+        'timestamp': Timestamp.now(),
+        'latestMessage': _enteredMessage,
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection('Chat')
+          .doc(widget.userId)
+          .update({
+        'name': user.displayName,
+        'latestMessage': _enteredMessage,
+      });
+    }
   }
 
   final _controller = new TextEditingController();
@@ -64,7 +78,7 @@ class _NewMessageState extends State<NewMessage> {
                 labelText: 'Type a message',
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
               ),
               onChanged: (value) {

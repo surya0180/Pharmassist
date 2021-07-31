@@ -16,6 +16,7 @@ import 'package:pharmassist/screens/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:pharmassist/widgets/new_feed_form.dart';
 import 'package:provider/provider.dart';
+import 'providers/store.dart';
 import 'providers/user.dart';
 
 void main() async {
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => GoogleSignInProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => StoreProvider(),
         ),
       ],
       child: MaterialApp(

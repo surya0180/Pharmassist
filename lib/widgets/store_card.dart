@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/store_detail_screen.dart';
 
 class StoreCard extends StatelessWidget {
+  final String storeId;
   final String name;
   final String firm_id;
   final String establishment_year;
@@ -12,6 +13,7 @@ class StoreCard extends StatelessWidget {
   final bool isNew;
 
   StoreCard(
+    this.storeId,
     this.name,
     this.firm_id,
     this.establishment_year,
@@ -24,6 +26,7 @@ class StoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(isNew);
     return Container(
       height: 250,
       child: GridTile(

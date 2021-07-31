@@ -46,14 +46,19 @@ class StoreProvider with ChangeNotifier {
     // )
   ];
 
-  Future getStoreData() async {
+  Future<bool> getStoreData() async {
     final _uid = FirebaseAuth.instance.currentUser.uid;
     final _userStoreData = await FirebaseFirestore.instance
         .collection('stores')
         .doc(_uid)
         .collection('sub Stores')
         .get();
+
     _userStoreData.docs.forEach((doc) {
+      if (doc.data() == null) {
+        print("false statement");
+        return false;
+      }
       _stores.add(Store(
         name: doc.data()["name"],
         uid: doc.data()["uid"],
@@ -64,11 +69,13 @@ class StoreProvider with ChangeNotifier {
         town: doc.data()["town"],
         district: doc.data()["district"],
         state: doc.data()["state"],
-        isNew: false,
+        isNew: doc.data()["isNew"],
       ));
     });
 
     notifyListeners();
+
+    return true;
   }
 
   Future<void> createStore(

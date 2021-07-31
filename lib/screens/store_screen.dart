@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/stores.dart';
+import 'package:pharmassist/providers/store.dart';
 import 'package:pharmassist/widgets/store_card.dart';
+import 'package:provider/provider.dart';
 
 class StoreScreen extends StatelessWidget {
   static final routeName = "/store-screen";
   @override
   Widget build(BuildContext context) {
+    // s
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Stores"),

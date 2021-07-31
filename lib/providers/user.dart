@@ -70,7 +70,7 @@ class UserProvider with ChangeNotifier {
       district: _userData.data()['district'],
       state: _userData.data()['state'],
       email: _userData.data()['email'],
-      photoUrl: _userData.data()['photoUrl'],
+      photoUrl: _userData.data()['PhotoUrl'],
     );
     notifyListeners();
     return true;

@@ -39,7 +39,8 @@ class MapScreenState extends State<ProfilePage>
   @override
   void initState() {
     // TODO: implement initState
-    var _isAdded = Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
+    var _isAdded =
+        Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
     final userinfo = Provider.of<UserProvider>(context, listen: false).user;
     setState(() {
       _initValues = {
@@ -111,11 +112,11 @@ class MapScreenState extends State<ProfilePage>
                             new Container(
                                 width: 140.0,
                                 height: 140.0,
+                                child: Image.network(userinfo.photoUrl),
                                 decoration: new BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
-                                    image: new ExactAssetImage(
-                                        'assets/images/as.png'),
+                                    image: NetworkImage(userinfo.photoUrl),
                                     fit: BoxFit.cover,
                                   ),
                                 )),

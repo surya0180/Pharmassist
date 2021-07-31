@@ -30,6 +30,8 @@ class GoogleSignInProvider extends ChangeNotifier {
       if (!isExist) {
         createUserData(signedUser.uid, signedUser.email, signedUser.photoURL,
             signedUser.displayName);
+        createChatData();
+        createStoreData();
       }
     } catch (e) {
       print(e.toString());
@@ -66,6 +68,45 @@ class GoogleSignInProvider extends ChangeNotifier {
       "district": "",
       "state": "",
       "displayName": displayName,
+    });
+  }
+
+  Future<void> createChatData() async {
+    User signedUser = FirebaseAuth.instance.currentUser;
+
+    final CollectionReference chat =
+        FirebaseFirestore.instance.collection('Chat');
+    print("create chat is running");
+    return await chat.doc(signedUser.uid).set({
+      "hostA": 0,
+      "hostB": 0,
+      "latestMessage": "",
+      "name": "",
+      "timestamp": null,
+      "uid": signedUser.uid,
+    });
+  }
+
+  Future<void> createStoreData() async {
+    User signedUser = FirebaseAuth.instance.currentUser;
+
+    final store = FirebaseFirestore.instance
+        .collection('stores')
+        .doc(signedUser.uid)
+        .collection("sub Stores")
+        .doc();
+
+    return await store.set({
+      'storeId': store.id,
+      'uid': signedUser.uid,
+      'name': "Data",
+      'firmId': "Data",
+      'establishmentYear': "Data",
+      'street': "Data",
+      'town': "Data",
+      'district': "Data",
+      'state': "Data",
+      'isNew': true
     });
   }
 }

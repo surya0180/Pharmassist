@@ -2,9 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/widgets/chat/chat_item.dart';
 
-class AdminChatList extends StatelessWidget {
+class AdminChatList extends StatefulWidget {
   const AdminChatList({Key key}) : super(key: key);
 
+  @override
+  _AdminChatListState createState() => _AdminChatListState();
+}
+
+class _AdminChatListState extends State<AdminChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -12,6 +17,7 @@ class AdminChatList extends StatelessWidget {
           .collection('Chat')
           .orderBy('timestamp', descending: true)
           .snapshots(),
+      initialData: "ture",
       builder: (ctx, listSnapShot) {
         if (listSnapShot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -22,12 +28,16 @@ class AdminChatList extends StatelessWidget {
         return ListView.builder(
           itemCount: listDocs.length,
           itemBuilder: (ctx, index) {
-            return listDocs[index]['latestMessage'] != "" ? ChatItem(
-              listDocs[index]['name'],
-              listDocs[index]['latestMessage'],
-              listDocs[index]['HostA'],
-              listDocs[index]['uid'],
-            ) : null;
+            print(listDocs[index]['latestMessage']);
+            if (listDocs[index]['latestMessage'] != '') {
+              return ChatItem(
+                listDocs[index]['name'],
+                listDocs[index]['latestMessage'],
+                listDocs[index]['hostB'],
+                listDocs[index]['uid'],
+              );
+            }
+            return SizedBox(height: 0,);
           },
         );
       },

@@ -27,13 +27,13 @@ class MessageBubble extends StatelessWidget {
                   bottomRight: isMe ? Radius.circular(0) : Radius.circular(12),
                 ),
               ),
-              width: 140,
+              constraints: BoxConstraints(minWidth: 100, maxWidth: 250),
               padding: EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 16,
               ),
               margin: EdgeInsets.symmetric(
-                vertical: 16,
+                vertical: 1,
                 horizontal: 8,
               ),
               child: Column(
@@ -63,13 +63,13 @@ class MessageBubble extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(
-          top: 0,
-          left: isMe ? null : 120,
-          right: isMe ? 120 : null,
-          child: CircleAvatar(
-          ),
-        ),
+        // Positioned(
+        //   top: 0,
+        //   left: isMe ? null : 120,
+        //   right: isMe ? 120 : null,
+        //   child: CircleAvatar(
+        //   ),
+        // ),
       ],
       clipBehavior: Clip.none,
     );

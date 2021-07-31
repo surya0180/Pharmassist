@@ -24,7 +24,7 @@ class UserChatList extends StatelessWidget {
             ChatItem(
               'Admin',
               listDocs['latestMessage'],
-              listDocs['HostA'],
+              listDocs['hostA'],
               listDocs['uid'],
             ),
           ],

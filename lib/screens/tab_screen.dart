@@ -39,7 +39,6 @@ class _TabScreenState extends State<TabScreen> {
     super.initState();
   }
 
-  var temp = 1;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -74,16 +73,22 @@ class _TabScreenState extends State<TabScreen> {
         : Scaffold(
             appBar: AppBar(
               title: Text(
-                _isAdminStatus() == null ? 'Logging out . .' : _isAdminStatus()
-                    ? adminPages[_selectedPageIndex]['title']
-                    : userPages[_selectedPageIndex]['title'],
+                _isAdminStatus() == null
+                    ? 'Logging out . .'
+                    : _isAdminStatus()
+                        ? adminPages[_selectedPageIndex]['title']
+                        : userPages[_selectedPageIndex]['title'],
                 style: Theme.of(context).textTheme.title,
               ),
               actions: [],
             ),
-            body: _isAdminStatus() == null ? Center(child: CircularProgressIndicator(),) : _isAdminStatus()
-                ? adminPages[_selectedPageIndex]['page']
-                : userPages[_selectedPageIndex]['page'],
+            body: _isAdminStatus() == null
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _isAdminStatus()
+                    ? adminPages[_selectedPageIndex]['page']
+                    : userPages[_selectedPageIndex]['page'],
             backgroundColor: Theme.of(context).backgroundColor,
             drawer: SideDrawer(),
             bottomNavigationBar: BottomNavBar(

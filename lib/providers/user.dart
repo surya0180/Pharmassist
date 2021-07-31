@@ -82,7 +82,7 @@ class UserProvider with ChangeNotifier {
     _user = User(
       isAdded: newUser.isAdded,
       isAdmin: _user.isAdmin,
-      uid: newUser.uid,
+      uid: _user.uid,
       fullname: newUser.fullname,
       registrationNo: newUser.registrationNo,
       renewalDate: newUser.renewalDate,
@@ -90,8 +90,8 @@ class UserProvider with ChangeNotifier {
       town: newUser.town,
       district: newUser.district,
       state: newUser.state,
-      email: newUser.email,
-      photoUrl: newUser.photoUrl,
+      email: _user.email,
+      photoUrl: _user.photoUrl,
     );
     notifyListeners();
     return await FirebaseFirestore.instance

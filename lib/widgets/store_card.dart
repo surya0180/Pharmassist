@@ -4,8 +4,8 @@ import 'package:pharmassist/screens/store_detail_screen.dart';
 class StoreCard extends StatelessWidget {
   final String storeId;
   final String name;
-  final String firm_id;
-  final String establishment_year;
+  final String firmId;
+  final String establishmentYear;
   final String street;
   final String town;
   final String district;
@@ -15,8 +15,8 @@ class StoreCard extends StatelessWidget {
   StoreCard(
     this.storeId,
     this.name,
-    this.firm_id,
-    this.establishment_year,
+    this.firmId,
+    this.establishmentYear,
     this.street,
     this.town,
     this.district,
@@ -35,7 +35,7 @@ class StoreCard extends StatelessWidget {
             Navigator.pushNamed(
               context,
               StoreDetailScreen.routeName,
-              arguments: firm_id,
+              arguments: storeId,
             );
           },
           child: isNew

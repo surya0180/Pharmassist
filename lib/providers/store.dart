@@ -33,25 +33,16 @@ class StoreProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
   var signedUser = FirebaseAuth.instance.currentUser;
 
-  List<Store> _stores = [
-    // Store(
-    //   name: "",
-    //   firmId: "",
-    //   establishmentYear: "",
-    //   street: "",
-    //   town: "",
-    //   district: "",
-    //   state: "",
-    //   isNew: true,
-    // )
-  ];
+  List<Store> _stores = [];
 
   Future<bool> getStoreData() async {
+    List<Store> _temp = [];
     final _uid = FirebaseAuth.instance.currentUser.uid;
     final _userStoreData = await FirebaseFirestore.instance
         .collection('stores')
         .doc(_uid)
         .collection('sub Stores')
+        .orderBy('timeStamp', descending: true)
         .get();
 
     _userStoreData.docs.forEach((doc) {
@@ -59,7 +50,8 @@ class StoreProvider with ChangeNotifier {
         print("false statement");
         return false;
       }
-      _stores.add(Store(
+
+      _temp.add(Store(
         name: doc.data()["name"],
         uid: doc.data()["uid"],
         storeId: doc.data()["storeId"],
@@ -72,15 +64,15 @@ class StoreProvider with ChangeNotifier {
         isNew: doc.data()["isNew"],
       ));
     });
-
+    _stores = _temp;
     notifyListeners();
 
     return true;
   }
 
-  Future<void> createStore(
-      String uid, String email, String photoUrl, String displayName) async {
+  Future<void> createStore(Store editedStore) async {
     final uid = signedUser.uid;
+    var timeStamp = DateTime.now();
     final document = FirebaseFirestore.instance
         .collection('stores')
         .doc(uid)
@@ -89,13 +81,15 @@ class StoreProvider with ChangeNotifier {
     return await document.set({
       'storeId': document.id,
       'uid': uid,
-      'name': "Data",
-      'firmId': "Data",
-      'establishmentYear': "Data",
-      'street': "Data",
-      'town': "Data",
-      'district': "Data",
-      'state': "Data",
+      'name': editedStore.name,
+      'firmId': editedStore.firmId,
+      'establishmentYear': editedStore.establishmentYear,
+      'street': editedStore.street,
+      'town': editedStore.town,
+      'district': editedStore.district,
+      'state': editedStore.state,
+      'isNew': false,
+      'timeStamp': timeStamp,
     }).then((onValue) {
       print('Created it in sub collection');
     }).catchError((e) {
@@ -109,6 +103,8 @@ class StoreProvider with ChangeNotifier {
   }
 
   Store findById(String id) {
+    print(_stores[0].storeId);
+    print(id);
     return _stores.firstWhere((store) => store.storeId == id);
   }
 

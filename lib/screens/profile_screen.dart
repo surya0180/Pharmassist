@@ -156,11 +156,18 @@ class MapScreenState extends State<ProfilePage>
                                     ),
                                   ],
                                 ),
-                                new Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
+                                new Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
                                     _status ? _getEditIcon() : new Container(),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    _status
+                                        ? _getMessageIcon()
+                                        : new Container(),
                                   ],
                                 )
                               ],
@@ -537,7 +544,9 @@ class MapScreenState extends State<ProfilePage>
                 child: new Text("Cancel"),
                 textColor: Colors.white,
                 color: Colors.red,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
               )),
@@ -553,11 +562,11 @@ class MapScreenState extends State<ProfilePage>
     return new GestureDetector(
       child: new CircleAvatar(
         backgroundColor: Colors.red,
-        radius: 14.0,
+        radius: 20.0,
         child: new Icon(
           Icons.edit,
           color: Colors.white,
-          size: 16.0,
+          size: 18.0,
         ),
       ),
       onTap: () {
@@ -565,6 +574,21 @@ class MapScreenState extends State<ProfilePage>
           _status = false;
         });
       },
+    );
+  }
+
+  Widget _getMessageIcon() {
+    return new GestureDetector(
+      child: new CircleAvatar(
+        backgroundColor: Colors.green,
+        radius: 20.0,
+        child: new Icon(
+          Icons.chat,
+          color: Colors.white,
+          size: 18.0,
+        ),
+      ),
+      onTap: () {},
     );
   }
 }

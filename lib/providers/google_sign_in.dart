@@ -89,7 +89,7 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future<void> createStoreData() async {
     User signedUser = FirebaseAuth.instance.currentUser;
-
+    var timeStamp = DateTime.now();
     final store = FirebaseFirestore.instance
         .collection('stores')
         .doc(signedUser.uid)
@@ -106,7 +106,8 @@ class GoogleSignInProvider extends ChangeNotifier {
       'town': "Data",
       'district': "Data",
       'state': "Data",
-      'isNew': true
+      'isNew': true,
+      'timeStamp': timeStamp,
     });
   }
 }

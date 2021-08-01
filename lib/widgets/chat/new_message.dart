@@ -50,6 +50,7 @@ class _NewMessageState extends State<NewMessage> {
           .doc(widget.userId)
           .update({
         'name': user.displayName,
+        'timestamp': Timestamp.now(),
         'latestMessage': _enteredMessage,
       });
     }

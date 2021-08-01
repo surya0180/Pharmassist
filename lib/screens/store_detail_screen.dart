@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/helpers/stores.dart';
+import 'package:pharmassist/providers/store.dart';
+import 'package:pharmassist/screens/store_screen.dart';
+import 'package:provider/provider.dart';
 
 class StoreDetailScreen extends StatefulWidget {
   static final routeName = "/add-store-page";
@@ -11,27 +14,90 @@ class StoreDetailScreen extends StatefulWidget {
 class MapScreenState extends State<StoreDetailScreen>
     with SingleTickerProviderStateMixin {
   bool _status = true;
+  bool _init = true;
   final FocusNode myFocusNode = FocusNode();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
+  var _editedStore = Store(
+    isNew: true,
+    name: "",
+    firmId: "",
+    establishmentYear: "",
+    street: '',
+    town: '',
+    district: '',
+    state: '',
+  );
+  var _initValues = {
+    "isNew": true,
+    "name": "",
+    "firmId": "",
+    "establishmentYear": "",
+    "street": '',
+    "town": '',
+    "district": '',
+    "state": '',
+  };
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final firm_id = ModalRoute.of(context).settings.arguments as String;
-    final store = stores.firstWhere((element) => element["firm_id"] == firm_id);
-    if (store["isNew"]) {
-      _status = false;
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_init) {
+      final storeId = ModalRoute.of(context).settings.arguments as String;
+      var store =
+          Provider.of<StoreProvider>(context, listen: false).findById(storeId);
+      if (store.isNew) {
+        setState(() {
+          _status = false;
+        });
+      }
+      _init = false;
     }
 
+    super.didChangeDependencies();
+  }
+
+  _onSubmit() {
+    final isValid = true;
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState.save();
+    Provider.of<StoreProvider>(context, listen: false)
+        .createStore(_editedStore);
+    setState(() {
+      _status = true;
+      FocusScope.of(context).requestFocus(new FocusNode());
+    });
+    Navigator.of(context).pop();
+    Navigator.of(context).popAndPushNamed(StoreScreen.routeName);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final storeId = ModalRoute.of(context).settings.arguments as String;
+    var store = Provider.of<StoreProvider>(context).findById(storeId);
+    setState(() {
+      _initValues = {
+        "isNew": true,
+        "name": store.name,
+        "firmId": store.firmId,
+        "establishmentYear": store.establishmentYear,
+        "street": store.street,
+        "town": store.town,
+        "district": store.district,
+        "state": store.state,
+      };
+    });
     print(store);
     return new Scaffold(
         appBar: AppBar(
-          title: store["name"] != "" ? Text(store["name"]) : Text("New Store"),
+          title: store.name != "" ? Text(store.name) : Text("New Store"),
         ),
         body: new Container(
           color: Colors.white,
@@ -44,6 +110,7 @@ class MapScreenState extends State<StoreDetailScreen>
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 25.0),
                       child: Form(
+                        key: _formKey,
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -109,7 +176,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextFormField(
-                                        initialValue: store["name"],
+                                        onSaved: (value) {
+                                          _editedStore = Store(
+                                            isNew: _editedStore.isNew,
+                                            name: value,
+                                            firmId: _editedStore.firmId,
+                                            establishmentYear:
+                                                _editedStore.establishmentYear,
+                                            street: _editedStore.street,
+                                            town: _editedStore.town,
+                                            district: _editedStore.district,
+                                            state: _editedStore.state,
+                                          );
+                                        },
+                                        initialValue: _initValues["name"],
                                         decoration: const InputDecoration(
                                           hintText: "Enter Store Name",
                                         ),
@@ -148,7 +228,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextFormField(
-                                        initialValue: store["firm_id"],
+                                        onSaved: (value) {
+                                          _editedStore = Store(
+                                            isNew: _editedStore.isNew,
+                                            name: _editedStore.name,
+                                            firmId: value,
+                                            establishmentYear:
+                                                _editedStore.establishmentYear,
+                                            street: _editedStore.street,
+                                            town: _editedStore.town,
+                                            district: _editedStore.district,
+                                            state: _editedStore.state,
+                                          );
+                                        },
+                                        initialValue: _initValues["firmId"],
                                         decoration: const InputDecoration(
                                             hintText: "Enter Firm Id"),
                                         enabled: !_status,
@@ -185,8 +278,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextFormField(
+                                        onSaved: (value) {
+                                          _editedStore = Store(
+                                            isNew: _editedStore.isNew,
+                                            name: _editedStore.name,
+                                            firmId: _editedStore.firmId,
+                                            establishmentYear: value,
+                                            street: _editedStore.street,
+                                            town: _editedStore.town,
+                                            district: _editedStore.district,
+                                            state: _editedStore.state,
+                                          );
+                                        },
                                         initialValue:
-                                            store["establishment_year"],
+                                            _initValues["establishmentYear"],
                                         decoration: const InputDecoration(
                                             hintText:
                                                 "Enter Establishment Year"),
@@ -237,7 +342,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextFormField(
-                                          initialValue: store["street"],
+                                          onSaved: (value) {
+                                            _editedStore = Store(
+                                              isNew: _editedStore.isNew,
+                                              name: _editedStore.name,
+                                              firmId: _editedStore.firmId,
+                                              establishmentYear: _editedStore
+                                                  .establishmentYear,
+                                              street: value,
+                                              town: _editedStore.town,
+                                              district: _editedStore.district,
+                                              state: _editedStore.state,
+                                            );
+                                          },
+                                          initialValue: _initValues['street'],
                                           decoration: const InputDecoration(
                                               hintText: "Enter Street"),
                                           enabled: !_status,
@@ -247,7 +365,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ),
                                     Flexible(
                                       child: new TextFormField(
-                                        initialValue: store["town"],
+                                        onSaved: (value) {
+                                          _editedStore = Store(
+                                            isNew: _editedStore.isNew,
+                                            name: _editedStore.name,
+                                            firmId: _editedStore.firmId,
+                                            establishmentYear:
+                                                _editedStore.establishmentYear,
+                                            street: _editedStore.street,
+                                            town: value,
+                                            district: _editedStore.district,
+                                            state: _editedStore.state,
+                                          );
+                                        },
+                                        initialValue: _initValues['town'],
                                         decoration: const InputDecoration(
                                             hintText: "Enter Town"),
                                         enabled: !_status,
@@ -298,7 +429,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextFormField(
-                                          initialValue: store["district"],
+                                          onSaved: (value) {
+                                            _editedStore = Store(
+                                              isNew: _editedStore.isNew,
+                                              name: _editedStore.name,
+                                              firmId: _editedStore.firmId,
+                                              establishmentYear: _editedStore
+                                                  .establishmentYear,
+                                              street: _editedStore.street,
+                                              town: _editedStore.town,
+                                              district: value,
+                                              state: _editedStore.state,
+                                            );
+                                          },
+                                          initialValue: _initValues["district"],
                                           decoration: const InputDecoration(
                                               hintText: "Enter District"),
                                           enabled: !_status,
@@ -308,7 +452,20 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ),
                                     Flexible(
                                       child: new TextFormField(
-                                        initialValue: store["state"],
+                                        onSaved: (value) {
+                                          _editedStore = Store(
+                                            isNew: _editedStore.isNew,
+                                            name: _editedStore.name,
+                                            firmId: _editedStore.firmId,
+                                            establishmentYear:
+                                                _editedStore.establishmentYear,
+                                            street: _editedStore.street,
+                                            town: _editedStore.town,
+                                            district: _editedStore.district,
+                                            state: value,
+                                          );
+                                        },
+                                        initialValue: _initValues["state"],
                                         decoration: const InputDecoration(
                                             hintText: "Enter State"),
                                         enabled: !_status,
@@ -318,7 +475,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                   ],
                                 )),
                             !_status
-                                ? _getActionButtons(store["isNew"])
+                                ? _getActionButtons(_initValues['isNew'])
                                 : new Container(),
                           ],
                         ),
@@ -354,12 +511,7 @@ class MapScreenState extends State<StoreDetailScreen>
                 child: new Text("Save"),
                 textColor: Colors.white,
                 color: Colors.green,
-                onPressed: () {
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(new FocusNode());
-                  });
-                },
+                onPressed: _onSubmit,
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
               )),

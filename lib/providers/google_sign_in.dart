@@ -89,7 +89,7 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future<void> createStoreData() async {
     User signedUser = FirebaseAuth.instance.currentUser;
-
+    var timeStamp = DateTime.now();
     final store = FirebaseFirestore.instance
         .collection('stores')
         .doc(signedUser.uid)
@@ -99,14 +99,15 @@ class GoogleSignInProvider extends ChangeNotifier {
     return await store.set({
       'storeId': store.id,
       'uid': signedUser.uid,
-      'name': "Data",
-      'firmId': "Data",
-      'establishmentYear': "Data",
-      'street': "Data",
-      'town': "Data",
-      'district': "Data",
-      'state': "Data",
-      'isNew': true
+      'name': "",
+      'firmId': "",
+      'establishmentYear': "",
+      'street': "",
+      'town': "",
+      'district': "",
+      'state': "",
+      'isNew': true,
+      'timeStamp': timeStamp,
     });
   }
 }

@@ -36,7 +36,6 @@ class _FeedScreenState extends State<FeedScreen> {
             );
           }
           final feedDocs = feedSnapShot.data.docs;
-          // print(feedDocs[0].data()['likedUsers']['h9khKSLwKfXn2S9k35Z4DbBHgBj1']);
           return feedDocs.length == 0
               ? _isAdmin
                   ? Center(
@@ -45,13 +44,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   : Center(
                       child: Text('No feed posts published'),
                     )
-              : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    childAspectRatio: 1.17,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
+              : ListView.builder(                  
                   itemCount: feedDocs.length,
                   itemBuilder: (ctx, index) {
                     String valueString = feedDocs[index]
@@ -68,7 +61,8 @@ class _FeedScreenState extends State<FeedScreen> {
                       likedUsers: feedDocs[index].data()['likedUsers'],
                       likes: feedDocs[index].data()['likes'],
                       createdOn: feedDocs[index].data()['createdOn'],
-                      updatedOn: feedDocs[index].data()['updatedOn'],
+                      createdBy: feedDocs[index].data()['createdBy'],
+                      profilePic: feedDocs[index].data()['profilePic'],
                     );
                   },
                 );

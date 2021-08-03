@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/store_detail_screen.dart';
 
 class StoreCard extends StatelessWidget {
+  final String uid;
   final String storeId;
   final String name;
   final String firmId;
@@ -11,8 +13,10 @@ class StoreCard extends StatelessWidget {
   final String district;
   final String state;
   final bool isNew;
+  final Timestamp timestamp;
 
   StoreCard(
+    this.uid,
     this.storeId,
     this.name,
     this.firmId,
@@ -22,6 +26,7 @@ class StoreCard extends StatelessWidget {
     this.district,
     this.state,
     this.isNew,
+    this.timestamp,
   );
 
   @override
@@ -35,7 +40,19 @@ class StoreCard extends StatelessWidget {
             Navigator.pushNamed(
               context,
               StoreDetailScreen.routeName,
-              arguments: storeId,
+              arguments: {
+                'uid': uid,
+                'storeId': storeId,
+                'name': name,
+                'firmId': firmId,
+                'establishmentYear': establishmentYear,
+                'street': street,
+                'town': town,
+                'district': district,
+                'state': state,
+                'isNew': isNew,
+                'timestamp': timestamp,
+              },
             );
           },
           child: isNew

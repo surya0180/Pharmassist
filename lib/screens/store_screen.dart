@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/stores.dart';
 import 'package:pharmassist/providers/store.dart';
@@ -13,58 +15,70 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  var _isInit = true;
-  var _isLoading = false;
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+  // var _isInit = true;
+  // var _isLoading = false;
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
 
-      Provider.of<StoreProvider>(context, listen: false)
-          .getStoreData()
-          .then((value) {
-        if (value) {
-          print("i am in line 52");
-          _isInit = false;
-          setState(() {
-            _isLoading = false;
-          });
-        } else {
-          print("i am else");
-          didChangeDependencies();
-        }
-      });
-    }
+  //     Provider.of<StoreProvider>(context, listen: false)
+  //         .getStoreData()
+  //         .then((value) {
+  //       if (value) {
+  //         print("i am in line 52");
+  //         _isInit = false;
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //       } else {
+  //         print("i am else");
+  //         didChangeDependencies();
+  //       }
+  //     });
+  //   }
 
-    super.didChangeDependencies();
-  }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var stores = Provider.of<StoreProvider>(context).stores;
+    final uid = FirebaseAuth.instance.currentUser.uid;
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Stores"),
       ),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : GridView.builder(
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('stores')
+              .doc(uid)
+              .collection('sub Stores')
+              .orderBy('timeStamp', descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final storeDocs = snapshot.data.docs;
+            return GridView.builder(
               padding: const EdgeInsets.all(10.0),
-              itemCount: stores.length,
+              itemCount: storeDocs.length,
               itemBuilder: (ctx, i) => StoreCard(
-                stores[i].storeId,
-                stores[i].name,
-                stores[i].firmId,
-                stores[i].establishmentYear,
-                stores[i].street,
-                stores[i].town,
-                stores[i].district,
-                stores[i].state,
-                stores[i].isNew,
+                storeDocs[i].data()['uid'],
+                storeDocs[i].data()['storeId'],
+                storeDocs[i].data()['name'],
+                storeDocs[i].data()['firmId'],
+                storeDocs[i].data()['establishmentYear'],
+                storeDocs[i].data()['street'],
+                storeDocs[i].data()['twon'],
+                storeDocs[i].data()['district'],
+                storeDocs[i].data()['state'],
+                storeDocs[i].data()['isNew'],
+                storeDocs[i].data()['timeStamp'],
 
                 // loadedProducts[i].id,
                 // loadedProducts[i].title,
@@ -76,7 +90,8 @@ class _StoreScreenState extends State<StoreScreen> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-            ),
+            );
+          }),
     );
   }
 }

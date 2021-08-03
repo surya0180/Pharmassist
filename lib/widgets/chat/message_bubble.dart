@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(this.message, this.username, this.isMe,
-      {this.key});
+  MessageBubble(this.message, this.username, this.isMe, {this.key});
 
   final String message;
   final bool isMe;
@@ -27,7 +26,7 @@ class MessageBubble extends StatelessWidget {
                   bottomRight: isMe ? Radius.circular(0) : Radius.circular(12),
                 ),
               ),
-              constraints: BoxConstraints(minWidth: 100, maxWidth: 250),
+              constraints: BoxConstraints(minWidth: 100),
               padding: EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 16,
@@ -40,15 +39,39 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment:
                     isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isMe
-                          ? Colors.black
-                          : Theme.of(context).accentTextTheme.title.color,
-                    ),
-                  ),
+                  isMe
+                      ? Text(
+                          username,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isMe
+                                ? Colors.black
+                                : Theme.of(context).accentTextTheme.title.color,
+                          ),
+                        )
+                      : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              username,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: isMe
+                                    ? Colors.black
+                                    : Theme.of(context)
+                                        .accentTextTheme
+                                        .title
+                                        .color,
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Text(
+                              '2:22 PM',
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.black38),
+                            ),
+                          ],
+                        ),
                   Text(
                     message,
                     style: TextStyle(
@@ -58,18 +81,26 @@ class MessageBubble extends StatelessWidget {
                     ),
                     textAlign: isMe ? TextAlign.end : TextAlign.start,
                   ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  if (isMe)
+                    Row(
+                      mainAxisAlignment: isMe
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '2:22 PM',
+                          style: TextStyle(fontSize: 12, color: Colors.black38),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
           ],
         ),
-        // Positioned(
-        //   top: 0,
-        //   left: isMe ? null : 120,
-        //   right: isMe ? 120 : null,
-        //   child: CircleAvatar(
-        //   ),
-        // ),
       ],
       clipBehavior: Clip.none,
     );

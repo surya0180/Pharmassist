@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/providers/feed.dart';
 
 class FeedProvider with ChangeNotifier {
@@ -14,7 +15,8 @@ class FeedProvider with ChangeNotifier {
       'likes': int.parse(feed.likes.toString()),
       'color': feed.color.toString(),
       'createdOn': feed.createdOn,
-      'updatedOn': null,
+      'createdBy': feed.createdBy,
+      'profilePic': feed.profilePic,
       'likedUsers': {
         '$uid': {
           'uid': '',
@@ -28,7 +30,8 @@ class FeedProvider with ChangeNotifier {
     FirebaseFirestore.instance.collection('feed/').doc(id).update({
       'title': title,
       'content': content,
-      'updatedOn': updatedOn,
+      'id': updatedOn.toIso8601String(),
+      'createdOn': DateFormat.yMMMd().format(updatedOn),
     });
   }
 

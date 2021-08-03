@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/helpers/Colors.dart';
 import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/feed.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
 class NewFeedForm extends StatefulWidget {
@@ -44,7 +46,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
             content: _description,
             likes: 0,
             color: _generateRandomColor(),
-            createdOn: timeStamp,
+            createdOn: DateFormat.yMd().format(timeStamp),
+            createdBy: Provider.of<UserProvider>(context, listen: false).user.fullname,
+            profilePic: Provider.of<UserProvider>(context, listen: false).user.photoUrl,
           ),
           timeStamp.toIso8601String());
       Provider.of<CommentProvider>(context, listen: false).createCommentSection(
@@ -104,12 +108,6 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         height: 1.5,
                         color: Colors.black,
                       ),
-                      validator: (value) {
-                        if (value.trim().length > 28) {
-                          return 'Length must be less that or equal to 18';
-                        }
-                        return null;
-                      },
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
                       onSaved: (value) {

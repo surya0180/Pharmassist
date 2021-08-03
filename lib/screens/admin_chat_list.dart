@@ -33,7 +33,7 @@ class _AdminChatListState extends State<AdminChatList> {
               return ChatItem(
                 listDocs[index]['name'],
                 listDocs[index]['latestMessage'],
-                listDocs[index]['hostB'],
+                listDocs[index]['hostA'],
                 listDocs[index]['uid'],
               );
             }

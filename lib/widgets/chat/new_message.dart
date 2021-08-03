@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +20,16 @@ class _NewMessageState extends State<NewMessage> {
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
     _controller.clear();
+    final hmstamp = DateTime.now();
+    final timestamp = Timestamp.now();
     final user = FirebaseAuth.instance.currentUser;
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
+        .get();
+    final chatData = await FirebaseFirestore.instance
+        .collection('Chat')
+        .doc(widget.userId)
         .get();
     FirebaseFirestore.instance
         .collection('Chat')
@@ -30,7 +37,8 @@ class _NewMessageState extends State<NewMessage> {
         .collection('messages')
         .add({
       'text': _enteredMessage,
-      'createdAt': Timestamp.now(),
+      'createdAt': timestamp,
+      'timestamp': DateFormat.Hm().format(hmstamp),
       'userId': user.uid,
       'username': userData.data()['fullName'],
     });
@@ -41,8 +49,9 @@ class _NewMessageState extends State<NewMessage> {
           .collection('Chat')
           .doc(widget.userId)
           .update({
-        'timestamp': Timestamp.now(),
+        'timestamp': timestamp,
         'latestMessage': _enteredMessage,
+        'hostB': chatData.data()['hostB'] + 1,
       });
     } else {
       await FirebaseFirestore.instance
@@ -50,8 +59,9 @@ class _NewMessageState extends State<NewMessage> {
           .doc(widget.userId)
           .update({
         'name': user.displayName,
-        'timestamp': Timestamp.now(),
+        'timestamp': timestamp,
         'latestMessage': _enteredMessage,
+        'hostA': chatData.data()['hostA'] + 1,
       });
     }
   }

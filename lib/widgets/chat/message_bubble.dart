@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(this.message, this.username, this.isMe, {this.key});
+  MessageBubble(
+      this.message, this.username, this.isMe, this.unread, this.timestamp,
+      {this.key});
 
   final String message;
   final bool isMe;
   final Key key;
   final String username;
+  final bool unread;
+  final String timestamp;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,11 @@ class MessageBubble extends StatelessWidget {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: isMe ? Colors.grey[300] : Theme.of(context).accentColor,
+                color: isMe
+                    ? Colors.grey[300]
+                    : unread
+                        ? Colors.orange
+                        : Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -39,39 +47,15 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment:
                     isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
-                  isMe
-                      ? Text(
-                          username,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: isMe
-                                ? Colors.black
-                                : Theme.of(context).accentTextTheme.title.color,
-                          ),
-                        )
-                      : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              username,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: isMe
-                                    ? Colors.black
-                                    : Theme.of(context)
-                                        .accentTextTheme
-                                        .title
-                                        .color,
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Text(
-                              '2:22 PM',
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.black38),
-                            ),
-                          ],
-                        ),
+                  Text(
+                    username,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isMe
+                          ? Colors.black
+                          : Theme.of(context).accentTextTheme.title.color,
+                    ),
+                  ),
                   Text(
                     message,
                     style: TextStyle(
@@ -84,18 +68,10 @@ class MessageBubble extends StatelessWidget {
                   SizedBox(
                     height: 6,
                   ),
-                  if (isMe)
-                    Row(
-                      mainAxisAlignment: isMe
-                          ? MainAxisAlignment.end
-                          : MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '2:22 PM',
-                          style: TextStyle(fontSize: 12, color: Colors.black38),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    '$timestamp',
+                    style: TextStyle(fontSize: 12, color: Colors.black38),
+                  ),
                 ],
               ),
             ),

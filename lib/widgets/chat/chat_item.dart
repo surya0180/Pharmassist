@@ -76,7 +76,13 @@ class ChatItem extends StatelessWidget {
                   SizedBox(
                     height: 6,
                   ),
-                  Text(message),
+                  number != 0
+                      ? Text(
+                          message,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, color: Colors.blue),
+                        )
+                      : Text(message),
                 ],
               ),
             ],

@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:provider/provider.dart';
+
+import 'new_feed_form.dart';
 
 class FeedCard extends StatefulWidget {
   const FeedCard(
@@ -43,6 +46,8 @@ class _FeedCardState extends State<FeedCard> {
     } else {
       _isLiked = widget.likedUsers['$uid']['isLiked'];
     }
+
+    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
 
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
@@ -121,6 +126,22 @@ class _FeedCardState extends State<FeedCard> {
                   ),
                   Row(
                     children: [
+                      if (_isAdmin)
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(NewFeedForm.routeName, arguments: {
+                              'id': widget.id,
+                              'title': widget.title,
+                              'content': widget.content,
+                            });
+                          },
+                          color: Theme.of(context).accentColor,
+                        ),
                       IconButton(
                         icon: Icon(
                           _isLiked == null

@@ -30,8 +30,8 @@ class FeedProvider with ChangeNotifier {
     FirebaseFirestore.instance.collection('feed/').doc(id).update({
       'title': title,
       'content': content,
-      'id': updatedOn.toIso8601String(),
-      'createdOn': DateFormat.yMMMd().format(updatedOn),
+      'id': id,
+      'updatedOn': DateFormat.yMMMd().format(updatedOn),
     });
   }
 

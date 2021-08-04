@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
+import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +52,9 @@ class _TabScreenState extends State<TabScreen> {
         if (value) {
           print("i am in line 52");
           _isInit = false;
+          Provider.of<AdminProvider>(context, listen: false)
+              .getAdminData()
+              .then((value) {});
           setState(() {
             _isLoading = false;
           });

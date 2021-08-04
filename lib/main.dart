@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/helpers/MyThemeData.dart';
+import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => AdminProvider(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => GoogleSignInProvider(),

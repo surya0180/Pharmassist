@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
-import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:provider/provider.dart';
 
@@ -74,10 +73,7 @@ class _FeedCardState extends State<FeedCard> {
                 children: [
                   CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(
-                        Provider.of<UserProvider>(context, listen: false)
-                            .user
-                            .photoUrl),
+                    backgroundImage: NetworkImage(widget.profilePic),
                   ),
                   SizedBox(
                     width: 20,

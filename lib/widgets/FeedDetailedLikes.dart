@@ -59,7 +59,7 @@ class _FeedLikesState extends State<FeedLikes> {
             ).addToLikedUsers(
               !_isLiked,
               widget.id,
-              widget.likes,
+              _likes,
               widget.likedUsers,
             );
             if (_isLiked) {

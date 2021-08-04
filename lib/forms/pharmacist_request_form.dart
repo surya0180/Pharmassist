@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pharmassist/providers/user.dart';
+import 'package:provider/provider.dart';
 
 class PharmacistRequestForm extends StatefulWidget {
   const PharmacistRequestForm({Key key}) : super(key: key);
@@ -22,12 +25,22 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
     FocusScope.of(context).unfocus();
     Navigator.of(context).pop();
     var uid = FirebaseAuth.instance.currentUser.uid;
-    var timeStamp = DateTime.now().toIso8601String();
-    var docName = uid + timeStamp;
+    var timeStamp = DateTime.now();
+    var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
+    var docName = uid + timeStamp.toIso8601String();
+    var userData = Provider.of<UserProvider>(context, listen: false).user;
     FirebaseFirestore.instance
         .collection('pharmacist requests')
         .doc('$docName')
-        .set({'about': _title, 'request': _request});
+        .set({
+      'about': _title,
+      'request': _request,
+      'timestamp': timeStamp,
+      'createdOn': createdOn,
+      'userId': userData.uid,
+      'username': userData.fullname,
+      'PhotoUrl': userData.photoUrl,
+    });
     print(_title);
     print(_request);
   }
@@ -45,8 +58,11 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
           child: ListView(
             children: [
               CircleAvatar(
-                radius: MediaQuery.of(context).size.height*0.08,
-                child: Icon(Icons.how_to_reg_sharp, size: MediaQuery.of(context).size.height*0.1,),
+                radius: MediaQuery.of(context).size.height * 0.08,
+                child: Icon(
+                  Icons.how_to_reg_sharp,
+                  size: MediaQuery.of(context).size.height * 0.1,
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,

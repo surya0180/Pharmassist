@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
 import 'package:pharmassist/providers/admin-provider.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
 import 'package:provider/provider.dart';
@@ -55,8 +56,12 @@ class _TabScreenState extends State<TabScreen> {
           Provider.of<AdminProvider>(context, listen: false)
               .getAdminData()
               .then((value) {});
-          setState(() {
-            _isLoading = false;
+          Provider.of<NotificationProvider>(context, listen: false)
+              .calculateTotalUnreadMessages()
+              .then((value) {
+            setState(() {
+              _isLoading = false;
+            });
           });
         } else {
           print("i am else");

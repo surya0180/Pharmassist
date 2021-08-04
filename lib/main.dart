@@ -8,6 +8,7 @@ import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => StoreProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => NotificationProvider(),
         ),
       ],
       child: MaterialApp(

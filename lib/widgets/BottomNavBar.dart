@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,9 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _adminUnreadMessages = Provider.of<NotificationProvider>(context, listen: false).getTotalUnreadMessages;
+    final _userUnreadMessages = Provider.of<NotificationProvider>(context, listen: false).getTotalUserUnreadMessages;
+    final _unreadMessages = _isAdmin ? _adminUnreadMessages : _userUnreadMessages;
     return BottomNavigationBar(
       onTap: selectPage,
       elevation: 10,
@@ -24,7 +28,7 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: _isAdmin == null ? Center(child: CircularProgressIndicator(),) : _isAdmin ? Stack(
+          icon: _isAdmin ? Stack(
             children: <Widget>[
               Icon(Icons.feed),
               Positioned(
@@ -71,7 +75,7 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Stack(
+          icon: _unreadMessages != 0 ? Stack(
             children: <Widget>[
               Icon(Icons.chat_bubble),
               Positioned(
@@ -87,7 +91,7 @@ class BottomNavBar extends StatelessWidget {
                     minHeight: 12,
                   ),
                   child: Text(
-                    '5',
+                    '$_unreadMessages',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 8,
@@ -97,7 +101,7 @@ class BottomNavBar extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          ) : Icon(Icons.chat_bubble),
           title: Text(
             'Chat',
             style: Theme.of(context).textTheme.bodyText1,

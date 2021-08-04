@@ -2,11 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/admin-provider.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/widgets/chat/chat_item.dart';
 import 'package:provider/provider.dart';
 
-class UserChatList extends StatelessWidget {
+class UserChatList extends StatefulWidget {
   const UserChatList({Key key}) : super(key: key);
+
+  @override
+  _UserChatListState createState() => _UserChatListState();
+}
+
+class _UserChatListState extends State<UserChatList> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<NotificationProvider>(context, listen: false).setTotalUserUnreadMessages();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

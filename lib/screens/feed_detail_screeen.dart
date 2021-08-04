@@ -28,10 +28,12 @@ class FeedDetailScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            _feedData['title'],
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+                          Flexible(
+                            child: Text(
+                              _feedData['title'],
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
                           ),
                           FeedLikes(
                             _feedData['id'],

@@ -32,6 +32,7 @@ class _AdminChatListState extends State<AdminChatList> {
             if (listDocs[index]['latestMessage'] != '') {
               return ChatItem(
                 listDocs[index]['name'],
+                listDocs[index]['profilePic'],
                 listDocs[index]['latestMessage'],
                 listDocs[index]['hostA'],
                 listDocs[index]['uid'],

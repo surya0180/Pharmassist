@@ -29,7 +29,7 @@ class MapScreenState extends State<StoreDetailScreen>
   String _state = '';
   String _storeId = '';
   String _uid = '';
-  Timestamp _timestamp = Timestamp.now();
+  Timestamp _timestamp;
 
   // var _initValues = {
   //   "isNew": true,
@@ -91,7 +91,7 @@ class MapScreenState extends State<StoreDetailScreen>
           district: _district,
           state: _state,
           isNew: _isNew,
-          timestamp: _timestamp,
+          timestamp: Timestamp.now(),
         ),
       );
     } else {

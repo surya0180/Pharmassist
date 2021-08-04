@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MedicalRequestForm extends StatefulWidget {
   const MedicalRequestForm({Key key}) : super(key: key);
@@ -22,12 +23,18 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
     FocusScope.of(context).unfocus();
     Navigator.of(context).pop();
     var uid = FirebaseAuth.instance.currentUser.uid;
-    var timeStamp = DateTime.now().toIso8601String();
-    var docName = uid + timeStamp;
+    var timeStamp = DateTime.now();
+    var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
+    var docName = uid + timeStamp.toIso8601String();
     FirebaseFirestore.instance
         .collection('medical requests')
         .doc('$docName')
-        .set({'about': _title, 'request': _request});
+        .set({
+      'about': _title,
+      'request': _request,
+      'timestamp': timeStamp,
+      'createdOn': createdOn,
+    });
     print(_title);
     print(_request);
   }

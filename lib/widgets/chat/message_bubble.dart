@@ -25,7 +25,7 @@ class MessageBubble extends StatelessWidget {
                 color: isMe
                     ? Colors.grey[300]
                     : unread
-                        ? Colors.orange
+                        ? Colors.green[300]
                         : Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),

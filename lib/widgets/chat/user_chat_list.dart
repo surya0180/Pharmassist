@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/widgets/chat/chat_item.dart';
+import 'package:provider/provider.dart';
 
 class UserChatList extends StatelessWidget {
   const UserChatList({Key key}) : super(key: key);
@@ -22,7 +24,8 @@ class UserChatList extends StatelessWidget {
         return ListView(
           children: [
             ChatItem(
-              'Admin',
+              Provider.of<AdminProvider>(context, listen: false).getAdminFullname,
+              Provider.of<AdminProvider>(context, listen: false).getAdminProfilePic,
               listDocs['latestMessage'],
               listDocs['hostB'],
               listDocs['uid'],

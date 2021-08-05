@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/widgets/chat/chat_item.dart';
+import 'package:provider/provider.dart';
 
 class AdminChatList extends StatefulWidget {
   const AdminChatList({Key key}) : super(key: key);
@@ -10,6 +12,13 @@ class AdminChatList extends StatefulWidget {
 }
 
 class _AdminChatListState extends State<AdminChatList> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<NotificationProvider>(context, listen: false).setTotalUnreadMessages();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

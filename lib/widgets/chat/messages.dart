@@ -54,6 +54,7 @@ class _MessagesState extends State<Messages> {
                       chatDocs[index]['userId'] == currentUserId,
                       true,
                       chatDocs[index]['timestamp'],
+                      chatDocs[index]['createdAt'],
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   } else {
@@ -63,6 +64,7 @@ class _MessagesState extends State<Messages> {
                       chatDocs[index]['userId'] == currentUserId,
                       false,
                       chatDocs[index]['timestamp'],
+                      chatDocs[index]['createdAt'],
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   }

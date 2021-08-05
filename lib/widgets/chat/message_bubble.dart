@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(
-      this.message, this.username, this.isMe, this.unread, this.timestamp,
+  MessageBubble(this.message, this.username, this.isMe, this.unread,
+      this.timestamp, this.day,
       {this.key});
 
   final String message;
@@ -11,9 +13,20 @@ class MessageBubble extends StatelessWidget {
   final String username;
   final bool unread;
   final String timestamp;
+  final Timestamp day;
 
   @override
   Widget build(BuildContext context) {
+    var chatTimestamp = DateTime.fromMillisecondsSinceEpoch(day.millisecondsSinceEpoch);
+    var currentTimestamp = DateTime.fromMillisecondsSinceEpoch(Timestamp.now().millisecondsSinceEpoch);
+    var cts = DateFormat('MMM-dd').format(chatTimestamp);
+    var cuts = DateFormat('MMM-dd').format(currentTimestamp);
+    String chatTime;
+    if(cts == cuts) {
+      chatTime = timestamp;
+    } else {
+      chatTime = cts + ' ' + timestamp;
+    }
     return Stack(
       children: [
         Row(
@@ -69,7 +82,7 @@ class MessageBubble extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    '$timestamp',
+                    '$chatTime',
                     style: TextStyle(fontSize: 12, color: Colors.black38),
                   ),
                 ],

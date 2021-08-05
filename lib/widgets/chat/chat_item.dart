@@ -72,12 +72,12 @@ class ChatItem extends StatelessWidget {
                       ),
                       number != 0
                           ? Text(
-                              message,
+                              message.length > 30 ? message.substring(0, 30) + '. . . .' : message,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.blue),
                             )
-                          : Text(message),
+                          : Text(message.length > 30 ? message.substring(0, 30) + '. . . .' : message,),
                     ],
                   ),
                 ],

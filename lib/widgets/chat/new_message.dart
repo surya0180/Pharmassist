@@ -79,12 +79,12 @@ class _NewMessageState extends State<NewMessage> {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.01,
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.06,
-            width: MediaQuery.of(context).size.width * 0.8,
+          Expanded(
             child: TextField(
+              maxLines: 2,
               controller: _controller,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
                 fillColor: Colors.grey[300],
                 filled: true,
                 labelText: 'Type a message',

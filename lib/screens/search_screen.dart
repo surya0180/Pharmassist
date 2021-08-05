@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pharmassist/widgets/SearchResults.dart';
+import 'package:pharmassist/widgets/SearchBar.dart';
+import 'package:pharmassist/widgets/StoreSearchResults.dart';
+import 'package:pharmassist/widgets/UserSearchResult.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -8,176 +10,77 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  static const historyLength = 5;
+  String _value, _category, _filter;
 
-  List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
-  ];
-
-  List<String> filteredSearchHistory;
-
-  String selectedTerm;
-
-  List<String> filterSearchTerms({
-    @required String filter,
-  }) {
-    if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
+  void _setQuery(String value, String category, String filter) {
+    setState(() {
+      _value = value;
+      _category = category;
+      _filter = filter;
+    });
   }
 
-  void addSearchTerm(String term) {
-    if (_searchHistory.contains(term)) {
-      putSearchTermFirst(term);
-      return;
-    }
-
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLength) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
-    }
-
-    filteredSearchHistory = filterSearchTerms(filter: null);
+  void _setCategory(String category) {
+    setState(() {
+      _category = category;
+    });
   }
 
-  void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  FloatingSearchBarController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+  void _setFilter(String filter) {
+    setState(() {
+      _filter = filter;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_value);
+    print(_category);
+    print(_filter);
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
-      body: FloatingSearchBar(
-        backgroundColor: Colors.white,
-        controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
+      body: ListView(
+        children: [
+          SearchBar(_setQuery, _setCategory, _setFilter),
+          SizedBox(
+            height: 6,
           ),
-        ),
-        transition: CircularFloatingSearchBarTransition(),
-        physics: BouncingScrollPhysics(),
-        title: Text(
-          selectedTerm ?? 'Type something here',
-          style: TextStyle(color: Colors.black54),
-        ),
-        hint: 'Search and find out...',
-        actions: [
-          FloatingSearchBarAction.searchToClear(),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            print(query);
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            print(query);
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-              color: Colors.white,
-              elevation: 4,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Start searching',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    );
-                  } else if (filteredSearchHistory.isEmpty) {
-                    return ListTile(
-                      title: Text(controller.query),
-                      leading: const Icon(Icons.search),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              leading: const Icon(Icons.history),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  setState(() {
-                                    deleteSearchTerm(term);
-                                  });
-                                },
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  putSearchTermFirst(term);
-                                  selectedTerm = term;
-                                });
-                                controller.close();
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-                  }
+          StreamBuilder(
+            stream: _category == null ||
+                    _category == 'noFilter' ||
+                    _category == 'pharms'
+                ? FirebaseFirestore.instance.collection('users').snapshots()
+                : FirebaseFirestore.instance
+                    .collection('stores label')
+                    .snapshots(),
+            builder: (ctx, snapShot) {
+              if (snapShot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final docs = snapShot.data.docs;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: docs.length,
+                itemBuilder: (ctx, index) {
+                  return _category == null ||
+                          _category == 'noFilter' ||
+                          _category == 'pharms'
+                      ? UserSearchResult(
+                          fullname: docs[index]['fullName'],
+                          profilePic: docs[index]['PhotoUrl'],
+                          registerationNumber: docs[index]['registrationNo'],
+                        )
+                      : StoreSearchResult(
+                          name: docs[index]['name'],
+                          storeId: docs[index]['storeId'],
+                        );
                 },
-              ),
-            ),
-          );
-        },
+              );
+            },
+          )
+        ],
       ),
     );
   }

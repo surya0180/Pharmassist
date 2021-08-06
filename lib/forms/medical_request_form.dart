@@ -45,6 +45,7 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
       'userId': userData.uid,
       'username': userData.fullname,
       'PhotoUrl': userData.photoUrl,
+      'isDeleted': false,
     });
     print(_title);
     print(_request);

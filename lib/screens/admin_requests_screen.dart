@@ -10,14 +10,17 @@ class AdminRequestScreen extends StatefulWidget {
 class _AdminRequestScreenState extends State<AdminRequestScreen> {
   int _value = 1;
   String RequestType = "pharm";
-  var streamBuilder =
-      FirebaseFirestore.instance.collection('pharmacist requests').snapshots();
+  var streamBuilder = FirebaseFirestore.instance
+      .collection('pharmacist requests')
+      .where('isDeleted', isEqualTo: false)
+      .snapshots();
   void setValue(value) {
     if (value == 1) {
       setState(() {
         RequestType = "pharm";
         streamBuilder = FirebaseFirestore.instance
             .collection('pharmacist requests')
+            .where('isDeleted', isEqualTo: false)
             .snapshots();
       });
     } else {
@@ -25,6 +28,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
         RequestType = "medic";
         streamBuilder = FirebaseFirestore.instance
             .collection('medical requests')
+            .where('isDeleted', isEqualTo: false)
             .snapshots();
       });
     }

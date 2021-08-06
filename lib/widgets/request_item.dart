@@ -82,7 +82,30 @@ class RequestItem extends StatelessWidget {
             ),
           );
         } else {
-          return Navigator.of(context).pushNamed(ChatScreen.routeName);
+          return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text('Are you sure?'),
+              content: Text(
+                'Do you want to chat with this person about the request',
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop(false);
+                  },
+                ),
+                FlatButton(
+                  child: Text('Yes'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop(false);
+                    Navigator.of(ctx).pushNamed(ChatScreen.routeName, arguments: {'name': username, 'userId': uid});
+                  },
+                ),
+              ],
+            ),
+          );
         }
 
         //write logic above for exact location
@@ -97,7 +120,7 @@ class RequestItem extends StatelessWidget {
             collection =
                 FirebaseFirestore.instance.collection('medical requests');
           }
-          collection.doc(requestId).delete();
+          collection.doc(requestId).update({'isDeleted': true});
         }
       },
       child: Card(

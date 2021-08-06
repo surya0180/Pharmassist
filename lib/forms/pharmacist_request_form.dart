@@ -38,6 +38,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
       'userId': userData.uid,
       'username': userData.fullname,
       'PhotoUrl': userData.photoUrl,
+      'isDeleted': false,
     }).then((value) {
       int count = 0;
       Navigator.of(context).popUntil((_) => count++ >= 2);

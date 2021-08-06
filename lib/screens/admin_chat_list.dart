@@ -15,7 +15,10 @@ class _AdminChatListState extends State<AdminChatList> {
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<NotificationProvider>(context, listen: false).setTotalUnreadMessages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NotificationProvider>(context, listen: false)
+          .setTotalUnreadMessages();
+    });
     super.initState();
   }
 
@@ -47,7 +50,9 @@ class _AdminChatListState extends State<AdminChatList> {
                 listDocs[index]['uid'],
               );
             }
-            return SizedBox(height: 0,);
+            return SizedBox(
+              height: 0,
+            );
           },
         );
       },

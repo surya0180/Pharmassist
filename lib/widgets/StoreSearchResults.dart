@@ -1,14 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/store_detail_screen.dart';
 
 class StoreSearchResult extends StatelessWidget {
   const StoreSearchResult({
     this.name,
     this.storeId,
+    this.district,
+    this.establishmentYear,
+    this.firmId,
+    this.state,
+    this.street,
+    this.timestamp,
+    this.town,
+    this.uid,
     Key key,
   }) : super(key: key);
 
   final String name;
+  final String firmId;
+  final String establishmentYear;
+  final String street;
+  final String town;
+  final String district;
+  final String state;
   final String storeId;
+  final String uid;
+  final Timestamp timestamp;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +38,21 @@ class StoreSearchResult extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(StoreDetailScreen.routeName, arguments: {
+            'name': name,
+            'firmId': firmId,
+            'establishmentYear': establishmentYear,
+            'street': street,
+            'town': town,
+            'district': district,
+            'state': state,
+            'storeId': storeId,
+            'uid': uid,
+            'timestamp': timestamp,
+            'isNew': false,
+          });
+        },
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/helpers/stores.dart';
@@ -163,7 +164,11 @@ class MapScreenState extends State<StoreDetailScreen>
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         _status
-                                            ? _getEditIcon()
+                                            ? _uid !=
+                                                    FirebaseAuth.instance
+                                                        .currentUser.uid
+                                                ? new Container()
+                                                : _getEditIcon()
                                             : new Container(),
                                       ],
                                     )

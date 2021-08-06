@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/widgets/SearchBar.dart';
 import 'package:pharmassist/widgets/StoreSearchResults.dart';
 import 'package:pharmassist/widgets/UserSearchResult.dart';
+import '../helpers/string_extension.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -45,41 +46,78 @@ class _SearchScreenState extends State<SearchScreen> {
           SizedBox(
             height: 6,
           ),
-          StreamBuilder(
-            stream: _category == null ||
-                    _category == 'noFilter' ||
-                    _category == 'pharms'
-                ? FirebaseFirestore.instance.collection('users').snapshots()
-                : FirebaseFirestore.instance
-                    .collection('stores label')
-                    .snapshots(),
-            builder: (ctx, snapShot) {
-              if (snapShot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              final docs = snapShot.data.docs;
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: docs.length,
-                itemBuilder: (ctx, index) {
-                  return _category == null ||
+          _value == null
+              ? Center(
+                  child: Text('Start searching'),
+                )
+              : StreamBuilder(
+                  stream: _category == null ||
                           _category == 'noFilter' ||
                           _category == 'pharms'
-                      ? UserSearchResult(
-                          fullname: docs[index]['fullName'],
-                          profilePic: docs[index]['PhotoUrl'],
-                          registerationNumber: docs[index]['registrationNo'],
-                        )
-                      : StoreSearchResult(
-                          name: docs[index]['name'],
-                          storeId: docs[index]['storeId'],
-                        );
-                },
-              );
-            },
-          )
+                      ? FirebaseFirestore.instance
+                          .collection('users')
+                          .orderBy('fullName')
+                          .startAt([_value]).endAt(
+                          [_value == null ? '' + '\uf8ff' : _value + '\uf8ff'],
+                        ).snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('stores label')
+                          .orderBy('name')
+                          .startAt([_value]).endAt(
+                          [_value == null ? '' + '\uf8ff' : _value + '\uf8ff'],
+                        ).snapshots(),
+                  builder: (ctx, snapShot) {
+                    if (snapShot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final docs = snapShot.data.docs;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: docs.length,
+                      itemBuilder: (ctx, index) {
+                        return _category == null ||
+                                _category == 'noFilter' ||
+                                _category == 'pharms'
+                            ? UserSearchResult(
+                                fullname: docs[index]['fullName']
+                                    .toString()
+                                    .capitalize(),
+                                profilePic: docs[index]['PhotoUrl'],
+                                registerationNumber: docs[index]
+                                    ['registrationNo'],
+                                district: docs[index]['district'],
+                                state: docs[index]['state'],
+                                renewalDate: docs[index]['renewalDate'],
+                                street: docs[index]['street'],
+                                town: docs[index]['town'],
+                              )
+                            : StoreSearchResult(
+                                name:
+                                    docs[index]['name'].toString().capitalize(),
+                                storeId: docs[index]['storeId'],
+                                district: docs[index]['district']
+                                    .toString()
+                                    .capitalize(),
+                                state: docs[index]['state']
+                                    .toString()
+                                    .capitalize(),
+                                street: docs[index]['street']
+                                    .toString()
+                                    .capitalize(),
+                                town:
+                                    docs[index]['town'].toString().capitalize(),
+                                establishmentYear: docs[index]
+                                    ['establishmentYear'],
+                                firmId: docs[index]['firmId'],
+                                timestamp: docs[index]['timeStamp'],
+                                uid: docs[index]['uid'],
+                              );
+                      },
+                    );
+                  },
+                )
         ],
       ),
     );

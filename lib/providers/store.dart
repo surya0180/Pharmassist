@@ -35,43 +35,6 @@ class StoreProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
   var signedUser = FirebaseAuth.instance.currentUser;
 
-  // List<Store> _stores = [];
-
-  // Future<bool> getStoreData() async {
-  //   List<Store> _temp = [];
-  //   final _uid = FirebaseAuth.instance.currentUser.uid;
-  //   final _userStoreData = await FirebaseFirestore.instance
-  //       .collection('stores')
-  //       .doc(_uid)
-  //       .collection('sub Stores')
-  //       .orderBy('timeStamp', descending: true)
-  //       .get();
-
-  //   _userStoreData.docs.forEach((doc) {
-  //     if (doc.data() == null) {
-  //       print("false statement");
-  //       return false;
-  //     }
-
-  //     _temp.add(Store(
-  //       name: doc.data()["name"],
-  //       uid: doc.data()["uid"],
-  //       storeId: doc.data()["storeId"],
-  //       firmId: doc.data()["firmId"],
-  //       establishmentYear: doc.data()["establishmentYear"],
-  //       street: doc.data()["street"],
-  //       town: doc.data()["town"],
-  //       district: doc.data()["district"],
-  //       state: doc.data()["state"],
-  //       isNew: doc.data()["isNew"],
-  //     ));
-  //   });
-  //   _stores = _temp;
-  //   notifyListeners();
-
-  //   return true;
-  // }
-
   void createStore(Store editedStore) {
     final uid = signedUser.uid;
 
@@ -99,13 +62,13 @@ class StoreProvider with ChangeNotifier {
     document2.set({
       'storeId': document.id,
       'uid': uid,
-      'name': editedStore.name,
+      'name': editedStore.name.toLowerCase(),
       'firmId': editedStore.firmId,
       'establishmentYear': editedStore.establishmentYear,
-      'street': editedStore.street,
-      'town': editedStore.town,
-      'district': editedStore.district,
-      'state': editedStore.state,
+      'street': editedStore.street.toLowerCase(),
+      'town': editedStore.town.toLowerCase(),
+      'district': editedStore.district.toLowerCase(),
+      'state': editedStore.state.toLowerCase(),
       'isNew': false,
       'timeStamp': editedStore.timestamp,
     });
@@ -138,13 +101,13 @@ class StoreProvider with ChangeNotifier {
         .update({
       'storeId': editedStore.storeId,
       'uid': editedStore.uid,
-      'name': editedStore.name,
+      'name': editedStore.name.toLowerCase(),
       'firmId': editedStore.firmId,
       'establishmentYear': editedStore.establishmentYear,
-      'street': editedStore.street,
-      'town': editedStore.town,
-      'district': editedStore.district,
-      'state': editedStore.state,
+      'street': editedStore.street.toLowerCase(),
+      'town': editedStore.town.toLowerCase(),
+      'district': editedStore.district.toLowerCase(),
+      'state': editedStore.state.toLowerCase(),
       'isNew': false,
       'timeStamp': editedStore.timestamp,
     });

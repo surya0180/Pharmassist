@@ -12,6 +12,7 @@ import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
+import 'package:pharmassist/screens/profile_screen.dart';
 import 'package:pharmassist/screens/store_detail_screen.dart';
 import 'package:pharmassist/screens/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         home: AuthPage(),
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
+          ProfilePage.routeName: (ctx) => ProfilePage(),
           TabScreen.routeName: (ctx) => TabScreen(),
           ChatScreen.routeName: (ctx) => ChatScreen(),
           MedicalRequestForm.routeName: (ctx) => MedicalRequestForm(),

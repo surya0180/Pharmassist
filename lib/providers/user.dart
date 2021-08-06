@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import '../helpers/string_extension.dart';
 
 class User {
   bool isAdded;
@@ -62,13 +63,13 @@ class UserProvider with ChangeNotifier {
       isAdded: _userData.data()['isAdded'],
       isAdmin: _userData.data()['isAdmin'],
       uid: _userData.data()['uid'],
-      fullname: _userData.data()['fullName'],
+      fullname: _userData.data()['fullName'].toString().capitalize(),
       registrationNo: _userData.data()['registrationNo'],
       renewalDate: _userData.data()['renewalDate'],
-      street: _userData.data()['street'],
-      town: _userData.data()['town'],
-      district: _userData.data()['district'],
-      state: _userData.data()['state'],
+      street: _userData.data()['street'].toString().capitalize(),
+      town: _userData.data()['town'].toString().capitalize(),
+      district: _userData.data()['district'].toString().capitalize(),
+      state: _userData.data()['state'].toString().capitalize(),
       email: _userData.data()['email'],
       photoUrl: _userData.data()['PhotoUrl'],
     );
@@ -99,13 +100,13 @@ class UserProvider with ChangeNotifier {
         .doc(FirebaseAuth.instance.currentUser.uid)
         .update({
       "isAdded": true,
-      "fullName": newUser.fullname,
+      "fullName": newUser.fullname.toLowerCase(),
       "registrationNo": newUser.registrationNo,
       "renewalDate": newUser.renewalDate,
-      "street": newUser.street,
-      "town": newUser.town,
-      "district": newUser.district,
-      "state": newUser.state,
+      "street": newUser.street.toLowerCase(),
+      "town": newUser.town.toLowerCase(),
+      "district": newUser.district.toLowerCase(),
+      "state": newUser.state.toLowerCase(),
     });
   }
 

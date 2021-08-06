@@ -39,7 +39,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0,
         title: Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(15.0),
           child: Container(
             padding: EdgeInsets.only(left: 5),
             color: Colors.cyan,
@@ -49,7 +49,6 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
                   DropdownMenuItem(
                     child: Text(
                       "pharmacist requests",
-                      style: TextStyle(color: Colors.white),
                     ),
                     value: 1,
                   ),

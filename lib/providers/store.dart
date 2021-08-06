@@ -80,8 +80,23 @@ class StoreProvider with ChangeNotifier {
         .doc(uid)
         .collection('sub Stores')
         .doc();
+    final document2 =
+        FirebaseFirestore.instance.collection('stores label').doc(document.id);
 
     document.set({
+      'storeId': document.id,
+      'uid': uid,
+      'name': editedStore.name,
+      'firmId': editedStore.firmId,
+      'establishmentYear': editedStore.establishmentYear,
+      'street': editedStore.street,
+      'town': editedStore.town,
+      'district': editedStore.district,
+      'state': editedStore.state,
+      'isNew': false,
+      'timeStamp': editedStore.timestamp,
+    });
+    document2.set({
       'storeId': document.id,
       'uid': uid,
       'name': editedStore.name,
@@ -103,6 +118,22 @@ class StoreProvider with ChangeNotifier {
         .collection('stores')
         .doc(uid)
         .collection('sub Stores')
+        .doc(editedStore.storeId)
+        .update({
+      'storeId': editedStore.storeId,
+      'uid': editedStore.uid,
+      'name': editedStore.name,
+      'firmId': editedStore.firmId,
+      'establishmentYear': editedStore.establishmentYear,
+      'street': editedStore.street,
+      'town': editedStore.town,
+      'district': editedStore.district,
+      'state': editedStore.state,
+      'isNew': false,
+      'timeStamp': editedStore.timestamp,
+    });
+    FirebaseFirestore.instance
+        .collection('stores label')
         .doc(editedStore.storeId)
         .update({
       'storeId': editedStore.storeId,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/helpers/stores.dart';
 import 'package:pharmassist/providers/store.dart';
 import 'package:pharmassist/screens/store_screen.dart';
@@ -31,7 +32,7 @@ class MapScreenState extends State<StoreDetailScreen>
   String _storeId = '';
   String _uid = '';
   Timestamp _timestamp;
-
+  TextEditingController dateinput = TextEditingController();
   // var _initValues = {
   //   "isNew": true,
   //   "name": "",
@@ -45,7 +46,7 @@ class MapScreenState extends State<StoreDetailScreen>
   @override
   void initState() {
     // TODO: implement initState
-
+    dateinput.text = "";
     super.initState();
   }
 
@@ -68,6 +69,7 @@ class MapScreenState extends State<StoreDetailScreen>
         _uid = routeArgs['uid'];
         _timestamp = routeArgs['timestamp'];
       }
+      dateinput.text = _establishmentYear;
       _init = false;
     }
 
@@ -75,7 +77,7 @@ class MapScreenState extends State<StoreDetailScreen>
   }
 
   _onSubmit() {
-    final isValid = true;
+    final isValid = _formKey.currentState.validate();
     if (!isValid) {
       return;
     }
@@ -208,6 +210,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                             _name = value;
                                           });
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _name,
                                         decoration: const InputDecoration(
                                           hintText: "Enter Store Name",
@@ -252,6 +262,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                             _firmId = value;
                                           });
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _firmId,
                                         decoration: const InputDecoration(
                                             hintText: "Enter Firm Id"),
@@ -294,7 +312,44 @@ class MapScreenState extends State<StoreDetailScreen>
                                             _establishmentYear = value;
                                           });
                                         },
-                                        initialValue: _establishmentYear,
+                                        readOnly: true,
+                                        onTap: () async {
+                                          DateTime pickedDate =
+                                              await showDatePicker(
+                                                  context:
+                                                      context, //context of current state
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(
+                                                      2000), //DateTime.now() - not to allow to choose before today.
+                                                  lastDate: DateTime(2101));
+
+                                          if (pickedDate != null) {
+                                            print(
+                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                            String formattedDate =
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(pickedDate);
+                                            print(
+                                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                                            setState(() {
+                                              _establishmentYear =
+                                                  formattedDate;
+                                              dateinput.text = formattedDate;
+                                            });
+                                          } else {
+                                            print("Date is not selected");
+                                          }
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
+                                        // initialValue: _establishmentYear,
+                                        controller: dateinput,
                                         decoration: const InputDecoration(
                                             hintText:
                                                 "Enter Establishment Year"),
@@ -350,6 +405,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                               _street = value;
                                             });
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _street,
                                           decoration: const InputDecoration(
                                               hintText: "Enter Street"),
@@ -364,6 +427,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                           setState(() {
                                             _town = value;
                                           });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _town,
                                         decoration: const InputDecoration(
@@ -421,6 +492,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                               _district = value;
                                             });
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _district,
                                           decoration: const InputDecoration(
                                               hintText: "Enter District"),
@@ -435,6 +514,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                           setState(() {
                                             _state = value;
                                           });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.done,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _state,
                                         decoration: const InputDecoration(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
@@ -48,9 +49,10 @@ class MapScreenState extends State<ProfilePage>
     "district": '',
     "state": '',
   };
-
+  TextEditingController dateinput = TextEditingController();
   @override
   void initState() {
+    dateinput.text = "";
     // TODO: implement initState
     var _isAdded =
         Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
@@ -65,6 +67,7 @@ class MapScreenState extends State<ProfilePage>
         "district": userinfo.district,
         "state": userinfo.state,
       };
+      dateinput.text = _initValues["renewalDate"];
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_isAdded) {
@@ -74,11 +77,12 @@ class MapScreenState extends State<ProfilePage>
         );
       }
     });
+
     super.initState();
   }
 
   _onSubmit() {
-    final isValid = true;
+    final isValid = _formKey.currentState.validate();
     if (!isValid) {
       return;
     }
@@ -109,6 +113,7 @@ class MapScreenState extends State<ProfilePage>
         _district = routeArgs['district'];
         _state = routeArgs['state'];
         _uid = routeArgs['uid'];
+        dateinput.text = _renewalDate;
       });
     }
     print(_isSearchResult);
@@ -274,6 +279,14 @@ class MapScreenState extends State<ProfilePage>
                                             state: _editedUser.state,
                                           );
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _isSearchResult != null
                                             ? _fullname
                                             : _initValues["fullName"],
@@ -328,6 +341,14 @@ class MapScreenState extends State<ProfilePage>
                                             state: _editedUser.state,
                                           );
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _isSearchResult != null
                                             ? _registerationNumber
                                             : _initValues["registrationNo"],
@@ -367,6 +388,34 @@ class MapScreenState extends State<ProfilePage>
                                   children: <Widget>[
                                     new Flexible(
                                       child: new TextFormField(
+                                        onTap: () async {
+                                          DateTime pickedDate =
+                                              await showDatePicker(
+                                                  context:
+                                                      context, //context of current state
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(
+                                                      2000), //DateTime.now() - not to allow to choose before today.
+                                                  lastDate: DateTime(2101));
+
+                                          if (pickedDate != null) {
+                                            print(
+                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                            String formattedDate =
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(pickedDate);
+                                            print(
+                                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                                            setState(() {
+                                              _initValues["renewalDate"] =
+                                                  formattedDate;
+                                              dateinput.text = formattedDate;
+                                            });
+                                          } else {
+                                            print("Date is not selected");
+                                          }
+                                        },
+                                        readOnly: true,
                                         onSaved: (value) {
                                           _editedUser = User(
                                             isAdded: _editedUser.isAdded,
@@ -380,11 +429,22 @@ class MapScreenState extends State<ProfilePage>
                                             state: _editedUser.state,
                                           );
                                         },
-                                        initialValue: _isSearchResult != null
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
+                                        controller: _isSearchResult != null
                                             ? _renewalDate
-                                            : _initValues["renewalDate"],
+                                            : dateinput,
+                                        // initialValue: _isSearchResult != null
+                                        //     ? _renewalDate
+                                        //     : dateinput,
                                         decoration: const InputDecoration(
-                                            hintText: "Enter renewal_date"),
+                                            hintText: "Enter renewal date"),
                                         enabled: !_status,
                                       ),
                                     ),
@@ -446,6 +506,14 @@ class MapScreenState extends State<ProfilePage>
                                               state: _editedUser.state,
                                             );
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _isSearchResult != null
                                               ? _street
                                               : _initValues["street"],
@@ -471,6 +539,14 @@ class MapScreenState extends State<ProfilePage>
                                             district: _editedUser.district,
                                             state: _editedUser.state,
                                           );
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _isSearchResult != null
                                             ? _town
@@ -539,6 +615,14 @@ class MapScreenState extends State<ProfilePage>
                                               state: _editedUser.state,
                                             );
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _isSearchResult != null
                                               ? _district
                                               : _initValues["district"],
@@ -564,6 +648,14 @@ class MapScreenState extends State<ProfilePage>
                                             district: _editedUser.district,
                                             state: value,
                                           );
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.done,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _isSearchResult != null
                                             ? _state

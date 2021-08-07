@@ -26,7 +26,7 @@ class _FeedScreenState extends State<FeedScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('feed/')
+            .collection('feed/').where('isDeleted', isEqualTo: false)
             .orderBy('id', descending: true)
             .snapshots(),
         builder: (ctx, feedSnapShot) {

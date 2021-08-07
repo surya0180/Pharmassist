@@ -35,7 +35,7 @@ class _MessagesState extends State<Messages> {
           );
         }
         final chatDocs = chatSnapShot.data.docs;
-        print(chatDocs[0]['text']);
+        // print(chatDocs[0]['text']);
         // print(chatDocs[0]['username']);
         print('0: 1: yes i am that one');
         return widget.unreadMessages == null
@@ -62,14 +62,16 @@ class _MessagesState extends State<Messages> {
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   } else {
+                    print(widget.timestamp);
+                    print(chatDocs[index]['timestamp']);
                     return MessageBubble(
                       chatDocs[index]['text'],
                       chatDocs[index]['username'],
                       chatDocs[index]['userId'] == currentUserId,
-                      true,
+                      false,
                       chatDocs[index]['timestamp'],
                       chatDocs[index]['createdAt'],
-                      widget.timestamp == chatDocs[index]['timestamp'] ? widget.isSent : true,
+                      widget.timestamp == chatDocs[index]['sentAt'].toString() ? widget.isSent : true,
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   }

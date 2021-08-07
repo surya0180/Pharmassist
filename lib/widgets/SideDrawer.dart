@@ -7,7 +7,10 @@ import 'package:provider/provider.dart';
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdded =
+        Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
     return Drawer(
       elevation: 20,
       child: Column(
@@ -28,19 +31,52 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          _isAdmin == null ? ListTile(title: Text('logging out'),) : _isAdmin ? ListTile(
-            leading: Icon(Icons.dashboard),
-            title: Text('Dashboard'),
-            onTap: () {
-              Navigator.popAndPushNamed(context, StoreScreen.routeName);
-            },
-          ) : ListTile(
-            leading: Icon(Icons.store),
-            title: Text('Add Store'),
-            onTap: () {
-              Navigator.popAndPushNamed(context, StoreScreen.routeName);
-            },
-          ),
+          _isAdmin == null
+              ? ListTile(
+                  title: Text('logging out'),
+                )
+              : _isAdmin
+                  ? ListTile(
+                      leading: Icon(Icons.dashboard),
+                      title: Text('Dashboard'),
+                      onTap: () {
+                        Navigator.popAndPushNamed(
+                            context, StoreScreen.routeName);
+                      },
+                    )
+                  : ListTile(
+                      leading: Icon(Icons.store),
+                      title: Text('Add Store'),
+                      onTap: () {
+                        if (!_isAdded) {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: Text(
+                                'Please complete your profile to add a store',
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 16),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    'Ok',
+                                    style: TextStyle(
+                                        fontFamily: 'poppins', fontSize: 12),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          Navigator.popAndPushNamed(
+                              context, StoreScreen.routeName);
+                        }
+                      },
+                    ),
           Divider(),
           ListTile(
             leading: Icon(Icons.feedback),

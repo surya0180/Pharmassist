@@ -6,47 +6,21 @@ import 'package:pharmassist/screens/request_screen.dart';
 import 'package:pharmassist/screens/search_screen.dart';
 
 final userPages = [
-    {
-      'page': ProfilePage(),
-      'title': 'Profile',
-    },
-    {
-      'page': RequestScreen(),
-      'title': 'Requests',
-    },
-    {
-      'page': FeedScreen(),
-      'title': 'Feed',
-    },
-    {
-      'page': SearchScreen(),
-      'title': 'Search',
-    },
-    {
-      'page': ChatListScreen(),
-      'title': 'Chat',
-    },
-  ];
+  ProfilePage(),
+  RequestScreen(),
+  FeedScreen(),
+  SearchScreen(),
+  ChatListScreen(),
+];
 
-  final adminPages = [
-    {
-      'page': ProfilePage(),
-      'title': 'Profile',
-    },
-    {
-      'page': AdminRequestScreen(),
-      'title': 'Requests',
-    },
-    {
-      'page': FeedScreen(),
-      'title': 'Feed',
-    },
-    {
-      'page': SearchScreen(),
-      'title': 'Search',
-    },
-    {
-      'page': ChatListScreen(),
-      'title': 'Chat',
-    },
-  ];
+final userPagesTitles = ['Profile', 'Request', 'Feed', 'Search', 'Chat'];
+
+final adminPages = [
+  ProfilePage(),
+  AdminRequestScreen(),
+  FeedScreen(),
+  SearchScreen(),
+  ChatListScreen(),
+];
+
+final adminPagesTitles = ['Profile', 'Request', 'Feed', 'Search', 'Chat'];

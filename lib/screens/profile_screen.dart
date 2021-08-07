@@ -75,7 +75,7 @@ class MapScreenState extends State<ProfilePage>
   }
 
   _onSubmit() {
-    final isValid = true;
+    final isValid = _formKey.currentState.validate();
     if (!isValid) {
       return;
     }
@@ -122,7 +122,11 @@ class MapScreenState extends State<ProfilePage>
                           padding: EdgeInsets.only(top: 20.0),
                           child: Center(
                             child: Text(
-                              _isSearchResult != null ? _isSearchResult ? _fullname : userinfo.fullname : '',
+                              _isSearchResult != null
+                                  ? _isSearchResult
+                                      ? _fullname
+                                      : userinfo.fullname
+                                  : '',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                             ),
@@ -145,9 +149,10 @@ class MapScreenState extends State<ProfilePage>
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
-                                        image: NetworkImage(_isSearchResult != null
-                                            ? _profilePic
-                                            : userinfo.photoUrl),
+                                        image: NetworkImage(
+                                            _isSearchResult != null
+                                                ? _profilePic
+                                                : userinfo.photoUrl),
                                         fit: BoxFit.cover,
                                       ),
                                     )),
@@ -253,6 +258,14 @@ class MapScreenState extends State<ProfilePage>
                                             state: _editedUser.state,
                                           );
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _isSearchResult != null
                                             ? _fullname
                                             : _initValues["fullName"],
@@ -307,6 +320,14 @@ class MapScreenState extends State<ProfilePage>
                                             state: _editedUser.state,
                                           );
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _isSearchResult != null
                                             ? _registerationNumber
                                             : _initValues["registrationNo"],
@@ -358,6 +379,14 @@ class MapScreenState extends State<ProfilePage>
                                             district: _editedUser.district,
                                             state: _editedUser.state,
                                           );
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _isSearchResult != null
                                             ? _renewalDate
@@ -425,6 +454,14 @@ class MapScreenState extends State<ProfilePage>
                                               state: _editedUser.state,
                                             );
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _isSearchResult != null
                                               ? _street
                                               : _initValues["street"],
@@ -450,6 +487,14 @@ class MapScreenState extends State<ProfilePage>
                                             district: _editedUser.district,
                                             state: _editedUser.state,
                                           );
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _isSearchResult != null
                                             ? _town
@@ -518,6 +563,14 @@ class MapScreenState extends State<ProfilePage>
                                               state: _editedUser.state,
                                             );
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _isSearchResult != null
                                               ? _district
                                               : _initValues["district"],
@@ -543,6 +596,14 @@ class MapScreenState extends State<ProfilePage>
                                             district: _editedUser.district,
                                             state: value,
                                           );
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.done,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _isSearchResult != null
                                             ? _state

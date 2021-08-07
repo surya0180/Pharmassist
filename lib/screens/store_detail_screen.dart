@@ -75,7 +75,7 @@ class MapScreenState extends State<StoreDetailScreen>
   }
 
   _onSubmit() {
-    final isValid = true;
+    final isValid = _formKey.currentState.validate();
     if (!isValid) {
       return;
     }
@@ -208,6 +208,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                             _name = value;
                                           });
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _name,
                                         decoration: const InputDecoration(
                                           hintText: "Enter Store Name",
@@ -252,6 +260,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                             _firmId = value;
                                           });
                                         },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
+                                        },
                                         initialValue: _firmId,
                                         decoration: const InputDecoration(
                                             hintText: "Enter Firm Id"),
@@ -293,6 +309,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                           setState(() {
                                             _establishmentYear = value;
                                           });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _establishmentYear,
                                         decoration: const InputDecoration(
@@ -350,6 +374,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                               _street = value;
                                             });
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _street,
                                           decoration: const InputDecoration(
                                               hintText: "Enter Street"),
@@ -364,6 +396,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                           setState(() {
                                             _town = value;
                                           });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _town,
                                         decoration: const InputDecoration(
@@ -421,6 +461,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                               _district = value;
                                             });
                                           },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
                                           initialValue: _district,
                                           decoration: const InputDecoration(
                                               hintText: "Enter District"),
@@ -435,6 +483,14 @@ class MapScreenState extends State<StoreDetailScreen>
                                           setState(() {
                                             _state = value;
                                           });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                        textInputAction: TextInputAction.done,
+                                        validator: (value) {
+                                          if (value.trim().length == 0) {
+                                            return 'This field is required';
+                                          }
+                                          return null;
                                         },
                                         initialValue: _state,
                                         decoration: const InputDecoration(

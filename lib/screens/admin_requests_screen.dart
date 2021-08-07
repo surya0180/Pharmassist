@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/widgets/request_item.dart';
+import 'package:provider/provider.dart';
 
 class AdminRequestScreen extends StatefulWidget {
   @override
@@ -9,7 +11,18 @@ class AdminRequestScreen extends StatefulWidget {
 
 class _AdminRequestScreenState extends State<AdminRequestScreen> {
   int _value = 1;
+  // ignore: non_constant_identifier_names
   String RequestType = "pharm";
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AdminProvider>(context, listen: false).updateRequests(0);
+    });
+
+    super.initState();
+  }
+
   var streamBuilder = FirebaseFirestore.instance
       .collection('pharmacist requests')
       .where('isDeleted', isEqualTo: false)

@@ -6,9 +6,11 @@ import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage(this.userId, {Key key}) : super(key: key);
+  const NewMessage(this.userId, this.setIsSent, this.setTimestamp, {Key key}) : super(key: key);
 
   final String userId;
+  final Function setIsSent;
+  final Function setTimestamp;
 
   @override
   _NewMessageState createState() => _NewMessageState();
@@ -18,11 +20,13 @@ class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = '';
 
   void _sendMessage() async {
+    widget.setIsSent(false);
     FocusScope.of(context).unfocus();
     _controller.clear();
     final hmstamp = DateTime.now();
     final timestamp = Timestamp.now();
     final user = FirebaseAuth.instance.currentUser;
+    widget.setTimestamp(DateFormat.Hm().format(hmstamp));
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -52,6 +56,8 @@ class _NewMessageState extends State<NewMessage> {
         'timestamp': timestamp,
         'latestMessage': _enteredMessage,
         'hostB': chatData.data()['hostB'] + 1,
+      }).then((value) {
+        widget.setIsSent(true);
       });
     } else {
       await FirebaseFirestore.instance
@@ -63,6 +69,8 @@ class _NewMessageState extends State<NewMessage> {
         'timestamp': timestamp,
         'latestMessage': _enteredMessage,
         'hostA': chatData.data()['hostA'] + 1,
+      }).then((value) {
+        widget.setIsSent(true);
       });
     }
   }

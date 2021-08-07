@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import './message_bubble.dart';
 
 class Messages extends StatefulWidget {
-  const Messages(this.userId, this.unreadMessages, {Key key}) : super(key: key);
+  const Messages(this.userId, this.unreadMessages, this.isSent, this.timestamp, {Key key}) : super(key: key);
 
   final String userId;
   final int unreadMessages;
+  final bool isSent;
+  final String timestamp;
 
   @override
   _MessagesState createState() => _MessagesState();
@@ -33,6 +35,7 @@ class _MessagesState extends State<Messages> {
           );
         }
         final chatDocs = chatSnapShot.data.docs;
+        print(chatDocs[0]['text']);
         // print(chatDocs[0]['username']);
         print('0: 1: yes i am that one');
         return widget.unreadMessages == null
@@ -55,6 +58,7 @@ class _MessagesState extends State<Messages> {
                       true,
                       chatDocs[index]['timestamp'],
                       chatDocs[index]['createdAt'],
+                      true,
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   } else {
@@ -62,9 +66,10 @@ class _MessagesState extends State<Messages> {
                       chatDocs[index]['text'],
                       chatDocs[index]['username'],
                       chatDocs[index]['userId'] == currentUserId,
-                      false,
+                      true,
                       chatDocs[index]['timestamp'],
                       chatDocs[index]['createdAt'],
+                      widget.timestamp == chatDocs[index]['timestamp'] ? widget.isSent : true,
                       key: ValueKey(chatDocs[index]['userId']),
                     );
                   }

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 class MessageBubble extends StatelessWidget {
   MessageBubble(this.message, this.username, this.isMe, this.unread,
-      this.timestamp, this.day,
+      this.timestamp, this.day, this.isSent,
       {this.key});
 
   final String message;
@@ -14,15 +14,18 @@ class MessageBubble extends StatelessWidget {
   final bool unread;
   final String timestamp;
   final Timestamp day;
+  final bool isSent;
 
   @override
   Widget build(BuildContext context) {
-    var chatTimestamp = DateTime.fromMillisecondsSinceEpoch(day.millisecondsSinceEpoch);
-    var currentTimestamp = DateTime.fromMillisecondsSinceEpoch(Timestamp.now().millisecondsSinceEpoch);
+    var chatTimestamp =
+        DateTime.fromMillisecondsSinceEpoch(day.millisecondsSinceEpoch);
+    var currentTimestamp = DateTime.fromMillisecondsSinceEpoch(
+        Timestamp.now().millisecondsSinceEpoch);
     var cts = DateFormat('MMM-dd').format(chatTimestamp);
     var cuts = DateFormat('MMM-dd').format(currentTimestamp);
     String chatTime;
-    if(cts == cuts) {
+    if (cts == cuts) {
       chatTime = timestamp;
     } else {
       chatTime = cts + ' ' + timestamp;
@@ -37,15 +40,21 @@ class MessageBubble extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: isMe
-                      ? Colors.grey[300]
+                      ? isSent != null
+                          ? isSent
+                              ? Colors.grey[300]
+                              : Colors.black38
+                          : Colors.grey[300]
                       : unread
                           ? Colors.green[300]
                           : Theme.of(context).accentColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
-                    bottomLeft: !isMe ? Radius.circular(0) : Radius.circular(12),
-                    bottomRight: isMe ? Radius.circular(0) : Radius.circular(12),
+                    bottomLeft:
+                        !isMe ? Radius.circular(0) : Radius.circular(12),
+                    bottomRight:
+                        isMe ? Radius.circular(0) : Radius.circular(12),
                   ),
                 ),
                 constraints: BoxConstraints(minWidth: 100, maxWidth: 290),

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/providers/user.dart';
+import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -25,6 +27,7 @@ class MapScreenState extends State<ProfilePage>
   String _town;
   String _district;
   String _state;
+  String _uid;
 
   var _editedUser = User(
     isAdded: true,
@@ -90,6 +93,8 @@ class MapScreenState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     final userinfo = Provider.of<UserProvider>(context, listen: false).user;
+    final _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     if (routeArgs != null) {
@@ -103,8 +108,10 @@ class MapScreenState extends State<ProfilePage>
         _town = routeArgs['town'];
         _district = routeArgs['district'];
         _state = routeArgs['state'];
+        _uid = routeArgs['uid'];
       });
     }
+    print(_isSearchResult);
     return new Scaffold(
         appBar: _isSearchResult != null ? AppBar() : null,
         body: new Container(
@@ -123,10 +130,8 @@ class MapScreenState extends State<ProfilePage>
                           child: Center(
                             child: Text(
                               _isSearchResult != null
-                                  ? _isSearchResult
-                                      ? _fullname
-                                      : userinfo.fullname
-                                  : '',
+                                  ? _fullname
+                                  : userinfo.fullname,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                             ),
@@ -200,8 +205,7 @@ class MapScreenState extends State<ProfilePage>
                                       // mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         _status
-                                            ? _isSearchResult == null ||
-                                                    _isSearchResult
+                                            ? _isSearchResult != null
                                                 ? new Container()
                                                 : _getEditIcon()
                                             : new Container(),
@@ -209,7 +213,19 @@ class MapScreenState extends State<ProfilePage>
                                           width: 5,
                                         ),
                                         _status
-                                            ? _getMessageIcon()
+                                            ? _isAdmin
+                                                ? _isSearchResult == null
+                                                    ? new Container()
+                                                    : _isSearchResult != null &&
+                                                            _uid ==
+                                                                fa
+                                                                    .FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser
+                                                                    .uid
+                                                        ? new Container()
+                                                        : _getMessageIcon()
+                                                : new Container()
                                             : new Container(),
                                       ],
                                     )
@@ -710,7 +726,12 @@ class MapScreenState extends State<ProfilePage>
           size: 18.0,
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        print(_uid);
+        print('above is the required uid');
+        Navigator.of(context).pushNamed(ChatScreen.routeName,
+            arguments: {'name': _fullname, 'userId': _uid});
+      },
     );
   }
 }

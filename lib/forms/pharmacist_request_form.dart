@@ -120,6 +120,9 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 TextFormField(
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.sentences,
+                  enableSuggestions: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.only(left: 12),
@@ -154,12 +157,15 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 TextFormField(
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.sentences,
+                  enableSuggestions: true,
                   keyboardType: TextInputType.multiline,
                   maxLines: 10,
                   decoration: InputDecoration(
                     labelStyle: TextStyle(),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12),
+                    contentPadding: EdgeInsets.only(left: 12, top: 25),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,

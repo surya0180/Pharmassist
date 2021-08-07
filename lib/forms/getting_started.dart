@@ -11,6 +11,15 @@ class GettingStarted extends StatelessWidget {
       content: SingleChildScrollView(
         child: Column(
           children: [
+            Align(
+              alignment: Alignment(1, 0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                icon: Icon(Icons.close),
+              ),
+            ),
             SizedBox(
               height: 30,
             ),

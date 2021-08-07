@@ -119,6 +119,9 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 TextFormField(
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.sentences,
+                  enableSuggestions: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.only(left: 12),
@@ -153,12 +156,15 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 TextFormField(
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.multiline,
+                  enableSuggestions: true,
                   maxLines: 8,
                   decoration: InputDecoration(
                     labelStyle: TextStyle(),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12),
+                    contentPadding: EdgeInsets.only(left: 12, top: 25),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,

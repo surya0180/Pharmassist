@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/widgets/NoResultsFound.dart';
 import 'package:pharmassist/widgets/SearchBar.dart';
+import 'package:pharmassist/widgets/StartSearching.dart';
 import 'package:pharmassist/widgets/StoreSearchResults.dart';
 import 'package:pharmassist/widgets/UserSearchResult.dart';
 import '../helpers/string_extension.dart';
@@ -47,9 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
             height: 6,
           ),
           _value == null
-              ? Center(
-                  child: Text('Start searching'),
-                )
+              ? StartSearching()
               : StreamBuilder(
                   stream: _category == null ||
                           _category == 'noFilter' ||
@@ -82,9 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     }
                     final docs = snapShot.data.docs;
                     return docs.length == 0
-                        ? Center(
-                            child: Text('No results found'),
-                          )
+                        ? NoResultsFound()
                         : ListView.builder(
                             shrinkWrap: true,
                             itemCount: docs.length,

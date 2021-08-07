@@ -6,7 +6,8 @@ import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage(this.userId, this.setIsSent, this.setTimestamp, {Key key}) : super(key: key);
+  const NewMessage(this.userId, this.setIsSent, this.setTimestamp, {Key key})
+      : super(key: key);
 
   final String userId;
   final Function setIsSent;
@@ -26,10 +27,14 @@ class _NewMessageState extends State<NewMessage> {
     final hmstamp = DateTime.now();
     final timestamp = Timestamp.now();
     final user = FirebaseAuth.instance.currentUser;
-    widget.setTimestamp(DateFormat.Hm().format(hmstamp));
+    widget.setTimestamp(hmstamp.toIso8601String());
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
+        .get();
+    final adminUserData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
         .get();
     final chatData = await FirebaseFirestore.instance
         .collection('Chat')
@@ -45,6 +50,7 @@ class _NewMessageState extends State<NewMessage> {
       'timestamp': DateFormat.Hm().format(hmstamp),
       'userId': user.uid,
       'username': userData.data()['fullName'],
+      'sentAt': hmstamp.toIso8601String(),
     });
     var _isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
@@ -55,6 +61,8 @@ class _NewMessageState extends State<NewMessage> {
           .update({
         'timestamp': timestamp,
         'latestMessage': _enteredMessage,
+        'name': adminUserData.data()['fullName'],
+        'profilePic': adminUserData.data()['PhotoUrl'],
         'hostB': chatData.data()['hostB'] + 1,
       }).then((value) {
         widget.setIsSent(true);

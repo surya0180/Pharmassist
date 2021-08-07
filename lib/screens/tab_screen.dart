@@ -20,13 +20,17 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   final firestoreInstance = FirebaseFirestore.instance;
-  int _selectedPageIndex = 0;
   var _isInit = true;
   var _isLoading = false;
 
+  int _selectedIndex;
+  PageController _pageController;
+
   void _selectPage(int index) {
     setState(() {
-      _selectedPageIndex = index;
+      _selectedIndex = index;
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -37,7 +41,8 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   void initState() {
-    _selectedPageIndex = 2;
+    _selectedIndex = 2;
+    _pageController = PageController(initialPage: 2);
     super.initState();
   }
 
@@ -74,6 +79,12 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _isLoading
         ? Center(
@@ -85,8 +96,8 @@ class _TabScreenState extends State<TabScreen> {
                 _isAdminStatus() == null
                     ? 'Logging out . .'
                     : _isAdminStatus()
-                        ? adminPages[_selectedPageIndex]['title']
-                        : userPages[_selectedPageIndex]['title'],
+                        ? adminPagesTitles[_selectedIndex]
+                        : userPagesTitles[_selectedIndex],
                 style: Theme.of(context).textTheme.title,
               ),
               actions: [],
@@ -95,14 +106,20 @@ class _TabScreenState extends State<TabScreen> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : _isAdminStatus()
-                    ? adminPages[_selectedPageIndex]['page']
-                    : userPages[_selectedPageIndex]['page'],
+                : SizedBox.expand(
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        setState(() => _selectedIndex = index);
+                      },
+                      children: _isAdminStatus() ? adminPages : userPages,
+                    ),
+                  ),
             backgroundColor: Theme.of(context).backgroundColor,
             drawer: SideDrawer(),
             bottomNavigationBar: BottomNavBar(
               selectPage: _selectPage,
-              selectedPageIndex: _selectedPageIndex,
+              selectedPageIndex: _selectedIndex,
             ),
           );
   }

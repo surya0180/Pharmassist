@@ -11,10 +11,11 @@ class UserSearchResult extends StatelessWidget {
     this.town,
     this.district,
     this.state,
+    this.uid,
     Key key,
   }) : super(key: key);
 
-  final String profilePic;
+  final String profilePic, uid;
   final String fullname;
   final String registerationNumber;
   final String renewalDate;
@@ -45,6 +46,7 @@ class UserSearchResult extends StatelessWidget {
               'town': town,
               'district': district,
               'state': state,
+              'uid': uid,
             },
           );
         },

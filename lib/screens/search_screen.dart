@@ -57,14 +57,22 @@ class _SearchScreenState extends State<SearchScreen> {
                       ? FirebaseFirestore.instance
                           .collection('users')
                           .orderBy('fullName')
-                          .startAt([_value]).endAt(
-                          [_value == null ? '' + '\uf8ff' : _value + '\uf8ff'],
+                          .startAt([_value.toLowerCase()]).endAt(
+                          [
+                            _value == null
+                                ? '' + '\uf8ff'
+                                : _value.toLowerCase() + '\uf8ff'
+                          ],
                         ).snapshots()
                       : FirebaseFirestore.instance
                           .collection('stores label')
                           .orderBy('name')
-                          .startAt([_value]).endAt(
-                          [_value == null ? '' + '\uf8ff' : _value + '\uf8ff'],
+                          .startAt([_value.toLowerCase()]).endAt(
+                          [
+                            _value == null
+                                ? '' + '\uf8ff'
+                                : _value.toLowerCase() + '\uf8ff'
+                          ],
                         ).snapshots(),
                   builder: (ctx, snapShot) {
                     if (snapShot.connectionState == ConnectionState.waiting) {
@@ -73,49 +81,56 @@ class _SearchScreenState extends State<SearchScreen> {
                       );
                     }
                     final docs = snapShot.data.docs;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: docs.length,
-                      itemBuilder: (ctx, index) {
-                        return _category == null ||
-                                _category == 'noFilter' ||
-                                _category == 'pharms'
-                            ? UserSearchResult(
-                                fullname: docs[index]['fullName']
-                                    .toString()
-                                    .capitalize(),
-                                profilePic: docs[index]['PhotoUrl'],
-                                registerationNumber: docs[index]
-                                    ['registrationNo'],
-                                district: docs[index]['district'],
-                                state: docs[index]['state'],
-                                renewalDate: docs[index]['renewalDate'],
-                                street: docs[index]['street'],
-                                town: docs[index]['town'],
-                              )
-                            : StoreSearchResult(
-                                name:
-                                    docs[index]['name'].toString().capitalize(),
-                                storeId: docs[index]['storeId'],
-                                district: docs[index]['district']
-                                    .toString()
-                                    .capitalize(),
-                                state: docs[index]['state']
-                                    .toString()
-                                    .capitalize(),
-                                street: docs[index]['street']
-                                    .toString()
-                                    .capitalize(),
-                                town:
-                                    docs[index]['town'].toString().capitalize(),
-                                establishmentYear: docs[index]
-                                    ['establishmentYear'],
-                                firmId: docs[index]['firmId'],
-                                timestamp: docs[index]['timeStamp'],
-                                uid: docs[index]['uid'],
-                              );
-                      },
-                    );
+                    return docs.length == 0
+                        ? Center(
+                            child: Text('No results found'),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: docs.length,
+                            itemBuilder: (ctx, index) {
+                              return _category == null ||
+                                      _category == 'noFilter' ||
+                                      _category == 'pharms'
+                                  ? UserSearchResult(
+                                      fullname: docs[index]['fullName']
+                                          .toString()
+                                          .capitalize(),
+                                      profilePic: docs[index]['PhotoUrl'],
+                                      registerationNumber: docs[index]
+                                          ['registrationNo'],
+                                      district: docs[index]['district'],
+                                      state: docs[index]['state'],
+                                      renewalDate: docs[index]['renewalDate'],
+                                      street: docs[index]['street'],
+                                      town: docs[index]['town'],
+                                      uid: docs[index]['uid'],
+                                    )
+                                  : StoreSearchResult(
+                                      name: docs[index]['name']
+                                          .toString()
+                                          .capitalize(),
+                                      storeId: docs[index]['storeId'],
+                                      district: docs[index]['district']
+                                          .toString()
+                                          .capitalize(),
+                                      state: docs[index]['state']
+                                          .toString()
+                                          .capitalize(),
+                                      street: docs[index]['street']
+                                          .toString()
+                                          .capitalize(),
+                                      town: docs[index]['town']
+                                          .toString()
+                                          .capitalize(),
+                                      establishmentYear: docs[index]
+                                          ['establishmentYear'],
+                                      firmId: docs[index]['firmId'],
+                                      timestamp: docs[index]['timeStamp'],
+                                      uid: docs[index]['uid'],
+                                    );
+                            },
+                          );
                   },
                 )
         ],

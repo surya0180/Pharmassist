@@ -17,6 +17,20 @@ class _ChatScreenState extends State<ChatScreen> {
   String userName;
   String userId;
   int _unreadMsg;
+  bool _isSent;
+  String _timestamp;
+
+  void setIsSent(bool status) {
+    setState(() {
+      _isSent = status;
+    });
+  }
+
+  void setTimestamp(String timestamp) {
+    setState(() {
+      _timestamp = timestamp;
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -28,13 +42,21 @@ class _ChatScreenState extends State<ChatScreen> {
     print(userName);
     print(userId);
     if (userId == FirebaseAuth.instance.currentUser.uid) {
-      FirebaseFirestore.instance.collection('Chat').doc(userId).get().then((value) {
+      FirebaseFirestore.instance
+          .collection('Chat')
+          .doc(userId)
+          .get()
+          .then((value) {
         setState(() {
           _unreadMsg = value.data()['hostB'];
         });
       });
     } else {
-      FirebaseFirestore.instance.collection('Chat').doc(userId).get().then((value) {
+      FirebaseFirestore.instance
+          .collection('Chat')
+          .doc(userId)
+          .get()
+          .then((value) {
         print('i am in admin setState');
         setState(() {
           print(value.data()['hostA']);
@@ -76,9 +98,9 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Messages(userId, _unreadMsg),
+              child: Messages(userId, _unreadMsg, _isSent, _timestamp),
             ),
-            NewMessage(userId),
+            NewMessage(userId, setIsSent, setTimestamp),
           ],
         ),
       ),

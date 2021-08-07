@@ -131,20 +131,61 @@ class _FeedCardState extends State<FeedCard> {
                     children: [
                       if (_isAdmin)
                         IconButton(
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.black,
-                          ),
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(NewFeedForm.routeName, arguments: {
-                              'id': widget.id,
-                              'title': widget.title,
-                              'content': widget.content,
-                            });
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text('Are you sure?'),
+                                content: Text(
+                                  'Do you want to delete this feed ?',
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('No'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('Yes'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                      Provider.of<FeedProvider>(context,
+                                              listen: false)
+                                          .deleteFeed(widget.id)
+                                          .then((value) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Deleted feed sucessfully',
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
                           },
-                          color: Theme.of(context).accentColor,
+                          icon: Icon(Icons.delete),
                         ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(NewFeedForm.routeName, arguments: {
+                            'id': widget.id,
+                            'title': widget.title,
+                            'content': widget.content,
+                          });
+                        },
+                        color: Theme.of(context).accentColor,
+                      ),
                       IconButton(
                         icon: Icon(
                           _isLiked == null
@@ -159,7 +200,8 @@ class _FeedCardState extends State<FeedCard> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Please complete your profile'),
-                                duration: Duration(seconds: 1, milliseconds: 200),
+                                duration:
+                                    Duration(seconds: 1, milliseconds: 200),
                               ),
                             );
                           } else {

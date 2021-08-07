@@ -17,6 +17,7 @@ class FeedProvider with ChangeNotifier {
       'createdOn': feed.createdOn,
       'createdBy': feed.createdBy,
       'profilePic': feed.profilePic,
+      'isDeleted': false,
       'likedUsers': {
         '$uid': {
           'uid': '',
@@ -35,14 +36,20 @@ class FeedProvider with ChangeNotifier {
     });
   }
 
+  Future<void> deleteFeed(String id) {
+    return FirebaseFirestore.instance
+        .collection('feed/')
+        .doc(id)
+        .update({'isDeleted': true});
+  }
+
   void addToLikedUsers(
       bool isLiked, String id, int likes, Map<String, dynamic> likedUsers) {
     var uid = FirebaseAuth.instance.currentUser.uid;
     likedUsers['$uid'] = {'uid': uid, 'isLiked': isLiked};
-    if(isLiked) {
+    if (isLiked) {
       likes = likes + 1;
-    }
-    else {
+    } else {
       likes = likes - 1;
     }
     FirebaseFirestore.instance.collection('feed/').doc(id).update({

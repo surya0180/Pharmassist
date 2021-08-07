@@ -47,7 +47,10 @@ class _FeedCardState extends State<FeedCard> {
       _isLiked = widget.likedUsers['$uid']['isLiked'];
     }
 
-    final _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    final _isAdded =
+        Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
 
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
@@ -152,8 +155,17 @@ class _FeedCardState extends State<FeedCard> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          feed.addToLikedUsers(!_isLiked, widget.id,
-                              widget.likes, widget.likedUsers);
+                          if (!_isAdded) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Please complete your profile'),
+                                duration: Duration(seconds: 1, milliseconds: 200),
+                              ),
+                            );
+                          } else {
+                            feed.addToLikedUsers(!_isLiked, widget.id,
+                                widget.likes, widget.likedUsers);
+                          }
                         },
                         color: Theme.of(context).accentColor,
                       ),

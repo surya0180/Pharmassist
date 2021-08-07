@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
+import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
 class FeedLikes extends StatefulWidget {
@@ -41,6 +42,8 @@ class _FeedLikesState extends State<FeedLikes> {
 
   @override
   Widget build(BuildContext context) {
+    final _isAdded =
+        Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
     return Row(
       children: [
         IconButton(
@@ -53,29 +56,38 @@ class _FeedLikesState extends State<FeedLikes> {
             color: Colors.black,
           ),
           onPressed: () {
-            Provider.of<FeedProvider>(
-              context,
-              listen: false,
-            ).addToLikedUsers(
-              !_isLiked,
-              widget.id,
-              _likes,
-              widget.likedUsers,
-            );
-            if (_isLiked) {
-              setState(() {
-                print('i setted likes in function if');
-                _likes = _likes - 1;
-              });
+            if (!_isAdded) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Please complete your profile'),
+                  duration: Duration(seconds: 1, milliseconds: 200),
+                ),
+              );
             } else {
+              Provider.of<FeedProvider>(
+                context,
+                listen: false,
+              ).addToLikedUsers(
+                !_isLiked,
+                widget.id,
+                _likes,
+                widget.likedUsers,
+              );
+              if (_isLiked) {
+                setState(() {
+                  print('i setted likes in function if');
+                  _likes = _likes - 1;
+                });
+              } else {
+                setState(() {
+                  print('i setted likes in function else');
+                  _likes = _likes + 1;
+                });
+              }
               setState(() {
-                print('i setted likes in function else');
-                _likes = _likes + 1;
+                _isLiked = !_isLiked;
               });
             }
-            setState(() {
-              _isLiked = !_isLiked;
-            });
           },
           color: Theme.of(context).accentColor,
         ),

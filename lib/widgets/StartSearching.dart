@@ -5,10 +5,11 @@ class StartSearching extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          height: 200,
+          height: device.height*0.25,
         ),
         Icon(
           Icons.search,

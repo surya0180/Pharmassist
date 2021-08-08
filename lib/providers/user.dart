@@ -47,6 +47,9 @@ class UserProvider with ChangeNotifier {
   }
 
   bool get getIsAddedStatus {
+    if (_user == null) {
+      return null;
+    }
     return _user.isAdded;
   }
 

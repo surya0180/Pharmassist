@@ -18,8 +18,10 @@ class _UserChatListState extends State<UserChatList> {
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<NotificationProvider>(context, listen: false)
-        .setTotalUserUnreadMessages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NotificationProvider>(context, listen: false)
+          .setTotalUnreadMessages();
+    });
     super.initState();
   }
 
@@ -66,10 +68,10 @@ class _UserChatListState extends State<UserChatList> {
                   color: Colors.black38,
                 ),
                 SizedBox(
-                  height: 15,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
-                  width: 200,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     'Please complete your profile to access this page',
                     style: TextStyle(

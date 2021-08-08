@@ -5,6 +5,7 @@ class GettingStarted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return AlertDialog(
       contentPadding: EdgeInsets.all(0),
       backgroundColor: Theme.of(context).canvasColor,
@@ -20,9 +21,6 @@ class GettingStarted extends StatelessWidget {
                 icon: Icon(Icons.close),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -37,17 +35,19 @@ class GettingStarted extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: device.height * 0.026,
             ),
             Container(
               padding: EdgeInsets.all(20),
-              child: Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, \n\nwhen an unknown printer took a galley of type and scrambled it to make a type, specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \n\nIt was popularised in the 1960s with the release of Letraset sheets',
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+              child: Flexible(
+                child: Text(
+                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, \n\nwhen an unknown printer took a galley of type and scrambled it to make a type, specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \n\nIt was popularised in the 1960s with the release of Letraset sheets',
+                  style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: device.height * 0.026,
             ),
           ],
         ),

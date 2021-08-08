@@ -96,6 +96,7 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     final userinfo = Provider.of<UserProvider>(context, listen: false).user;
     final _isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
@@ -126,7 +127,7 @@ class MapScreenState extends State<ProfilePage>
               Column(
                 children: <Widget>[
                   new Container(
-                    height: 250.0,
+                    height: device.height*0.31,
                     color: Colors.white,
                     child: new Column(
                       children: <Widget>[
@@ -151,8 +152,8 @@ class MapScreenState extends State<ProfilePage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Container(
-                                    width: 140.0,
-                                    height: 140.0,
+                                    width: device.height*0.18,
+                                    height: device.height*0.18,
                                     child: Image.network(_isSearchResult != null
                                         ? _profilePic
                                         : userinfo.photoUrl),

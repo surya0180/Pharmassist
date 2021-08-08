@@ -16,6 +16,7 @@ class RequestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return Card(
       margin: EdgeInsets.all(25),
       child: Ink(
@@ -29,7 +30,7 @@ class RequestCard extends StatelessWidget {
           },
           splashColor: Theme.of(context).canvasColor,
           child: Container(
-            height: 260,
+            height: device.height*0.34,
             padding: EdgeInsets.only(left: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +43,7 @@ class RequestCard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 25),
+                SizedBox(height: device.height*0.03),
                 Text(description),
               ],
             ),

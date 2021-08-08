@@ -53,7 +53,7 @@ class UserSearchResult extends StatelessWidget {
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(
-          height: 73,
+          height: MediaQuery.of(context).size.height*0.09,
           padding: EdgeInsets.only(left: 14, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +65,7 @@ class UserSearchResult extends StatelessWidget {
                     backgroundImage: NetworkImage(profilePic),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: MediaQuery.of(context).size.width*0.06,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +75,7 @@ class UserSearchResult extends StatelessWidget {
                         style: Theme.of(context).textTheme.title,
                       ),
                       SizedBox(
-                        height: 6,
+                        height: MediaQuery.of(context).size.height*0.008,
                       ),
                       Text(
                         'Reg-no:  $registerationNumber',

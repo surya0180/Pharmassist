@@ -41,41 +41,42 @@ class SideDrawer extends StatelessWidget {
                       leading: Icon(Icons.dashboard),
                       title: Text('Dashboard'),
                       onTap: () {
-                        Navigator.popAndPushNamed(
-                            context, Dashboard.routeName);
+                        Navigator.popAndPushNamed(context, Dashboard.routeName);
                       },
                     )
                   : ListTile(
                       leading: Icon(Icons.store),
                       title: Text('Add Store'),
                       onTap: () {
-                        if (!_isAdded) {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              content: Text(
-                                'Please complete your profile to add a store',
-                                style: TextStyle(
-                                    fontFamily: 'poppins', fontSize: 16),
-                              ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text(
-                                    'Ok',
-                                    style: TextStyle(
-                                        fontFamily: 'poppins', fontSize: 12),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          Navigator.popAndPushNamed(
-                              context, StoreScreen.routeName);
-                        }
+                        _isAdded == null
+                            ? print('logging out')
+                            : _isAdded
+                                ? showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      content: Text(
+                                        'Please complete your profile to add a store',
+                                        style: TextStyle(
+                                            fontFamily: 'poppins',
+                                            fontSize: 16),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text(
+                                            'Ok',
+                                            style: TextStyle(
+                                                fontFamily: 'poppins',
+                                                fontSize: 12),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Navigator.popAndPushNamed(
+                                    context, StoreScreen.routeName);
                       },
                     ),
           Divider(),

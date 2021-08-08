@@ -84,6 +84,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
         final value = await showDialog<bool>(
@@ -166,7 +167,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         },
                       ),
                       SizedBox(
-                        height: 20,
+                        height: device.height*0.026,
                       ),
 
                       // this is where the
@@ -212,7 +213,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                       ),
 
                       SizedBox(
-                        height: 20,
+                        height: device.height*0.026,
                       ),
                       Container(
                         alignment: Alignment.centerRight,

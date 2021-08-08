@@ -38,6 +38,7 @@ class FeedCard extends StatefulWidget {
 class _FeedCardState extends State<FeedCard> {
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     final feed = Provider.of<FeedProvider>(context, listen: false);
     final uid = FirebaseAuth.instance.currentUser.uid;
     var _isLiked;
@@ -88,7 +89,7 @@ class _FeedCardState extends State<FeedCard> {
                           backgroundImage: NetworkImage(widget.profilePic),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: device.width*0.05,
                         ),
                         Flexible(
                           child: Text(
@@ -178,7 +179,7 @@ class _FeedCardState extends State<FeedCard> {
               Row(
                 children: [
                   SizedBox(
-                    width: 70,
+                    width: device.width*0.19,
                   ),
                   Flexible(
                     child: Text(
@@ -200,7 +201,7 @@ class _FeedCardState extends State<FeedCard> {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: 14,
+                        width: device.width*0.03,
                       ),
                       Text(
                         '${widget.createdOn}',

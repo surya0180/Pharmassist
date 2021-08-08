@@ -63,7 +63,7 @@ class RequestItem extends StatelessWidget {
             builder: (ctx) => AlertDialog(
               title: Text('Are you sure?'),
               content: Text(
-                'Do you want to remove the item from the cart?',
+                'Confirm to delete the request?',
               ),
               actions: <Widget>[
                 FlatButton(
@@ -100,7 +100,8 @@ class RequestItem extends StatelessWidget {
                   child: Text('Yes'),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
-                    Navigator.of(ctx).pushNamed(ChatScreen.routeName, arguments: {'name': username, 'userId': uid});
+                    Navigator.of(ctx).pushNamed(ChatScreen.routeName,
+                        arguments: {'name': username, 'userId': uid});
                   },
                 ),
               ],

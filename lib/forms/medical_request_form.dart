@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,12 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
       'PhotoUrl': userData.photoUrl,
       'isDeleted': false,
     });
+
+    final _count =
+        Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+    Provider.of<AdminProvider>(context, listen: false)
+        .updateRequests(_count + 1);
+
     print(_title);
     print(_request);
   }

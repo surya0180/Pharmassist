@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmassist/forms/getting_started.dart';
+import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 import 'package:pharmassist/screens/edit_profile_screen.dart';
@@ -115,6 +116,7 @@ class MapScreenState extends State<ProfilePage>
 
   _onSubmit() {
     final isValid = _formKey.currentState.validate();
+    Provider.of<ProfileEditStatus>(context, listen: false).setIsEditingFalse();
     if (!isValid) {
       return;
     }
@@ -166,7 +168,7 @@ class MapScreenState extends State<ProfilePage>
               Column(
                 children: <Widget>[
                   new Container(
-                    height: device.height*0.31,
+                    height: device.height * 0.31,
                     color: Colors.white,
                     child: new Column(
                       children: <Widget>[
@@ -191,8 +193,8 @@ class MapScreenState extends State<ProfilePage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Container(
-                                    width: device.height*0.18,
-                                    height: device.height*0.18,
+                                    width: device.height * 0.18,
+                                    height: device.height * 0.18,
                                     child: Image.network(_isSearchResult != null
                                         ? _profilePic
                                         : userinfo.photoUrl),
@@ -735,32 +737,32 @@ class MapScreenState extends State<ProfilePage>
   @override
   void dispose() {
     // Clean up the controller when the Widget is disposed
-    if (!_status) {
-      showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              title: Text('Are you sure?'),
-              content: Text(
-                'Do you want to leave this page',
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(ctx).pop(false);
-                  },
-                ),
-                FlatButton(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    Navigator.of(ctx).pop(true);
-                  },
-                ),
-              ],
-            );
-          });
-    }
+    // if (!_status) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (ctx) {
+    //         return AlertDialog(
+    //           title: Text('Are you sure?'),
+    //           content: Text(
+    //             'Do you want to leave this page',
+    //           ),
+    //           actions: <Widget>[
+    //             FlatButton(
+    //               child: Text('No'),
+    //               onPressed: () {
+    //                 Navigator.of(ctx).pop(false);
+    //               },
+    //             ),
+    //             FlatButton(
+    //               child: Text('Yes'),
+    //               onPressed: () {
+    //                 Navigator.of(ctx).pop(true);
+    //               },
+    //             ),
+    //           ],
+    //         );
+    //       });
+    // }
     myFocusNode.dispose();
     super.dispose();
   }
@@ -798,6 +800,8 @@ class MapScreenState extends State<ProfilePage>
                 onPressed: () {
                   final userinfo =
                       Provider.of<UserProvider>(context, listen: false).user;
+                  Provider.of<ProfileEditStatus>(context, listen: false)
+                      .setIsEditingFalse();
                   setState(() {
                     dateinput.text = userinfo.renewalDate;
                     dropdownValue = userinfo.state.toLowerCase().toString();
@@ -836,6 +840,8 @@ class MapScreenState extends State<ProfilePage>
         ),
       ),
       onTap: () {
+        Provider.of<ProfileEditStatus>(context, listen: false)
+            .setIsEditingTrue();
         setState(() {
           _status = false;
         });

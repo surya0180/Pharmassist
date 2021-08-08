@@ -50,7 +50,7 @@ class SideDrawer extends StatelessWidget {
                       onTap: () {
                         _isAdded == null
                             ? print('logging out')
-                            : _isAdded
+                            : !_isAdded
                                 ? showDialog(
                                     context: context,
                                     builder: (ctx) => AlertDialog(

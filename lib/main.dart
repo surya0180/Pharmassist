@@ -9,13 +9,11 @@ import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/feed_provider.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
+import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
-<<<<<<< HEAD
 import 'package:pharmassist/screens/edit_profile_screen.dart';
-=======
 import 'package:pharmassist/screens/dashboard.dart';
->>>>>>> a753e7ab0454c6588ebdb339f6c95d8a1cfdb904
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:pharmassist/screens/profile_screen.dart';
 import 'package:pharmassist/screens/store_detail_screen.dart';
@@ -58,6 +56,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => NotificationProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => ProfileEditStatus(),
+        ),
       ],
       child: MaterialApp(
         title: 'Pharmassist',
@@ -74,11 +75,8 @@ class MyApp extends StatelessWidget {
           FeedDetailScreen.routeName: (ctx) => FeedDetailScreen(),
           StoreScreen.routeName: (ctx) => StoreScreen(),
           StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
-<<<<<<< HEAD
           ProfilePageEdit.routeName: (ctx) => ProfilePageEdit(),
-=======
           Dashboard.routeName: (ctx) => Dashboard(),
->>>>>>> a753e7ab0454c6588ebdb339f6c95d8a1cfdb904
         },
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
 import 'package:pharmassist/providers/admin-provider.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
+import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/widgets/BottomNavBar.dart';
 import 'package:provider/provider.dart';
@@ -27,11 +28,41 @@ class _TabScreenState extends State<TabScreen> {
   PageController _pageController;
 
   void _selectPage(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-    });
+    final _isEditing = Provider.of<ProfileEditStatus>(context, listen: false).getIsEditingStatus;
+    if (_selectedIndex == 0 && index != 0 && _isEditing) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: new Text('Are you sure?'),
+          content: new Text('Unsaved data will be lost.'),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () => Navigator.pop(context), // Closes the dialog
+              child: new Text('No'),
+            ),
+            new FlatButton(
+              onPressed: () {
+                setState(() {
+                  _selectedIndex = index;
+                  _pageController.animateToPage(index,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                  print('i am setted to another page');
+                }); // Changes the tab
+                Navigator.pop(context); // Closes the dialog
+              },
+              child: new Text('Yes'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+        _pageController.animateToPage(index,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      });
+    }
   }
 
   dynamic _isAdminStatus() {

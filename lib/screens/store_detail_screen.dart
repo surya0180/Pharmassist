@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/states.dart';
 import 'package:pharmassist/helpers/stores.dart';
 import 'package:pharmassist/providers/store.dart';
 import 'package:pharmassist/screens/store_screen.dart';
@@ -33,6 +34,7 @@ class MapScreenState extends State<StoreDetailScreen>
   String _uid = '';
   Timestamp _timestamp;
   TextEditingController dateinput = TextEditingController();
+  String dropdownValue;
   // var _initValues = {
   //   "isNew": true,
   //   "name": "",
@@ -47,6 +49,7 @@ class MapScreenState extends State<StoreDetailScreen>
   void initState() {
     // TODO: implement initState
     dateinput.text = "";
+    dropdownValue = "andhra pradesh";
     super.initState();
   }
 
@@ -70,6 +73,10 @@ class MapScreenState extends State<StoreDetailScreen>
         _timestamp = routeArgs['timestamp'];
       }
       dateinput.text = _establishmentYear;
+      if (_state != "") {
+        dropdownValue = _state.toLowerCase().toString();
+      }
+
       _init = false;
     }
 
@@ -509,24 +516,31 @@ class MapScreenState extends State<StoreDetailScreen>
                                       flex: 2,
                                     ),
                                     Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          setState(() {
-                                            _state = value;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.done,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          return null;
-                                        },
-                                        initialValue: _state,
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter State"),
-                                        enabled: !_status,
+                                      child: IgnorePointer(
+                                        ignoring: _status,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              DropdownButtonFormField<String>(
+                                                onSaved: (value) {
+                                                  setState(() {
+                                                    _state = value;
+                                                  });
+                                                },
+                                                isExpanded: true,
+                                                value: dropdownValue,
+                                                onChanged: (String newValue) {
+                                                  setState(() {
+                                                    dropdownValue = newValue;
+                                                  });
+                                                },
+                                                items: statesItems,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                       flex: 2,
                                     ),

@@ -5,17 +5,16 @@ import 'package:intl/intl.dart';
 import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/providers/user.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
-import 'package:pharmassist/screens/edit_profile_screen.dart';
 import 'package:provider/provider.dart';
 import '../helpers/states.dart';
 
-class ProfilePage extends StatefulWidget {
-  static final routeName = "/profile-page";
+class ProfilePageEdit extends StatefulWidget {
+  static final routeName = "/profile-page-edit";
   @override
   MapScreenState createState() => MapScreenState();
 }
 
-class MapScreenState extends State<ProfilePage>
+class MapScreenState extends State<ProfilePageEdit>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
@@ -52,13 +51,6 @@ class MapScreenState extends State<ProfilePage>
     "state": '',
   };
   TextEditingController dateinput = TextEditingController();
-  TextEditingController fullname = TextEditingController();
-  TextEditingController registrationNo = TextEditingController();
-
-  TextEditingController street = TextEditingController();
-  TextEditingController town = TextEditingController();
-  TextEditingController district = TextEditingController();
-
   String stateInput;
   String dropdownValue;
 
@@ -68,13 +60,6 @@ class MapScreenState extends State<ProfilePage>
   void initState() {
     dateinput.text = "";
     dropdownValue = "andhra pradesh";
-
-    fullname.text = "";
-    registrationNo.text = "";
-
-    street.text = "";
-    town.text = "";
-    district.text = "";
 
     // TODO: implement initState
     var _isAdded =
@@ -92,13 +77,6 @@ class MapScreenState extends State<ProfilePage>
       };
       dateinput.text = _initValues["renewalDate"];
       dropdownValue = _initValues["state"].toLowerCase().toString();
-      fullname.text = userinfo.fullname;
-      registrationNo.text = userinfo.registrationNo;
-
-      street.text = userinfo.street;
-      town.text = userinfo.town;
-      district.text = userinfo.district;
-
       _status = userinfo.isAdded;
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -147,12 +125,6 @@ class MapScreenState extends State<ProfilePage>
         _uid = routeArgs['uid'];
         dateinput.text = _renewalDate;
         dropdownValue = _state.toLowerCase().toString();
-        fullname.text = _fullname;
-        registrationNo.text = _registerationNumber;
-
-        street.text = _street;
-        town.text = _town;
-        district.text = _district;
       });
     }
     print(_isSearchResult);
@@ -326,10 +298,9 @@ class MapScreenState extends State<ProfilePage>
                                           }
                                           return null;
                                         },
-                                        controller: fullname,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _fullname
-                                        //     : _initValues["fullName"],
+                                        initialValue: _isSearchResult != null
+                                            ? _fullname
+                                            : _initValues["fullName"],
                                         decoration: const InputDecoration(
                                           hintText: "Enter Your Name",
                                         ),
@@ -389,10 +360,9 @@ class MapScreenState extends State<ProfilePage>
                                           }
                                           return null;
                                         },
-                                        controller: registrationNo,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _registerationNumber
-                                        //     : _initValues["registrationNo"],
+                                        initialValue: _isSearchResult != null
+                                            ? _registerationNumber
+                                            : _initValues["registrationNo"],
                                         decoration: const InputDecoration(
                                             hintText: "Enter registration no"),
                                         enabled: !_status,
@@ -478,7 +448,9 @@ class MapScreenState extends State<ProfilePage>
                                           }
                                           return null;
                                         },
-                                        controller: dateinput,
+                                        controller: _isSearchResult != null
+                                            ? _renewalDate
+                                            : dateinput,
                                         // initialValue: _isSearchResult != null
                                         //     ? _renewalDate
                                         //     : dateinput,
@@ -553,10 +525,9 @@ class MapScreenState extends State<ProfilePage>
                                             }
                                             return null;
                                           },
-                                          controller: street,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _street
-                                          //     : _initValues["street"],
+                                          initialValue: _isSearchResult != null
+                                              ? _street
+                                              : _initValues["street"],
                                           decoration: const InputDecoration(
                                               hintText: "Enter Street"),
                                           enabled: !_status,
@@ -588,10 +559,9 @@ class MapScreenState extends State<ProfilePage>
                                           }
                                           return null;
                                         },
-                                        controller: town,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _town
-                                        //     : _initValues["town"],
+                                        initialValue: _isSearchResult != null
+                                            ? _town
+                                            : _initValues["town"],
                                         decoration: const InputDecoration(
                                             hintText: "Enter Town"),
                                         enabled: !_status,
@@ -664,10 +634,9 @@ class MapScreenState extends State<ProfilePage>
                                             }
                                             return null;
                                           },
-                                          controller: district,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _district
-                                          //     : _initValues["district"],
+                                          initialValue: _isSearchResult != null
+                                              ? _district
+                                              : _initValues["district"],
                                           decoration: const InputDecoration(
                                               hintText: "Enter District"),
                                           enabled: !_status,
@@ -734,32 +703,6 @@ class MapScreenState extends State<ProfilePage>
   @override
   void dispose() {
     // Clean up the controller when the Widget is disposed
-    if (!_status) {
-      showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              title: Text('Are you sure?'),
-              content: Text(
-                'Do you want to leave this page',
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(ctx).pop(false);
-                  },
-                ),
-                FlatButton(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    Navigator.of(ctx).pop(true);
-                  },
-                ),
-              ],
-            );
-          });
-    }
     myFocusNode.dispose();
     super.dispose();
   }
@@ -795,22 +738,7 @@ class MapScreenState extends State<ProfilePage>
                 textColor: Colors.white,
                 color: Colors.red,
                 onPressed: () {
-                  final userinfo =
-                      Provider.of<UserProvider>(context, listen: false).user;
-                  setState(() {
-                    dateinput.text = userinfo.renewalDate;
-                    dropdownValue = userinfo.state.toLowerCase().toString();
-                    fullname.text = userinfo.fullname;
-                    registrationNo.text = userinfo.registrationNo;
-
-                    street.text = userinfo.street;
-                    town.text = userinfo.town;
-                    district.text = userinfo.district;
-
-                    _status = userinfo.isAdded;
-                    _status = true;
-                  });
-                  print(_status);
+                  Navigator.of(context).pop();
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),

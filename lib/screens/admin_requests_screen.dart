@@ -25,6 +25,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
 
   var streamBuilder = FirebaseFirestore.instance
       .collection('pharmacist requests')
+      .orderBy('timestamp', descending: true)
       .where('isDeleted', isEqualTo: false)
       .snapshots();
   void setValue(value) {
@@ -33,6 +34,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
         RequestType = "pharm";
         streamBuilder = FirebaseFirestore.instance
             .collection('pharmacist requests')
+            .orderBy('timestamp', descending: true)
             .where('isDeleted', isEqualTo: false)
             .snapshots();
       });
@@ -41,6 +43,7 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
         RequestType = "medic";
         streamBuilder = FirebaseFirestore.instance
             .collection('medical requests')
+            .orderBy('timestamp', descending: true)
             .where('isDeleted', isEqualTo: false)
             .snapshots();
       });

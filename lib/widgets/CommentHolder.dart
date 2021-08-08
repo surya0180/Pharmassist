@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CommentHolder extends StatelessWidget {
-  const CommentHolder({this.id, this.username, this.comment, Key key})
+  const CommentHolder(
+      {this.id, this.username, this.comment, this.createdAt, Key key})
       : super(key: key);
 
   final String id;
   final String username;
   final String comment;
+  final String createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CommentHolder extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(
-                  '5ds ago',
+                  '$createdAt',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 10,
@@ -40,7 +42,9 @@ class CommentHolder extends StatelessWidget {
                 ),
               ],
             ),
-            Text(comment),
+            Text(
+              comment,
+            ),
           ],
         ),
       ),

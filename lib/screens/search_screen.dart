@@ -37,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     print(_value);
     print(_category);
     print(_filter);
@@ -46,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           SearchBar(_setQuery, _setCategory, _setFilter),
           SizedBox(
-            height: 6,
+            height: device.height*0.02,
           ),
           _value == null
               ? StartSearching()

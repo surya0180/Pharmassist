@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/Colors.dart';
-import 'package:pharmassist/helpers/SampleMessages.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
@@ -46,7 +45,7 @@ class ChatItem extends StatelessWidget {
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(
-          height: 73,
+          height: MediaQuery.of(context).size.height*0.1,
           padding: EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +57,7 @@ class ChatItem extends StatelessWidget {
                     backgroundImage: NetworkImage(profilePic),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: MediaQuery.of(context).size.width*0.05,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +67,7 @@ class ChatItem extends StatelessWidget {
                         style: Theme.of(context).textTheme.title,
                       ),
                       SizedBox(
-                        height: 6,
+                        height: MediaQuery.of(context).size.height*0.008,
                       ),
                       number != 0
                           ? Text(

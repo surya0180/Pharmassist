@@ -13,6 +13,7 @@ class RequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     final _isAdded =
         Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
     return _isAdded
@@ -46,10 +47,10 @@ class RequestScreen extends StatelessWidget {
                   color: Colors.black38,
                 ),
                 SizedBox(
-                  height: 15,
+                  height: device.height*0.02,
                 ),
                 Container(
-                  width: 200,
+                  width: device.width*0.6,
                   child: Text(
                     'Please complete your profile to access this page',
                     style: TextStyle(

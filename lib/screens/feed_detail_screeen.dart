@@ -9,6 +9,7 @@ class FeedDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     final _feedData =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     return Scaffold(
@@ -43,11 +44,11 @@ class FeedDetailScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 25,
+                        height: device.height*0.031,
                       ),
                       Text(_feedData['content']),
                       SizedBox(
-                        height: 25,
+                        height: device.height*0.031,
                       ),
                       CommentScreen(_feedData['id']),
                     ],

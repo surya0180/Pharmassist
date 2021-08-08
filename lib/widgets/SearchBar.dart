@@ -16,8 +16,9 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return Container(
-      height: 62,
+      height: device.height*0.075,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -86,7 +87,7 @@ class _SearchBarState extends State<SearchBar> {
                 ],
               ),
               SizedBox(
-                width: 10,
+                width: device.width*0.03,
               ),
             ],
           ),

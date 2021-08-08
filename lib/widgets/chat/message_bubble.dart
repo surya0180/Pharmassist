@@ -57,7 +57,10 @@ class MessageBubble extends StatelessWidget {
                         isMe ? Radius.circular(0) : Radius.circular(12),
                   ),
                 ),
-                constraints: BoxConstraints(minWidth: 100, maxWidth: 290),
+                constraints: BoxConstraints(
+                  minWidth: MediaQuery.of(context).size.width * 0.3,
+                  maxWidth: MediaQuery.of(context).size.width * 0.85,
+                ),
                 padding: EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 16,
@@ -90,7 +93,7 @@ class MessageBubble extends StatelessWidget {
                       textAlign: isMe ? TextAlign.end : TextAlign.start,
                     ),
                     SizedBox(
-                      height: 6,
+                      height: MediaQuery.of(context).size.height * 0.008,
                     ),
                     Text(
                       '$chatTime',

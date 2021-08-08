@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/forms/getting_started.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
-import 'package:pharmassist/screens/tab_screen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +13,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Column(
@@ -25,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
               padding: EdgeInsets.only(bottom: 20),
               child: Image.asset(
                 'assets/images/splashlogo.png',
-                height: 150,
+                height: device.height*0.185,
               ),
             ),
             Container(

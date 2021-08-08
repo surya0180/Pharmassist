@@ -84,6 +84,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
         final value = await showDialog<bool>(
@@ -133,6 +134,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.sentences,
+                        enableSuggestions: true,
                         initialValue: _title,
                         decoration: InputDecoration(
                           hintText: 'Title',
@@ -163,13 +167,16 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         },
                       ),
                       SizedBox(
-                        height: 20,
+                        height: device.height*0.026,
                       ),
 
                       // this is where the
                       // input goes
 
                       TextFormField(
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.sentences,
+                        enableSuggestions: true,
                         initialValue: _description,
                         minLines: 4,
                         maxLines: 6,
@@ -206,7 +213,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                       ),
 
                       SizedBox(
-                        height: 20,
+                        height: device.height*0.026,
                       ),
                       Container(
                         alignment: Alignment.centerRight,

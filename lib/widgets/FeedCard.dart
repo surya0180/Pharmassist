@@ -38,6 +38,7 @@ class FeedCard extends StatefulWidget {
 class _FeedCardState extends State<FeedCard> {
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     final feed = Provider.of<FeedProvider>(context, listen: false);
     final uid = FirebaseAuth.instance.currentUser.uid;
     var _isLiked;
@@ -78,26 +79,107 @@ class _FeedCardState extends State<FeedCard> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage: NetworkImage(widget.profilePic),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                    child: Text(
-                      widget.title,
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(widget.profilePic),
+                        ),
+                        SizedBox(
+                          width: device.width*0.05,
+                        ),
+                        Flexible(
+                          child: Text(
+                            widget.title,
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  if (_isAdmin)
+                    DropdownButton(
+                      icon: Icon(Icons.more_vert),
+                      underline: Container(),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'delete',
+                          child: Text(
+                            'Delete feed',
+                            style: TextStyle(
+                              fontFamily: 'poppins',
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: 'edit',
+                          child: Text(
+                            'Edit feed',
+                            style: TextStyle(
+                              fontFamily: 'poppins',
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
+                      ],
+                      onChanged: (itemIdentifier) {
+                        if (itemIdentifier == 'delete') {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text('Are you sure?'),
+                              content: Text(
+                                'Do you want to delete this feed ?',
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('No'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text('Yes'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                    Provider.of<FeedProvider>(context,
+                                            listen: false)
+                                        .deleteFeed(widget.id)
+                                        .then((value) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Deleted feed sucessfully',
+                                          ),
+                                        ),
+                                      );
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          Navigator.of(context)
+                              .pushNamed(NewFeedForm.routeName, arguments: {
+                            'id': widget.id,
+                            'title': widget.title,
+                            'content': widget.content,
+                          });
+                        }
+                      },
+                    ),
                 ],
               ),
               Row(
                 children: [
                   SizedBox(
-                    width: 70,
+                    width: device.width*0.19,
                   ),
                   Flexible(
                     child: Text(
@@ -119,7 +201,7 @@ class _FeedCardState extends State<FeedCard> {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: 14,
+                        width: device.width*0.03,
                       ),
                       Text(
                         '${widget.createdOn}',
@@ -129,63 +211,6 @@ class _FeedCardState extends State<FeedCard> {
                   ),
                   Row(
                     children: [
-                      if (_isAdmin)
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text('Are you sure?'),
-                                content: Text(
-                                  'Do you want to delete this feed ?',
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('No'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop(false);
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text('Yes'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop(true);
-                                      Provider.of<FeedProvider>(context,
-                                              listen: false)
-                                          .deleteFeed(widget.id)
-                                          .then((value) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Deleted feed sucessfully',
-                                            ),
-                                          ),
-                                        );
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.delete),
-                        ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(NewFeedForm.routeName, arguments: {
-                            'id': widget.id,
-                            'title': widget.title,
-                            'content': widget.content,
-                          });
-                        },
-                        color: Theme.of(context).accentColor,
-                      ),
                       IconButton(
                         icon: Icon(
                           _isLiked == null

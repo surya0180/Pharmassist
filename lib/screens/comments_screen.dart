@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pharmassist/providers/comment.dart';
 import 'package:pharmassist/providers/comment_provider.dart';
 import 'package:pharmassist/providers/user.dart';
@@ -70,11 +71,13 @@ class _CommentScreenState extends State<CommentScreen> {
                 setState(() {
                   _comment = _controller.text;
                 });
+                var timestamp = DateTime.now();
                 _commentsData.addComment(
                   widget.feedId,
-                  DateTime.now().toIso8601String(),
+                  timestamp.toIso8601String(),
                   _comment,
                   _username,
+                  DateFormat.yMd().format(timestamp),
                 );
                 _controller.clear();
                 FocusScope.of(context).unfocus();
@@ -110,12 +113,14 @@ class _CommentScreenState extends State<CommentScreen> {
                   )
                 : ListView.builder(
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     itemBuilder: (ctx, index) {
                       return CommentHolder(
                         id: commentDocs[index].data()['id'],
                         username: commentDocs[index].data()['username'],
                         comment: commentDocs[index].data()['comment'],
+                        createdAt: commentDocs[index].data()['createdAt'],
                       );
                     },
                     itemCount: commentDocs.length,

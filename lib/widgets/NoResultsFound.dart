@@ -5,16 +5,17 @@ class NoResultsFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final device = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          height: 200,
+          height: device.height*0.26,
         ),
         Icon(
           Icons.no_accounts,
           size: 70,
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: device.height*0.02,),
         Text(
           'No results found',
           style: TextStyle(fontSize: 18),

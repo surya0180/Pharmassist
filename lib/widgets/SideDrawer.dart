@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/providers/user.dart';
+import 'package:pharmassist/screens/dashboard.dart';
 import 'package:pharmassist/screens/store_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ class SideDrawer extends StatelessWidget {
                       title: Text('Dashboard'),
                       onTap: () {
                         Navigator.popAndPushNamed(
-                            context, StoreScreen.routeName);
+                            context, Dashboard.routeName);
                       },
                     )
                   : ListTile(

@@ -133,6 +133,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.sentences,
+                        enableSuggestions: true,
                         initialValue: _title,
                         decoration: InputDecoration(
                           hintText: 'Title',
@@ -170,6 +173,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
                       // input goes
 
                       TextFormField(
+                        autocorrect: false,
+                        textCapitalization: TextCapitalization.sentences,
+                        enableSuggestions: true,
                         initialValue: _description,
                         minLines: 4,
                         maxLines: 6,

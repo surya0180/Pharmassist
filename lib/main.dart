@@ -11,6 +11,7 @@ import 'package:pharmassist/providers/google_sign_in.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/screens/auth_screen.dart';
 import 'package:pharmassist/screens/chat_screen.dart';
+import 'package:pharmassist/screens/dashboard.dart';
 import 'package:pharmassist/screens/feed_detail_screeen.dart';
 import 'package:pharmassist/screens/profile_screen.dart';
 import 'package:pharmassist/screens/store_detail_screen.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
           FeedDetailScreen.routeName: (ctx) => FeedDetailScreen(),
           StoreScreen.routeName: (ctx) => StoreScreen(),
           StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
+          Dashboard.routeName: (ctx) => Dashboard(),
         },
       ),
     );

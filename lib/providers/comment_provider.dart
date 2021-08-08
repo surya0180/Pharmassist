@@ -9,7 +9,12 @@ class CommentProvider with ChangeNotifier {
   }
 
   void addComment(
-      String sectionId, String commentId, String comment, String username) {
+    String sectionId,
+    String commentId,
+    String comment,
+    String username,
+    String createdAt,
+  ) {
     FirebaseFirestore.instance
         .collection('commentSections/')
         .doc(sectionId)
@@ -19,6 +24,7 @@ class CommentProvider with ChangeNotifier {
       'id': commentId,
       'username': username,
       'comment': comment,
+      'createdAt': createdAt
     });
   }
 }

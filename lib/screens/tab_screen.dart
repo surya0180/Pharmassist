@@ -28,30 +28,18 @@ class _TabScreenState extends State<TabScreen> {
   PageController _pageController;
 
   void _selectPage(int index) {
-    final _isEditing = Provider.of<ProfileEditStatus>(context, listen: false).getIsEditingStatus;
+    final _isEditing = Provider.of<ProfileEditStatus>(context, listen: false)
+        .getIsEditingStatus;
     if (_selectedIndex == 0 && index != 0 && _isEditing) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: new Text('Are you sure?'),
-          content: new Text('Unsaved data will be lost.'),
+          // title: new Text('Are you sure?'),
+          content: new Text('Please save your data.'),
           actions: <Widget>[
             new FlatButton(
               onPressed: () => Navigator.pop(context), // Closes the dialog
-              child: new Text('No'),
-            ),
-            new FlatButton(
-              onPressed: () {
-                setState(() {
-                  _selectedIndex = index;
-                  _pageController.animateToPage(index,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut);
-                  print('i am setted to another page');
-                }); // Changes the tab
-                Navigator.pop(context); // Closes the dialog
-              },
-              child: new Text('Yes'),
+              child: new Text('Ok'),
             ),
           ],
         ),

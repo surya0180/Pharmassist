@@ -186,12 +186,16 @@ class MapScreenState extends State<StoreDetailScreen>
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            _status
-                                                ? _uid !=
-                                                        FirebaseAuth.instance
-                                                            .currentUser.uid
-                                                    ? new Container()
-                                                    : _getDeleteIcon()
+                                            !_isNew
+                                                ? _status
+                                                    ? _uid !=
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .currentUser
+                                                                .uid
+                                                        ? new Container()
+                                                        : _getDeleteIcon()
+                                                    : new Container()
                                                 : new Container(),
                                           ],
                                         )

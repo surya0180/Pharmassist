@@ -68,6 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ).snapshots()
                       : FirebaseFirestore.instance
                           .collection('stores label')
+                          .where('isDeleted', isEqualTo: false)
                           .orderBy('name')
                           .startAt([_value.toLowerCase()]).endAt(
                           [

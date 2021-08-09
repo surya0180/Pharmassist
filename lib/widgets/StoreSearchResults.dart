@@ -39,7 +39,8 @@ class StoreSearchResult extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(StoreDetailScreen.routeName, arguments: {
+          Navigator.of(context)
+              .pushNamed(StoreDetailScreen.routeName, arguments: {
             'name': name,
             'firmId': firmId,
             'establishmentYear': establishmentYear,
@@ -56,7 +57,7 @@ class StoreSearchResult extends StatelessWidget {
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(
-          height: MediaQuery.of(context).size.height*0.09,
+          height: 73,
           padding: EdgeInsets.only(left: 14, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +72,7 @@ class StoreSearchResult extends StatelessWidget {
                         style: Theme.of(context).textTheme.title,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.008,
+                        height: MediaQuery.of(context).size.height * 0.008,
                       ),
                       Text(
                         'Store-Id:  $storeId',

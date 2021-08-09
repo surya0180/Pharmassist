@@ -33,7 +33,7 @@ class StoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     print(isNew);
     return Container(
-      height: MediaQuery.of(context).size.height*0.3,
+      height: MediaQuery.of(context).size.height * 0.3,
       child: GridTile(
         child: GestureDetector(
           onTap: () {
@@ -62,7 +62,7 @@ class StoreCard extends StatelessWidget {
                     children: [
                       Text("Add Store"),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.02,
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       Icon(Icons.add),
                     ],

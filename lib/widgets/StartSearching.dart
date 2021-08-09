@@ -22,6 +22,7 @@ class StartSearching extends StatelessWidget {
                   .snapshots()
               : FirebaseFirestore.instance
                   .collection('stores label')
+                  .where('isDeleted', isEqualTo: false)
                   .orderBy('name')
                   .snapshots(),
       builder: (ctx, snapShot) {

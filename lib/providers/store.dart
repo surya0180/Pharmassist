@@ -57,6 +57,7 @@ class StoreProvider with ChangeNotifier {
       'district': editedStore.district,
       'state': editedStore.state,
       'isNew': false,
+      'isDeleted': false,
       'timeStamp': editedStore.timestamp,
     });
     document2.set({
@@ -70,6 +71,7 @@ class StoreProvider with ChangeNotifier {
       'district': editedStore.district.toLowerCase(),
       'state': editedStore.state.toLowerCase(),
       'isNew': false,
+      'isDeleted': false,
       'timeStamp': editedStore.timestamp,
     });
   }
@@ -93,6 +95,7 @@ class StoreProvider with ChangeNotifier {
       'district': editedStore.district,
       'state': editedStore.state,
       'isNew': false,
+      'isDeleted': false,
       'timeStamp': editedStore.timestamp,
     });
     FirebaseFirestore.instance
@@ -109,6 +112,48 @@ class StoreProvider with ChangeNotifier {
       'district': editedStore.district.toLowerCase(),
       'state': editedStore.state.toLowerCase(),
       'isNew': false,
+      'isDeleted': false,
+      'timeStamp': editedStore.timestamp,
+    });
+  }
+
+  void deleteStore(Store editedStore) {
+    final uid = signedUser.uid;
+
+    FirebaseFirestore.instance
+        .collection('stores')
+        .doc(uid)
+        .collection('sub Stores')
+        .doc(editedStore.storeId)
+        .update({
+      'storeId': editedStore.storeId,
+      'uid': editedStore.uid,
+      'name': editedStore.name,
+      'firmId': editedStore.firmId,
+      'establishmentYear': editedStore.establishmentYear,
+      'street': editedStore.street,
+      'town': editedStore.town,
+      'district': editedStore.district,
+      'state': editedStore.state,
+      'isNew': false,
+      'isDeleted': true,
+      'timeStamp': editedStore.timestamp,
+    });
+    FirebaseFirestore.instance
+        .collection('stores label')
+        .doc(editedStore.storeId)
+        .update({
+      'storeId': editedStore.storeId,
+      'uid': editedStore.uid,
+      'name': editedStore.name.toLowerCase(),
+      'firmId': editedStore.firmId,
+      'establishmentYear': editedStore.establishmentYear,
+      'street': editedStore.street.toLowerCase(),
+      'town': editedStore.town.toLowerCase(),
+      'district': editedStore.district.toLowerCase(),
+      'state': editedStore.state.toLowerCase(),
+      'isNew': false,
+      'isDeleted': true,
       'timeStamp': editedStore.timestamp,
     });
   }

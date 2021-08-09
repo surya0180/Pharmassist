@@ -109,6 +109,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       'district': "",
       'state': "",
       'isNew': true,
+      'isDeleted': false,
       'timeStamp': timeStamp,
     });
   }

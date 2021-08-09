@@ -47,10 +47,10 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           SearchBar(_setQuery, _setCategory, _setFilter),
           SizedBox(
-            height: device.height*0.02,
+            height: device.height * 0.02,
           ),
           _value == null
-              ? StartSearching()
+              ? StartSearching(_category)
               : StreamBuilder(
                   stream: _category == null ||
                           _category == 'noFilter' ||
@@ -58,6 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ? FirebaseFirestore.instance
                           .collection('users')
                           .orderBy('fullName')
+                          .where('isAdded', isEqualTo: true)
                           .startAt([_value.toLowerCase()]).endAt(
                           [
                             _value == null

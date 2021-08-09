@@ -14,6 +14,7 @@ class Store {
   final String state;
   final bool isNew;
   Timestamp timestamp;
+  bool isDeletd;
 
   Store({
     this.uid,
@@ -27,6 +28,7 @@ class Store {
     @required this.state,
     @required this.isNew,
     this.timestamp,
+    this.isDeletd,
   });
 }
 
@@ -117,44 +119,23 @@ class StoreProvider with ChangeNotifier {
     });
   }
 
-  void deleteStore(Store editedStore) {
+  Future<void> deleteStore(Store editedStore) {
     final uid = signedUser.uid;
+    print(editedStore.storeId);
 
     FirebaseFirestore.instance
+        .collection('stores label')
+        .doc(editedStore.storeId)
+        .update({
+      'isDeleted': true,
+    });
+    return FirebaseFirestore.instance
         .collection('stores')
         .doc(uid)
         .collection('sub Stores')
         .doc(editedStore.storeId)
         .update({
-      'storeId': editedStore.storeId,
-      'uid': editedStore.uid,
-      'name': editedStore.name,
-      'firmId': editedStore.firmId,
-      'establishmentYear': editedStore.establishmentYear,
-      'street': editedStore.street,
-      'town': editedStore.town,
-      'district': editedStore.district,
-      'state': editedStore.state,
-      'isNew': false,
       'isDeleted': true,
-      'timeStamp': editedStore.timestamp,
-    });
-    FirebaseFirestore.instance
-        .collection('stores label')
-        .doc(editedStore.storeId)
-        .update({
-      'storeId': editedStore.storeId,
-      'uid': editedStore.uid,
-      'name': editedStore.name.toLowerCase(),
-      'firmId': editedStore.firmId,
-      'establishmentYear': editedStore.establishmentYear,
-      'street': editedStore.street.toLowerCase(),
-      'town': editedStore.town.toLowerCase(),
-      'district': editedStore.district.toLowerCase(),
-      'state': editedStore.state.toLowerCase(),
-      'isNew': false,
-      'isDeleted': true,
-      'timeStamp': editedStore.timestamp,
     });
   }
 }

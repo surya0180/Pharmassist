@@ -195,9 +195,9 @@ class MapScreenState extends State<ProfilePage>
                                 new Container(
                                     width: device.height * 0.18,
                                     height: device.height * 0.18,
-                                    child: Image.network(_isSearchResult != null
-                                        ? _profilePic
-                                        : userinfo.photoUrl),
+                                    // child: Image.network(_isSearchResult != null
+                                    //     ? _profilePic
+                                    //     : userinfo.photoUrl),
                                     decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(

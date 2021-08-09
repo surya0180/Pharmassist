@@ -46,7 +46,7 @@ class SideDrawer extends StatelessWidget {
                     )
                   : ListTile(
                       leading: Icon(Icons.store),
-                      title: Text('Add Store'),
+                      title: Text('Stores'),
                       onTap: () {
                         _isAdded == null
                             ? print('logging out')

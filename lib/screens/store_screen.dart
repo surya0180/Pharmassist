@@ -55,6 +55,7 @@ class _StoreScreenState extends State<StoreScreen> {
               .collection('stores')
               .doc(uid)
               .collection('sub Stores')
+              .where('isDeleted', isEqualTo: false)
               .orderBy('timeStamp', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
@@ -74,7 +75,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 storeDocs[i].data()['firmId'],
                 storeDocs[i].data()['establishmentYear'],
                 storeDocs[i].data()['street'],
-                storeDocs[i].data()['twon'],
+                storeDocs[i].data()['town'],
                 storeDocs[i].data()['district'],
                 storeDocs[i].data()['state'],
                 storeDocs[i].data()['isNew'],

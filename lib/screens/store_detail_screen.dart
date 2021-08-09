@@ -96,7 +96,7 @@ class MapScreenState extends State<StoreDetailScreen>
           name: _name,
           firmId: _firmId,
           establishmentYear: _establishmentYear,
-          street: _state,
+          street: _street,
           town: _town,
           district: _district,
           state: _state,
@@ -110,7 +110,7 @@ class MapScreenState extends State<StoreDetailScreen>
           name: _name,
           firmId: _firmId,
           establishmentYear: _establishmentYear,
-          street: _state,
+          street: _street,
           town: _town,
           district: _district,
           state: _state,
@@ -172,13 +172,29 @@ class MapScreenState extends State<StoreDetailScreen>
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        _status
-                                            ? _uid !=
-                                                    FirebaseAuth.instance
-                                                        .currentUser.uid
-                                                ? new Container()
-                                                : _getEditIcon()
-                                            : new Container(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            _status
+                                                ? _uid !=
+                                                        FirebaseAuth.instance
+                                                            .currentUser.uid
+                                                    ? new Container()
+                                                    : _getEditIcon()
+                                                : new Container(),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            _status
+                                                ? _uid !=
+                                                        FirebaseAuth.instance
+                                                            .currentUser.uid
+                                                    ? new Container()
+                                                    : _getDeleteIcon()
+                                                : new Container(),
+                                          ],
+                                        )
                                       ],
                                     )
                                   ],
@@ -621,18 +637,83 @@ class MapScreenState extends State<StoreDetailScreen>
   Widget _getEditIcon() {
     return new GestureDetector(
       child: new CircleAvatar(
-        backgroundColor: Colors.red,
-        radius: 14.0,
+        backgroundColor: Colors.green,
+        radius: 16.0,
         child: new Icon(
           Icons.edit,
           color: Colors.white,
-          size: 16.0,
+          size: 18.0,
         ),
       ),
       onTap: () {
         setState(() {
           _status = false;
         });
+      },
+    );
+  }
+
+  Widget _getDeleteIcon() {
+    return new GestureDetector(
+      child: new CircleAvatar(
+        backgroundColor: Colors.red,
+        radius: 16.0,
+        child: new Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 18.0,
+        ),
+      ),
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text(
+              'Do you want to delete this Store ?',
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  int count = 0;
+
+                  Provider.of<StoreProvider>(context, listen: false)
+                      .deleteStore(
+                    Store(
+                      storeId: _storeId,
+                      uid: _uid,
+                      name: _name,
+                      firmId: _firmId,
+                      establishmentYear: _establishmentYear,
+                      street: _street,
+                      town: _town,
+                      district: _district,
+                      state: _state,
+                      isNew: _isNew,
+                      timestamp: _timestamp,
+                      isDeletd: true,
+                    ),
+                  )
+                      .then((value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Deleted store sucessfully'),
+                      ),
+                    );
+                    Navigator.of(context).popUntil((_) => count++ >= 2);
+                  });
+                },
+              ),
+            ],
+          ),
+        );
       },
     );
   }

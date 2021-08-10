@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
-import 'package:pharmassist/providers/admin-provider.dart';
+import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
-import 'package:pharmassist/providers/user.dart';
-import 'package:pharmassist/widgets/BottomNavBar.dart';
+import 'package:pharmassist/providers/auth/user.dart';
+import 'package:pharmassist/widgets/UI/BottomNavBar.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/SideDrawer.dart';
+import '../widgets/UI/SideDrawer.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key key}) : super(key: key);

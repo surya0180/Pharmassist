@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import './message_bubble.dart';
+import 'UI/message_bubble.dart';
 
 class Messages extends StatefulWidget {
   const Messages(this.userId, this.unreadMessages, this.isSent, this.timestamp, {Key key}) : super(key: key);

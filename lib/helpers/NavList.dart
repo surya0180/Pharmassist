@@ -1,9 +1,9 @@
-import 'package:pharmassist/screens/admin_requests_screen.dart';
-import 'package:pharmassist/screens/chat_list_screen.dart';
-import 'package:pharmassist/screens/feed_screen.dart';
-import 'package:pharmassist/screens/profile_screen.dart';
-import 'package:pharmassist/screens/request_screen.dart';
-import 'package:pharmassist/screens/search_screen.dart';
+import 'package:pharmassist/screens/admin/admin_requests_screen.dart';
+import 'package:pharmassist/screens/chat/chat_list_screen.dart';
+import 'package:pharmassist/screens/feeds/feed_screen.dart';
+import 'package:pharmassist/screens/tabs/profile_screen.dart';
+import 'package:pharmassist/screens/tabs/request_screen.dart';
+import 'package:pharmassist/screens/tabs/search_screen.dart';
 
 final userPages = [
   ProfilePage(),

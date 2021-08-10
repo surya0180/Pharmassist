@@ -3,26 +3,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
-import 'package:pharmassist/helpers/MyThemeData.dart';
-import 'package:pharmassist/providers/admin-provider.dart';
-import 'package:pharmassist/providers/comment_provider.dart';
-import 'package:pharmassist/providers/feed_provider.dart';
-import 'package:pharmassist/providers/google_sign_in.dart';
+import 'package:pharmassist/helpers/theme/MyThemeData.dart';
+import 'package:pharmassist/providers/auth/admin-provider.dart';
+import 'package:pharmassist/providers/comments/comment_provider.dart';
+import 'package:pharmassist/providers/feed/feed_provider.dart';
+import 'package:pharmassist/providers/auth/google_sign_in.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
-import 'package:pharmassist/screens/auth_screen.dart';
-import 'package:pharmassist/screens/chat_screen.dart';
-import 'package:pharmassist/screens/edit_profile_screen.dart';
-import 'package:pharmassist/screens/dashboard.dart';
-import 'package:pharmassist/screens/feed_detail_screeen.dart';
-import 'package:pharmassist/screens/profile_screen.dart';
-import 'package:pharmassist/screens/store_detail_screen.dart';
-import 'package:pharmassist/screens/store_screen.dart';
+import 'package:pharmassist/screens/tabs/auth_screen.dart';
+import 'package:pharmassist/screens/chat/chat_screen.dart';
+import 'package:pharmassist/screens/admin/dashboard_screen.dart';
+import 'package:pharmassist/screens/feeds/feed_detail_screeen.dart';
+import 'package:pharmassist/screens/tabs/profile_screen.dart';
+import 'package:pharmassist/screens/stores/store_detail_screen.dart';
+import 'package:pharmassist/screens/stores/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
-import 'package:pharmassist/widgets/new_feed_form.dart';
+import 'package:pharmassist/widgets/feed/new_feed_form.dart';
 import 'package:provider/provider.dart';
 import 'providers/store.dart';
-import 'providers/user.dart';
+import 'providers/auth/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +74,6 @@ class MyApp extends StatelessWidget {
           FeedDetailScreen.routeName: (ctx) => FeedDetailScreen(),
           StoreScreen.routeName: (ctx) => StoreScreen(),
           StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
-          ProfilePageEdit.routeName: (ctx) => ProfilePageEdit(),
           Dashboard.routeName: (ctx) => Dashboard(),
         },
       ),

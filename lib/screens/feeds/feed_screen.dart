@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/feed/FeedCard.dart';
 import 'package:pharmassist/widgets/feed/new_feed_form.dart';

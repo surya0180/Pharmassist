@@ -1,6 +1,4 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/theme/Colors.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
@@ -17,11 +15,6 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color _generateRandomColor() {
-      var rc = Random();
-      return themeColors[rc.nextInt(10)];
-    }
-
     print(uid);
 
     return Container(

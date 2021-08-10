@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmassist/helpers/states.dart';
 import 'package:pharmassist/providers/store.dart';
-import 'package:pharmassist/screens/stores/store_screen.dart';
 import 'package:provider/provider.dart';
 
 class StoreDetailScreen extends StatefulWidget {
@@ -34,16 +33,6 @@ class MapScreenState extends State<StoreDetailScreen>
   Timestamp _timestamp;
   TextEditingController dateinput = TextEditingController();
   String dropdownValue;
-  // var _initValues = {
-  //   "isNew": true,
-  //   "name": "",
-  //   "firmId": "",
-  //   "establishmentYear": "",
-  //   "street": '',
-  //   "town": '',
-  //   "district": '',
-  //   "state": '',
-  // };
   @override
   void initState() {
     // TODO: implement initState
@@ -124,7 +113,6 @@ class MapScreenState extends State<StoreDetailScreen>
       );
     }
     Navigator.of(context).pop();
-    // Navigator.of(context).popAndPushNamed(StoreScreen.routeName);
   }
 
   @override
@@ -377,7 +365,6 @@ class MapScreenState extends State<StoreDetailScreen>
                                           }
                                           return null;
                                         },
-                                        // initialValue: _establishmentYear,
                                         controller: dateinput,
                                         decoration: const InputDecoration(
                                             hintText:

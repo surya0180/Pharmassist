@@ -36,8 +36,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   final authProvider =
                       Provider.of<GoogleSignInProvider>(context, listen: false);
                   authProvider.googleLogIn();
-                  //   Navigator.of(context)
-                  //       .pushReplacementNamed(TabScreen.routeName);
                 },
               ),
             ),

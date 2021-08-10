@@ -3,7 +3,6 @@ import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/requests/RequestCard.dart';
-import 'package:pharmassist/widgets/requests/admin_requests.dart';
 import 'package:provider/provider.dart';
 
 class RequestScreen extends StatelessWidget {

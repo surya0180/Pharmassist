@@ -34,7 +34,6 @@ class _TabScreenState extends State<TabScreen> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          // title: new Text('Are you sure?'),
           content: new Text('Please save your data.'),
           actions: <Widget>[
             new FlatButton(

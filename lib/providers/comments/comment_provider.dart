@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/providers/comments/comment.dart';
 
 class CommentProvider with ChangeNotifier {
   void createCommentSection(String id) {

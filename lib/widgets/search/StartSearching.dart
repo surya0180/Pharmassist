@@ -6,12 +6,11 @@ import 'UserSearchResult.dart';
 import '../../helpers/string_extension.dart';
 
 class StartSearching extends StatelessWidget {
-  String _category;
+  final String _category;
   StartSearching(this._category);
 
   @override
   Widget build(BuildContext context) {
-    final device = MediaQuery.of(context).size;
     return StreamBuilder(
       stream:
           _category == null || _category == 'noFilter' || _category == 'pharms'

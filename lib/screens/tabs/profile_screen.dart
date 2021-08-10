@@ -486,9 +486,6 @@ class MapScreenState extends State<ProfilePage>
                                             return null;
                                           },
                                           controller: dateinput,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _renewalDate
-                                          //     : dateinput,
                                           decoration: const InputDecoration(
                                               hintText: "Enter renewal date"),
                                           enabled: !_status,
@@ -561,9 +558,6 @@ class MapScreenState extends State<ProfilePage>
                                             return null;
                                           },
                                           controller: street,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _street
-                                          //     : _initValues["street"],
                                           decoration: const InputDecoration(
                                               hintText: "Enter Street"),
                                           enabled: !_status,
@@ -596,9 +590,6 @@ class MapScreenState extends State<ProfilePage>
                                           return null;
                                         },
                                         controller: town,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _town
-                                        //     : _initValues["town"],
                                         decoration: const InputDecoration(
                                             hintText: "Enter Town"),
                                         enabled: !_status,
@@ -672,9 +663,6 @@ class MapScreenState extends State<ProfilePage>
                                             return null;
                                           },
                                           controller: district,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _district
-                                          //     : _initValues["district"],
                                           decoration: const InputDecoration(
                                               hintText: "Enter District"),
                                           enabled: !_status,
@@ -740,33 +728,6 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   void dispose() {
-    // Clean up the controller when the Widget is disposed
-    // if (!_status) {
-    //   showDialog(
-    //       context: context,
-    //       builder: (ctx) {
-    //         return AlertDialog(
-    //           title: Text('Are you sure?'),
-    //           content: Text(
-    //             'Do you want to leave this page',
-    //           ),
-    //           actions: <Widget>[
-    //             FlatButton(
-    //               child: Text('No'),
-    //               onPressed: () {
-    //                 Navigator.of(ctx).pop(false);
-    //               },
-    //             ),
-    //             FlatButton(
-    //               child: Text('Yes'),
-    //               onPressed: () {
-    //                 Navigator.of(ctx).pop(true);
-    //               },
-    //             ),
-    //           ],
-    //         );
-    //       });
-    // }
     myFocusNode.dispose();
     super.dispose();
   }

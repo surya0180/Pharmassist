@@ -35,8 +35,6 @@ class _MessagesState extends State<Messages> {
           );
         }
         final chatDocs = chatSnapShot.data.docs;
-        // print(chatDocs[0]['text']);
-        // print(chatDocs[0]['username']);
         print('0: 1: yes i am that one');
         return widget.unreadMessages == null
             ? Center(

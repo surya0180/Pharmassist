@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/admin/request_detail_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 
 class RequestItem extends StatelessWidget {
@@ -126,17 +127,25 @@ class RequestItem extends StatelessWidget {
       },
       child: Card(
         margin: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 4,
+          horizontal: 5,
+          vertical: 2,
         ),
         child: Padding(
           padding: EdgeInsets.all(4),
           child: ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(RequestDetailScreen.routeName, arguments: {
+                'userName': username,
+                'uid': uid,
+                'createdOn': createdOn,
+                'title': about,
+                'detail': request,
+                'photoUrl': photoUrl,
+              });
+            },
             leading: CircleAvatar(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Image.network(photoUrl),
-              ),
+              backgroundImage: NetworkImage(photoUrl),
             ),
             title: Text(about),
             subtitle: Text(createdOn),

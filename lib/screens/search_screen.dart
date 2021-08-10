@@ -59,6 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           .collection('users')
                           .orderBy('fullName')
                           .where('isAdded', isEqualTo: true)
+                          .where('isAdmin', isEqualTo: false)
                           .startAt([_value.toLowerCase()]).endAt(
                           [
                             _value == null

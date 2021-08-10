@@ -342,156 +342,161 @@ class MapScreenState extends State<ProfilePage>
                                     ),
                                   ],
                                 )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          'Registration Number',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          _editedUser = User(
-                                            isAdded: _editedUser.isAdded,
-                                            fullname: _editedUser.fullname,
-                                            registrationNo: value,
-                                            renewalDate:
-                                                _editedUser.renewalDate,
-                                            street: _editedUser.street,
-                                            town: _editedUser.town,
-                                            district: _editedUser.district,
-                                            state: _editedUser.state,
-                                          );
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          return null;
-                                        },
-                                        controller: registrationNo,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _registerationNumber
-                                        //     : _initValues["registrationNo"],
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter registration no"),
-                                        enabled: !_status,
+                            if (!_isAdmin)
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            'Registration Number',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          "Renewel Date",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
+                                    ],
+                                  )),
+                            if (!_isAdmin)
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Flexible(
+                                        child: new TextFormField(
+                                          onSaved: (value) {
+                                            _editedUser = User(
+                                              isAdded: _editedUser.isAdded,
+                                              fullname: _editedUser.fullname,
+                                              registrationNo: value,
+                                              renewalDate:
+                                                  _editedUser.renewalDate,
+                                              street: _editedUser.street,
+                                              town: _editedUser.town,
+                                              district: _editedUser.district,
+                                              state: _editedUser.state,
+                                            );
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
+                                          controller: registrationNo,
+                                          // initialValue: _isSearchResult != null
+                                          //     ? _registerationNumber
+                                          //     : _initValues["registrationNo"],
+                                          decoration: const InputDecoration(
+                                              hintText:
+                                                  "Enter registration no"),
+                                          enabled: !_status,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextFormField(
-                                        onTap: () async {
-                                          DateTime pickedDate =
-                                              await showDatePicker(
-                                                  context:
-                                                      context, //context of current state
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(
-                                                      2000), //DateTime.now() - not to allow to choose before today.
-                                                  lastDate: DateTime(2101));
+                                      ),
+                                    ],
+                                  )),
+                            if (!_isAdmin)
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            "Renewel Date",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                            if (!_isAdmin)
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Flexible(
+                                        child: new TextFormField(
+                                          onTap: () async {
+                                            DateTime pickedDate =
+                                                await showDatePicker(
+                                                    context:
+                                                        context, //context of current state
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(
+                                                        2000), //DateTime.now() - not to allow to choose before today.
+                                                    lastDate: DateTime(2101));
 
-                                          if (pickedDate != null) {
-                                            print(
-                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                            String formattedDate =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                            print(
-                                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                                            setState(() {
-                                              _initValues["renewalDate"] =
-                                                  formattedDate;
-                                              dateinput.text = formattedDate;
-                                            });
-                                          } else {
-                                            print("Date is not selected");
-                                          }
-                                        },
-                                        readOnly: true,
-                                        onSaved: (value) {
-                                          _editedUser = User(
-                                            isAdded: _editedUser.isAdded,
-                                            fullname: _editedUser.fullname,
-                                            registrationNo:
-                                                _editedUser.registrationNo,
-                                            renewalDate: value,
-                                            street: _editedUser.street,
-                                            town: _editedUser.town,
-                                            district: _editedUser.district,
-                                            state: _editedUser.state,
-                                          );
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          return null;
-                                        },
-                                        controller: dateinput,
-                                        // initialValue: _isSearchResult != null
-                                        //     ? _renewalDate
-                                        //     : dateinput,
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter renewal date"),
-                                        enabled: !_status,
+                                            if (pickedDate != null) {
+                                              print(
+                                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                              String formattedDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(pickedDate);
+                                              print(
+                                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                                              setState(() {
+                                                _initValues["renewalDate"] =
+                                                    formattedDate;
+                                                dateinput.text = formattedDate;
+                                              });
+                                            } else {
+                                              print("Date is not selected");
+                                            }
+                                          },
+                                          readOnly: true,
+                                          onSaved: (value) {
+                                            _editedUser = User(
+                                              isAdded: _editedUser.isAdded,
+                                              fullname: _editedUser.fullname,
+                                              registrationNo:
+                                                  _editedUser.registrationNo,
+                                              renewalDate: value,
+                                              street: _editedUser.street,
+                                              town: _editedUser.town,
+                                              district: _editedUser.district,
+                                              state: _editedUser.state,
+                                            );
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
+                                          controller: dateinput,
+                                          // initialValue: _isSearchResult != null
+                                          //     ? _renewalDate
+                                          //     : dateinput,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter renewal date"),
+                                          enabled: !_status,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )),
+                                    ],
+                                  )),
                             Padding(
                                 padding: EdgeInsets.only(
                                     left: 25.0, right: 25.0, top: 25.0),

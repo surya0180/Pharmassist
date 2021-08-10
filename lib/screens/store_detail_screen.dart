@@ -76,6 +76,9 @@ class MapScreenState extends State<StoreDetailScreen>
       if (_state != "") {
         dropdownValue = _state.toLowerCase().toString();
       }
+      if (_isNew) {
+        _status = false;
+      }
 
       _init = false;
     }

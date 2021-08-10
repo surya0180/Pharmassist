@@ -18,6 +18,7 @@ class StartSearching extends StatelessWidget {
               ? FirebaseFirestore.instance
                   .collection('users')
                   .where('isAdded', isEqualTo: true)
+                  .where('isAdmin', isEqualTo: false)
                   .orderBy('fullName')
                   .snapshots()
               : FirebaseFirestore.instance

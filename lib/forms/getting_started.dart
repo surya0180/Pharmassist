@@ -41,7 +41,7 @@ class GettingStarted extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Flexible(
                 child: Text(
-                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n\nLorem Ipsum has been the industrys standard dummy text ever since the 1500s, \n\nwhen an unknown printer took a galley of type and scrambled it to make a type, specimen book. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. \n\nIt was popularised in the 1960s with the release of Letraset sheets',
+                  'This is your Profile page , Here you must fill all the details compulsorily and make sure to add valid and leagal Information for better use of app.\n\nYou must complete to bulid your profile before you start using other services of the app. \n\nThis profile is Visible to public ,So please be aware of it and fill your data appropriately',
                   style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
                 ),
               ),

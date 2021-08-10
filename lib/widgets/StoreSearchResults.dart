@@ -75,7 +75,7 @@ class StoreSearchResult extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.008,
                       ),
                       Text(
-                        'Store-Id:  $storeId',
+                        'Establishment-year:  $establishmentYear',
                         style: TextStyle(fontWeight: FontWeight.w400),
                       ),
                     ],

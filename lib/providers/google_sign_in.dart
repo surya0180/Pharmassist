@@ -48,10 +48,10 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout(BuildContext context) async {
-    await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
     Provider.of<up.UserProvider>(context, listen: false).clearState();
     Provider.of<ProfileEditStatus>(context, listen: false).clearState();
+    await googleSignIn.disconnect();
+    return FirebaseAuth.instance.signOut();
   }
 
   Future<void> createUserData(

@@ -19,7 +19,7 @@ class _SearchBarState extends State<SearchBar> {
     final device = MediaQuery.of(context).size;
     return Container(
       height: device.height*0.075,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.only(top: 0, bottom: 20, left: 10, right: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(

@@ -3,6 +3,7 @@ import 'package:pharmassist/providers/auth/google_sign_in.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/screens/admin/dashboard_screen.dart';
 import 'package:pharmassist/screens/stores/store_screen.dart';
+import 'package:pharmassist/screens/tabs/request_screen.dart';
 import 'package:provider/provider.dart';
 
 class SideDrawer extends StatefulWidget {
@@ -74,8 +75,8 @@ class _SideDrawerState extends State<SideDrawer> {
                             },
                           )
                         : ListTile(
-                            leading: Icon(Icons.store),
-                            title: Text('Stores'),
+                            leading: Icon(Icons.feed),
+                            title: Text('Request'),
                             onTap: () {
                               _isAdded == null
                                   ? print('logging out')
@@ -84,7 +85,7 @@ class _SideDrawerState extends State<SideDrawer> {
                                           context: context,
                                           builder: (ctx) => AlertDialog(
                                             content: Text(
-                                              'Please complete your profile to add a store',
+                                              'Please complete your profile to send a request',
                                               style: TextStyle(
                                                   fontFamily: 'poppins',
                                                   fontSize: 16),
@@ -106,7 +107,7 @@ class _SideDrawerState extends State<SideDrawer> {
                                           ),
                                         )
                                       : Navigator.popAndPushNamed(
-                                          context, StoreScreen.routeName);
+                                          context, RequestScreen.routeName);
                             },
                           ),
                 Divider(),

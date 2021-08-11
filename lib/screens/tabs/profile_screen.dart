@@ -101,6 +101,10 @@ class MapScreenState extends State<ProfilePage>
       district.text = userinfo.district;
 
       _status = userinfo.isAdded;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Provider.of<ProfileEditStatus>(context, listen: false)
+            .setIsEditing(!userinfo.isAdded);
+      });
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_isAdded) {

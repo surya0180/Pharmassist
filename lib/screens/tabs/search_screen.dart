@@ -43,10 +43,9 @@ class _SearchScreenState extends State<SearchScreen> {
     print(_category);
     print(_filter);
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Theme.of(context).canvasColor,
         bottom: PreferredSize(
           child: SearchBar(_setQuery, _setCategory, _setFilter),
           preferredSize: Size.fromHeight(kMinInteractiveDimensionCupertino),

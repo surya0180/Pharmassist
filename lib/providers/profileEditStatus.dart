@@ -12,6 +12,10 @@ class ProfileEditStatus with ChangeNotifier {
     isEditing = false;
     notifyListeners();
   }
+  setIsEditing(bool value) {
+    isEditing = value;
+    notifyListeners();
+  }
 
   get getIsEditingStatus {
     return isEditing;

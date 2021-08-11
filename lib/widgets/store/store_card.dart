@@ -57,6 +57,7 @@ class StoreCard extends StatelessWidget {
           },
           child: isNew
               ? Card(
+                  color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -69,7 +70,21 @@ class StoreCard extends StatelessWidget {
                   ),
                 )
               : Card(
-                  child: Center(child: Text(name)),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('$name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                        SizedBox(height: 10,),
+                        Text('$establishmentYear'),
+                        SizedBox(height: 6,),
+                        Text('$firmId'),
+                      ],
+                    ),
+                  ),
                 ),
         ),
       ),

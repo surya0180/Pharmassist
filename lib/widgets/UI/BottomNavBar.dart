@@ -71,9 +71,9 @@ class BottomNavBar extends StatelessWidget {
                           ],
                         )
                       : Icon(Icons.feed)
-                  : Icon(Icons.feed),
+                  : Icon(Icons.store),
           title: Text(
-            'Requests',
+            _isAdmin == null ? 'Requests' : _isAdmin ? 'Requests' : 'Stores',
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),

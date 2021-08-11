@@ -19,6 +19,7 @@ import 'package:pharmassist/screens/tabs/profile_screen.dart';
 import 'package:pharmassist/screens/stores/store_detail_screen.dart';
 import 'package:pharmassist/screens/stores/store_screen.dart';
 import 'package:pharmassist/screens/tab_screen.dart';
+import 'package:pharmassist/screens/tabs/request_screen.dart';
 import 'package:pharmassist/widgets/feed/new_feed_form.dart';
 import 'package:provider/provider.dart';
 import 'providers/store.dart';
@@ -77,6 +78,7 @@ class MyApp extends StatelessWidget {
           StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
           Dashboard.routeName: (ctx) => Dashboard(),
           RequestDetailScreen.routeName: (ctx) => RequestDetailScreen(),
+          RequestScreen.routeName: (ctx) => RequestScreen(),
         },
       ),
     );

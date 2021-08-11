@@ -110,6 +110,7 @@ class _TabScreenState extends State<TabScreen> {
           )
         : Scaffold(
             appBar: AppBar(
+              elevation: _selectedIndex == 1 ? 0 : 5,
               title: Text(
                 _isAdminStatus() == null
                     ? 'Logging out . .'

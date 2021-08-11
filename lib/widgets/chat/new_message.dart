@@ -45,7 +45,7 @@ class _NewMessageState extends State<NewMessage> {
         .doc(widget.userId)
         .collection('messages')
         .add({
-      'text': _enteredMessage,
+      'text': _enteredMessage.trim(),
       'createdAt': timestamp,
       'timestamp': DateFormat.Hm().format(hmstamp),
       'userId': user.uid,
@@ -60,7 +60,7 @@ class _NewMessageState extends State<NewMessage> {
           .doc(widget.userId)
           .update({
         'timestamp': timestamp,
-        'latestMessage': _enteredMessage,
+        'latestMessage': _enteredMessage.trim(),
         'name': adminUserData.data()['fullName'],
         'profilePic': adminUserData.data()['PhotoUrl'],
         'hostB': chatData.data()['hostB'] + 1,
@@ -75,7 +75,7 @@ class _NewMessageState extends State<NewMessage> {
         'name': user.displayName,
         'profilePic': userData.data()['PhotoUrl'],
         'timestamp': timestamp,
-        'latestMessage': _enteredMessage,
+        'latestMessage': _enteredMessage.trim(),
         'hostA': chatData.data()['hostA'] + 1,
       }).then((value) {
         widget.setIsSent(true);

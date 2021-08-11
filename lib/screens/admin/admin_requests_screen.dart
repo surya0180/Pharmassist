@@ -27,8 +27,8 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
   }
 
   final List<Map<String, Object>> _pages = [
-    {'page': PharmReqScreen(), 'title': 'Pharmassists'},
-    {'page': MedicReqScreen(), 'title': 'Medicals'},
+    {'page': PharmReqScreen(false), 'title': 'Pharmassists'},
+    {'page': MedicReqScreen(false), 'title': 'Medicals'},
   ];
   int _selectedPageIndex = 0;
   void _selectPage(int index) {
@@ -70,25 +70,29 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            foregroundColor: Colors.green,
-            backgroundColor: Colors.yellow,
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.account_circle),
-                  text: "Pharmassists",
-                ),
-                Tab(
-                  icon: Icon(Icons.store),
-                  text: "Medicals",
-                ),
-              ],
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(kToolbarHeight),
+            child: AppBar(
+              foregroundColor: Colors.green,
+              backgroundColor: Colors.blue[200],
+              bottom: TabBar(
+                indicatorColor: Colors.red,
+                tabs: [
+                  Tab(
+                    // icon: Icon(Icons.account_circle),
+                    text: "Pharmassists",
+                  ),
+                  Tab(
+                    // icon: Icon(Icons.store),
+                    text: "Medicals",
+                  ),
+                ],
+              ),
             ),
           ),
           body: TabBarView(children: [
-            PharmReqScreen(),
-            MedicReqScreen(),
+            PharmReqScreen(false),
+            MedicReqScreen(false),
           ]),
         ));
   }
@@ -132,72 +136,10 @@ class Requsts extends StatelessWidget {
                     pharmReqs[i].data()['username'],
                     requestType,
                     pharmReqs[i].id,
+                    true,
                   );
                 });
           }),
     );
   }
 }
-
-
-// appBar: AppBar(
-      //   automaticallyImplyLeading: true,
-      //   titleSpacing: 0.0,
-      //   backgroundColor: Theme.of(context).canvasColor,
-      //   elevation: 0,
-      //   title: Container(
-      //     padding: EdgeInsets.all(15.0),
-      //     child: Container(
-      //       padding: EdgeInsets.only(left: 5),
-      //       color: Colors.cyan,
-      //       child: DropdownButton(
-      //           value: _value,
-      //           items: [
-      //             DropdownMenuItem(
-      //               child: Text(
-      //                 "pharmacist requests",
-      //               ),
-      //               value: 1,
-      //             ),
-      //             DropdownMenuItem(
-      //               child: Text("medical requests"),
-      //               value: 2,
-      //             ),
-      //           ],
-      //           onChanged: (value) {
-      //             setState(() {
-      //               _value = value;
-      //             });
-      //             setValue(value);
-      //           }),
-      //     ),
-      //   ),
-      // ),
-      // appBar: AppBar(
-      //   title: Text(_pages[_selectedPageIndex]['title']),
-      // ),
-      // drawer: MainDrawer(),
-      // body: _pages[_selectedPageIndex]['page'],
-      // bottomNavigationBar: BottomNavigationBar(
-      //   onTap: _selectPage,
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   unselectedItemColor: Colors.white,
-      //   selectedItemColor: Theme.of(context).accentColor,
-      //   currentIndex: _selectedPageIndex,
-      //   type: BottomNavigationBarType.shifting,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.account_circle),
-      //       title: Text('Pharmassists'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       backgroundColor: Theme.of(context).primaryColor,
-      //       icon: Icon(Icons.star),
-      //       title: Text('Medicals'),
-      //     )
-      //   ],
-      // ),
-      // body: Requsts(
-      //   streamBuilder: streamBuilder,
-      //   requestType: RequestType,
-      // ),

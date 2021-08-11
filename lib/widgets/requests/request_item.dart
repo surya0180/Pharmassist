@@ -12,6 +12,7 @@ class RequestItem extends StatelessWidget {
   final String username;
   final String requestType;
   final String requestId;
+  final bool isDeleted;
 
   RequestItem(
     this.createdOn,
@@ -22,10 +23,41 @@ class RequestItem extends StatelessWidget {
     this.username,
     this.requestType,
     this.requestId,
+    this.isDeleted,
   );
 
   @override
   Widget build(BuildContext context) {
+    if (isDeleted) {
+      return Card(
+        color: Colors.white,
+        margin: EdgeInsets.symmetric(
+          horizontal: 5,
+          vertical: 2,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(4),
+          child: ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(RequestDetailScreen.routeName, arguments: {
+                'userName': username,
+                'uid': uid,
+                'createdOn': createdOn,
+                'title': about,
+                'detail': request,
+                'photoUrl': photoUrl,
+              });
+            },
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(photoUrl),
+            ),
+            title: Text(about),
+            subtitle: Text(createdOn),
+          ),
+        ),
+      );
+    }
     return Dismissible(
       key: ValueKey(createdOn),
       secondaryBackground: Container(
@@ -126,6 +158,7 @@ class RequestItem extends StatelessWidget {
         }
       },
       child: Card(
+        color: Colors.white,
         margin: EdgeInsets.symmetric(
           horizontal: 5,
           vertical: 2,

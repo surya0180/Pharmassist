@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/widgets/requests/request_item.dart';
 
 class MedicReqScreen extends StatelessWidget {
+  final bool isDeleted;
+  MedicReqScreen(this.isDeleted);
   final requestType = "medic";
-  final streamBuilder = FirebaseFirestore.instance
-      .collection('medical requests')
-      .orderBy('timestamp', descending: true)
-      .where('isDeleted', isEqualTo: false)
-      .snapshots();
+
   @override
   Widget build(BuildContext context) {
+    final streamBuilder = FirebaseFirestore.instance
+        .collection('medical requests')
+        .orderBy('timestamp', descending: true)
+        .where('isDeleted', isEqualTo: isDeleted)
+        .snapshots();
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: StreamBuilder(
@@ -29,15 +32,15 @@ class MedicReqScreen extends StatelessWidget {
                 itemCount: pharmReqs.length,
                 itemBuilder: (ctx, i) {
                   return RequestItem(
-                    pharmReqs[i].data()['createdOn'],
-                    pharmReqs[i].data()['about'],
-                    pharmReqs[i].data()['request'],
-                    pharmReqs[i].data()['userId'],
-                    pharmReqs[i].data()['PhotoUrl'],
-                    pharmReqs[i].data()['username'],
-                    requestType,
-                    pharmReqs[i].id,
-                  );
+                      pharmReqs[i].data()['createdOn'],
+                      pharmReqs[i].data()['about'],
+                      pharmReqs[i].data()['request'],
+                      pharmReqs[i].data()['userId'],
+                      pharmReqs[i].data()['PhotoUrl'],
+                      pharmReqs[i].data()['username'],
+                      requestType,
+                      pharmReqs[i].id,
+                      isDeleted);
                 });
           }),
     );

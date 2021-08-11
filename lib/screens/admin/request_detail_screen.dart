@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/screens/chat/chat_screen.dart';
 
 class RequestDetailScreen extends StatelessWidget {
   static const routeName = "/rquest-detail-screen";
@@ -46,7 +47,8 @@ class RequestDetailScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // logic to chat
+              Navigator.of(context).pushNamed(ChatScreen.routeName,
+                  arguments: {'name': userName, 'userId': uid});
             },
             icon: Icon(Icons.chat),
             iconSize: 30,
@@ -62,6 +64,7 @@ class RequestDetailScreen extends StatelessWidget {
           child: Column(
             children: [
               Card(
+                color: Colors.white,
                 child: Column(
                   children: [
                     Padding(
@@ -102,6 +105,7 @@ class RequestDetailScreen extends StatelessWidget {
                 ),
               ),
               Card(
+                color: Colors.white,
                 child: Column(
                   children: [
                     Padding(

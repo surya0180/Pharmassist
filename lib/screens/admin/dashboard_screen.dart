@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/auth/admin-provider.dart';
+import 'package:pharmassist/screens/admin/medic_req_screen.dart';
+import 'package:pharmassist/screens/admin/pharm_req_screen.dart';
 import 'package:pharmassist/widgets/requests/request_item.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   static const routeName = '/dashboard';
@@ -11,16 +15,40 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _value = 1;
   String RequestType = "pharm";
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AdminProvider>(context, listen: false).updateRequests(0);
+    });
+
+    super.initState();
+  }
+
+  final List<Map<String, Object>> _pages = [
+    {'page': PharmReqScreen(true), 'title': 'Pharmassists'},
+    {'page': MedicReqScreen(true), 'title': 'Medicals'},
+  ];
+  int _selectedPageIndex = 0;
+  void _selectPage(int index) {
+    setValue(index);
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   var streamBuilder = FirebaseFirestore.instance
       .collection('pharmacist requests')
+      .orderBy('timestamp', descending: true)
       .where('isDeleted', isEqualTo: true)
       .snapshots();
   void setValue(value) {
-    if (value == 1) {
+    if (value == 0) {
       setState(() {
         RequestType = "pharm";
         streamBuilder = FirebaseFirestore.instance
             .collection('pharmacist requests')
+            .orderBy('timestamp', descending: true)
             .where('isDeleted', isEqualTo: true)
             .snapshots();
       });
@@ -29,6 +57,7 @@ class _DashboardState extends State<Dashboard> {
         RequestType = "medic";
         streamBuilder = FirebaseFirestore.instance
             .collection('medical requests')
+            .orderBy('timestamp', descending: true)
             .where('isDeleted', isEqualTo: true)
             .snapshots();
       });
@@ -37,45 +66,31 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        titleSpacing: 0.0,
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0,
-        title: Container(
-          padding: EdgeInsets.all(15.0),
-          child: Container(
-            padding: EdgeInsets.only(left: 5),
-            color: Colors.cyan,
-            child: DropdownButton(
-                value: _value,
-                items: [
-                  DropdownMenuItem(
-                    child: Text(
-                      "pharmacist requests",
-                    ),
-                    value: 1,
-                  ),
-                  DropdownMenuItem(
-                    child: Text("medical requests"),
-                    value: 2,
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _value = value;
-                  });
-                  setValue(value);
-                }),
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Dashboard"),
+            backgroundColor: Colors.lightGreenAccent[100],
+            bottom: TabBar(
+              indicatorColor: Colors.red,
+              tabs: [
+                Tab(
+                  // icon: Icon(Icons.account_circle),
+                  text: "Pharmassists",
+                ),
+                Tab(
+                  // icon: Icon(Icons.store),
+                  text: "Medicals",
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      body: DeletedRequests(
-        streamBuilder: streamBuilder,
-        requestType: RequestType,
-      ),
-    );
+          body: TabBarView(children: [
+            PharmReqScreen(true),
+            MedicReqScreen(true),
+          ]),
+        ));
   }
 }
 
@@ -117,6 +132,7 @@ class DeletedRequests extends StatelessWidget {
                     pharmReqs[i].data()['username'],
                     requestType,
                     pharmReqs[i].id,
+                    true,
                   );
                 });
           }),

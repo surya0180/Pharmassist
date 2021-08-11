@@ -27,6 +27,10 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
     Navigator.of(context).popUntil((_) => count++ >= 2);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.black,
+        margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+        duration: Duration(seconds: 2),
         content: Text('Request sent sucessfully'),
       ),
     );

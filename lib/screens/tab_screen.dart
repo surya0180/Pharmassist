@@ -104,41 +104,65 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _isEditingStatus =
+        Provider.of<ProfileEditStatus>(context).getIsEditingStatus;
+    print(_isEditingStatus);
+    print('Above is the editing status');
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
           )
-        : Scaffold(
-            appBar: AppBar(
-              elevation: _selectedIndex == 1 ? 0 : 5,
-              title: Text(
-                _isAdminStatus() == null
-                    ? 'Logging out . .'
-                    : _isAdminStatus()
-                        ? adminPagesTitles[_selectedIndex]
-                        : userPagesTitles[_selectedIndex],
-                style: Theme.of(context).textTheme.title,
+        : WillPopScope(
+            onWillPop: _selectedIndex == 0 && _isEditingStatus
+                ? () async {
+                    final value = await showDialog<bool>(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        content: new Text('Please save your data.'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            onPressed: () =>
+                                Navigator.pop(context), // Closes the dialog
+                            child: new Text('Ok'),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    return value == true;
+                  }
+                : null,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  _isAdminStatus() == null
+                      ? 'Logging out . .'
+                      : _isAdminStatus()
+                          ? adminPagesTitles[_selectedIndex]
+                          : userPagesTitles[_selectedIndex],
+                  style: Theme.of(context).textTheme.title,
+                ),
+                actions: [],
               ),
-              actions: [],
-            ),
-            body: _isAdminStatus() == null
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : SizedBox.expand(
-                    child: PageView(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() => _selectedIndex = index);
-                      },
-                      children: _isAdminStatus() ? adminPages : userPages,
+              body: _isAdminStatus() == null
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SizedBox.expand(
+                      child: PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() => _selectedIndex = index);
+                        },
+                        children: _isAdminStatus() ? adminPages : userPages,
+                      ),
                     ),
-                  ),
-            backgroundColor: Theme.of(context).backgroundColor,
-            drawer: SideDrawer(),
-            bottomNavigationBar: BottomNavBar(
-              selectPage: _selectPage,
-              selectedPageIndex: _selectedIndex,
+              backgroundColor: Theme.of(context).backgroundColor,
+              drawer: SideDrawer(),
+              bottomNavigationBar: BottomNavBar(
+                selectPage: _selectPage,
+                selectedPageIndex: _selectedIndex,
+              ),
             ),
           );
   }

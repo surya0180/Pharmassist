@@ -61,6 +61,10 @@ class _NewFeedFormState extends State<NewFeedForm> {
     Navigator.of(context).popUntil((_) => count++ >= 2);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.black,
+        margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+        duration: Duration(seconds: 2),
         content: Text('Added feed sucessfully'),
       ),
     );
@@ -167,7 +171,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         },
                       ),
                       SizedBox(
-                        height: device.height*0.026,
+                        height: device.height * 0.026,
                       ),
 
                       // this is where the
@@ -213,7 +217,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                       ),
 
                       SizedBox(
-                        height: device.height*0.026,
+                        height: device.height * 0.026,
                       ),
                       Container(
                         alignment: Alignment.centerRight,

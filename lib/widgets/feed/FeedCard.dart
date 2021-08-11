@@ -89,7 +89,7 @@ class _FeedCardState extends State<FeedCard> {
                           backgroundImage: NetworkImage(widget.profilePic),
                         ),
                         SizedBox(
-                          width: device.width*0.05,
+                          width: device.width * 0.05,
                         ),
                         Flexible(
                           child: Text(
@@ -153,6 +153,11 @@ class _FeedCardState extends State<FeedCard> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: Colors.black,
+                                          margin: EdgeInsets.only(
+                                              left: 10, right: 10, bottom: 40),
+                                          duration: Duration(seconds: 2),
                                           content: Text(
                                             'Deleted feed sucessfully',
                                           ),
@@ -179,7 +184,7 @@ class _FeedCardState extends State<FeedCard> {
               Row(
                 children: [
                   SizedBox(
-                    width: device.width*0.19,
+                    width: device.width * 0.19,
                   ),
                   Flexible(
                     child: Text(
@@ -201,7 +206,7 @@ class _FeedCardState extends State<FeedCard> {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: device.width*0.03,
+                        width: device.width * 0.03,
                       ),
                       Text(
                         '${widget.createdOn}',

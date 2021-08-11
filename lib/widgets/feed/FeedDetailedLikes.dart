@@ -59,8 +59,11 @@ class _FeedLikesState extends State<FeedLikes> {
             if (!_isAdded) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.black,
+                  margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                  duration: Duration(seconds: 2),
                   content: Text('Please complete your profile'),
-                  duration: Duration(seconds: 1, milliseconds: 200),
                 ),
               );
             } else {

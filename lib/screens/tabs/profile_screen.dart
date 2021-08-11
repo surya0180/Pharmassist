@@ -8,6 +8,7 @@ import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 import '../../helpers/states.dart';
+import 'package:string_validator/string_validator.dart';
 
 class ProfilePage extends StatefulWidget {
   static final routeName = "/profile-page";
@@ -238,7 +239,7 @@ class MapScreenState extends State<ProfilePage>
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         new Text(
-                                          'Parsonal Information',
+                                          'Personal Information',
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.bold),
@@ -326,6 +327,10 @@ class MapScreenState extends State<ProfilePage>
                                           if (value.trim().length == 0) {
                                             return 'This field is required';
                                           }
+                                          if (!isAlpha(
+                                              value.replaceAll(' ', ''))) {
+                                            return 'Please Enter Valid Value';
+                                          }
                                           return null;
                                         },
                                         controller: fullname,
@@ -391,6 +396,10 @@ class MapScreenState extends State<ProfilePage>
                                             if (value.trim().length == 0) {
                                               return 'This field is required';
                                             }
+                                            if (!isAlphanumeric(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
+                                            }
                                             return null;
                                           },
                                           controller: registrationNo,
@@ -418,7 +427,7 @@ class MapScreenState extends State<ProfilePage>
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           new Text(
-                                            "Renewel Date",
+                                            "Renewal Date",
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold),
@@ -443,7 +452,7 @@ class MapScreenState extends State<ProfilePage>
                                                         context, //context of current state
                                                     initialDate: DateTime.now(),
                                                     firstDate: DateTime(
-                                                        2000), //DateTime.now() - not to allow to choose before today.
+                                                        2015), //DateTime.now() - not to allow to choose before today.
                                                     lastDate: DateTime(2101));
 
                                             if (pickedDate != null) {
@@ -555,6 +564,10 @@ class MapScreenState extends State<ProfilePage>
                                             if (value.trim().length == 0) {
                                               return 'This field is required';
                                             }
+                                            if (!isAlphanumeric(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
+                                            }
                                             return null;
                                           },
                                           controller: street,
@@ -586,6 +599,10 @@ class MapScreenState extends State<ProfilePage>
                                         validator: (value) {
                                           if (value.trim().length == 0) {
                                             return 'This field is required';
+                                          }
+                                          if (!isAlphanumeric(
+                                              value.replaceAll(' ', ''))) {
+                                            return 'Please Enter Valid Value';
                                           }
                                           return null;
                                         },
@@ -659,6 +676,10 @@ class MapScreenState extends State<ProfilePage>
                                           validator: (value) {
                                             if (value.trim().length == 0) {
                                               return 'This field is required';
+                                            }
+                                            if (!isAlpha(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
                                             }
                                             return null;
                                           },

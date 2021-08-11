@@ -10,6 +10,7 @@ import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/google_sign_in.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
+import 'package:pharmassist/screens/admin/request_detail_screen.dart';
 import 'package:pharmassist/screens/tabs/auth_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/screens/admin/dashboard_screen.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
           StoreScreen.routeName: (ctx) => StoreScreen(),
           StoreDetailScreen.routeName: (ctx) => StoreDetailScreen(),
           Dashboard.routeName: (ctx) => Dashboard(),
+          RequestDetailScreen.routeName: (ctx) => RequestDetailScreen(),
         },
       ),
     );

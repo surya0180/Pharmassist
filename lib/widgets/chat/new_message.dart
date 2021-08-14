@@ -72,7 +72,7 @@ class _NewMessageState extends State<NewMessage> {
           .collection('Chat')
           .doc(widget.userId)
           .update({
-        'name': user.displayName,
+        'name': userData.data()['fullName'],
         'profilePic': userData.data()['PhotoUrl'],
         'timestamp': timestamp,
         'latestMessage': _enteredMessage.trim(),

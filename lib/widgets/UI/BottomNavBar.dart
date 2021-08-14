@@ -85,9 +85,9 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: _isAdmin == null ? Icon(Icons.search) : _isAdmin ? Icon(Icons.search) : Icon(Icons.feed),
           title: Text(
-            'Search',
+            _isAdmin == null ? 'Requests' : _isAdmin ? 'Search' : 'Request',
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),

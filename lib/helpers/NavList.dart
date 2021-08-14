@@ -3,17 +3,18 @@ import 'package:pharmassist/screens/chat/chat_list_screen.dart';
 import 'package:pharmassist/screens/feeds/feed_screen.dart';
 import 'package:pharmassist/screens/stores/store_screen.dart';
 import 'package:pharmassist/screens/tabs/profile_screen.dart';
+import 'package:pharmassist/screens/tabs/request_screen.dart';
 import 'package:pharmassist/screens/tabs/search_screen.dart';
 
 final userPages = [
   ProfilePage(),
   StoreScreen(),
   FeedScreen(),
-  SearchScreen(),
+  RequestScreen(),
   ChatListScreen(),
 ];
 
-final userPagesTitles = ['Profile', 'Stores', 'Feed', 'Search', 'Chat'];
+final userPagesTitles = ['Profile', 'Stores', 'Feed', 'Request', 'Chat'];
 
 final adminPages = [
   ProfilePage(),

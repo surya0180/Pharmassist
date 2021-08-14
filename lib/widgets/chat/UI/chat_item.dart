@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
+import '../../../helpers/string_extension.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem(
@@ -30,7 +31,7 @@ class ChatItem extends StatelessWidget {
           Navigator.of(context).pushNamed(
             ChatScreen.routeName,
             arguments: {
-              'name': name,
+              'name': name.capitalize(),
               'userId': uid,
             },
           );
@@ -56,7 +57,7 @@ class ChatItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        name.capitalize(),
                         style: Theme.of(context).textTheme.title,
                       ),
                       SizedBox(

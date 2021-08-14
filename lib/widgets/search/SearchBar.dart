@@ -109,68 +109,68 @@ class _SearchBarState extends State<SearchBar> {
           ),
           Row(
             children: [
-              PopupMenuButton(
-                onSelected: (value) {
-                  setState(() {
-                    _filter = value;
-                    widget.setFilter(value);
-                  });
-                },
-                icon: Icon(Icons.filter_alt),
-                itemBuilder: (BuildContext ctx) => [
-                  PopupMenuItem(
-                    value: 'noFilter',
-                    child: Text(
-                      'No filter',
-                      style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontSize: 13,
-                        color:
-                            _filter == 'noFilter' ? Colors.red : Colors.black,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'town',
-                    child: Text(
-                      'Town',
-                      style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontSize: 13,
-                        color: _filter == 'town' ? Colors.red : Colors.black,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'dist',
-                    child: Text(
-                      'District',
-                      style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontSize: 13,
-                        color: _filter == 'dist' ? Colors.red : Colors.black,
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'state',
-                    child: Text(
-                      'State',
-                      style: TextStyle(
-                        fontFamily: 'poppins',
-                        fontSize: 13,
-                        color: _filter == 'state' ? Colors.red : Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // PopupMenuButton(
+              //   onSelected: (value) {
+              //     setState(() {
+              //       _filter = value;
+              //       widget.setFilter(value);
+              //     });
+              //   },
+              //   icon: Icon(Icons.filter_alt),
+              //   itemBuilder: (BuildContext ctx) => [
+              //     PopupMenuItem(
+              //       value: 'noFilter',
+              //       child: Text(
+              //         'No filter',
+              //         style: TextStyle(
+              //           fontFamily: 'poppins',
+              //           fontSize: 13,
+              //           color:
+              //               _filter == 'noFilter' ? Colors.red : Colors.black,
+              //         ),
+              //       ),
+              //     ),
+              //     PopupMenuItem(
+              //       value: 'town',
+              //       child: Text(
+              //         'Town',
+              //         style: TextStyle(
+              //           fontFamily: 'poppins',
+              //           fontSize: 13,
+              //           color: _filter == 'town' ? Colors.red : Colors.black,
+              //         ),
+              //       ),
+              //     ),
+              //     PopupMenuItem(
+              //       value: 'dist',
+              //       child: Text(
+              //         'District',
+              //         style: TextStyle(
+              //           fontFamily: 'poppins',
+              //           fontSize: 13,
+              //           color: _filter == 'dist' ? Colors.red : Colors.black,
+              //         ),
+              //       ),
+              //     ),
+              //     PopupMenuItem(
+              //       value: 'state',
+              //       child: Text(
+              //         'State',
+              //         style: TextStyle(
+              //           fontFamily: 'poppins',
+              //           fontSize: 13,
+              //           color: _filter == 'state' ? Colors.red : Colors.black,
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               IconButton(
                 onPressed: () {
                   setState(() {
                     _query = _controller.text;
                   });
-                  widget.setQuery(_query, _category, _filter);
+                  widget.setQuery(_query, _category, null);
                   FocusScope.of(context).unfocus();
                 },
                 icon: Icon(Icons.search),

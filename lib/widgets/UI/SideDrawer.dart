@@ -75,54 +75,45 @@ class _SideDrawerState extends State<SideDrawer> {
                             },
                           )
                         : ListTile(
-                            leading: Icon(Icons.feed),
-                            title: Text('Request'),
+                            leading: Icon(Icons.feed_outlined),
+                            title: Text('My Requests'),
                             onTap: () {
-                              _isAdded == null
-                                  ? print('logging out')
-                                  : !_isAdded
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (ctx) => AlertDialog(
-                                            content: Text(
-                                              'Please complete your profile to send a request',
-                                              style: TextStyle(
-                                                  fontFamily: 'poppins',
-                                                  fontSize: 16),
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text(
-                                                  'Ok',
-                                                  style: TextStyle(
-                                                      fontFamily: 'poppins',
-                                                      fontSize: 12),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop(true);
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : Navigator.popAndPushNamed(
-                                          context, RequestScreen.routeName);
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  content: Text(
+                                    'This feature is still under progress',
+                                    style: TextStyle(
+                                        fontFamily: 'poppins', fontSize: 16),
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text(
+                                        'Ok',
+                                        style: TextStyle(
+                                            fontFamily: 'poppins',
+                                            fontSize: 12),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop(true);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
                           ),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.feedback),
                   title: Text('Feedback'),
-                  onTap: () {
-                  },
+                  onTap: () {},
                 ),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.info),
                   title: Text('About'),
-                  onTap: () {
-                  },
+                  onTap: () {},
                 ),
               ],
             ),

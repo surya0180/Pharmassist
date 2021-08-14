@@ -156,7 +156,6 @@ class MapScreenState extends State<ProfilePage>
         dropdownValue = _state.toLowerCase().toString();
         fullname.text = _fullname;
         registrationNo.text = _registerationNumber;
-
         street.text = _street;
         town.text = _town;
         district.text = _district;
@@ -350,7 +349,7 @@ class MapScreenState extends State<ProfilePage>
                                     ),
                                   ],
                                 )),
-                            if (!_isAdmin)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
@@ -372,7 +371,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
@@ -418,7 +417,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
@@ -440,7 +439,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),

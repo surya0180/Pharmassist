@@ -1,14 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
+import 'package:pharmassist/screens/tabs/profile_screen.dart';
 
-class RequestDetailScreen extends StatelessWidget {
+class RequestDetailScreen extends StatefulWidget {
   static const routeName = "/rquest-detail-screen";
+
+  @override
+  _RequestDetailScreenState createState() => _RequestDetailScreenState();
+}
+
+class _RequestDetailScreenState extends State<RequestDetailScreen> {
   String userName;
   String photoUrl;
   String title;
   String detail;
   String createdOn;
   String uid;
+
+  var _isLoading;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      _isLoading = false;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,41 +43,60 @@ class RequestDetailScreen extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Don't show the leading button
+        // automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-            ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(photoUrl),
-              radius: 15,
-            ),
             SizedBox(
-              width: 5,
+              width: 7,
             ),
             Text(userName)
-            // Your widgets here
           ],
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isLoading = true;
+              });
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(uid)
+                  .get()
+                  .then((value) {
+                setState(() {
+                  _isLoading = false;
+                });
+                Navigator.of(context)
+                    .pushNamed(ProfilePage.routeName, arguments: {
+                  'isSearchResult': true,
+                  'profilePic': value.data()['PhotoUrl'],
+                  'fullname': value.data()['fullName'],
+                  'registerationNumber': value.data()['registrationNo'],
+                  'renewalDate': value.data()['renewalDate'],
+                  'street': value.data()['street'],
+                  'town': value.data()['town'],
+                  'district': value.data()['district'],
+                  'state': value.data()['state'],
+                  'uid': value.data()['uid'],
+                });
+              });
+            },
+            icon: Icon(Icons.account_box_rounded),
+            iconSize: 24,
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(ChatScreen.routeName,
                   arguments: {'name': userName, 'userId': uid});
             },
             icon: Icon(Icons.chat),
-            iconSize: 30,
+            iconSize: 23,
           ),
-          SizedBox(
-            width: 30,
-          )
         ],
       ),
-      body: SingleChildScrollView(
+      body: _isLoading ? Center(child: CircularProgressIndicator(),) : SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

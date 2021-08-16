@@ -26,7 +26,7 @@ class MedicReqScreen extends StatelessWidget {
               );
             }
 
-            final pharmReqs = pharmSnapShot.data.docs;
+            final pharmReqs = pharmSnapShot.data == null ? [] :  pharmSnapShot.data.docs;
 
             return ListView.builder(
                 itemCount: pharmReqs.length,

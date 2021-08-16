@@ -31,7 +31,7 @@ class StartSearching extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        final docs = snapShot.data.docs;
+        final docs = snapShot.data == null ? [] : snapShot.data.docs;
         return ListView.builder(
           shrinkWrap: true,
           itemCount: docs.length,

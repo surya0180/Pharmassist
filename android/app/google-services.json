@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "310095393555",
-    "project_id": "pharmassist-f911e",
-    "storage_bucket": "pharmassist-f911e.appspot.com"
+    "project_number": "525200533935",
+    "project_id": "pharmassist-ebbc1",
+    "storage_bucket": "pharmassist-ebbc1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:310095393555:android:dfa9e37c53e640982e20e6",
+        "mobilesdk_app_id": "1:525200533935:android:2fcc9e4231b667b148e75a",
         "android_client_info": {
           "package_name": "com.example.pharmassist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "310095393555-5e1ftg4tm8gfifas5l5c7pee28brc3ba.apps.googleusercontent.com",
+          "client_id": "525200533935-34h8isusgt1ktbvp63l3lgaa6nmktnn3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.pharmassist",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "310095393555-9qkb28vkof35vavhb0ugnlhn15rlc7bg.apps.googleusercontent.com",
+          "client_id": "525200533935-8tiq1aoc541js9hd0h63lehm4d4ac771.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.pharmassist",
@@ -30,20 +30,20 @@
           }
         },
         {
-          "client_id": "310095393555-nuv0ehr0rra105u2966fm79hpb79v3h2.apps.googleusercontent.com",
+          "client_id": "525200533935-mldan5147hjgov0f6llkhtebgdcn2n4d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHWb5pdQnyPwOgHmuQSZMv6b5zlnC3uJ0"
+          "current_key": "AIzaSyC9wDXoUlAa8cVk6x1xUlNu0eqYIcS7uOw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "310095393555-nuv0ehr0rra105u2966fm79hpb79v3h2.apps.googleusercontent.com",
+              "client_id": "525200533935-mldan5147hjgov0f6llkhtebgdcn2n4d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

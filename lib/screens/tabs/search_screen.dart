@@ -86,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                final docs = snapShot.data.docs;
+                final docs = snapShot.data == null ? [] : snapShot.data.docs;
                 return docs.length == 0
                     ? NoResultsFound()
                     : ListView.builder(

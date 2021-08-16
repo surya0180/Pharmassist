@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/stores/store_detail_screen.dart';
+import '../../helpers/string_extension.dart';
 
 class StoreCard extends StatelessWidget {
   final String uid;
@@ -77,10 +78,18 @@ class StoreCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('$name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                        SizedBox(height: 10,),
+                        Text(
+                          '$name'.capitalize(),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text('$establishmentYear'),
-                        SizedBox(height: 6,),
+                        SizedBox(
+                          height: 6,
+                        ),
                         Text('$firmId'),
                       ],
                     ),

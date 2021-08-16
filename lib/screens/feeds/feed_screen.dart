@@ -34,7 +34,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          final feedDocs = feedSnapShot.data == null ? [] : feedSnapShot.data.docs;
+          final feedDocs = feedSnapShot.data.docs;
           return feedDocs.length == 0
               ? _isAdmin
                   ? Center(

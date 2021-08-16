@@ -70,8 +70,7 @@ class MessageBubble extends StatelessWidget {
                   horizontal: 8,
                 ),
                 child: Column(
-                  crossAxisAlignment:
-                      isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       username,
@@ -90,7 +89,7 @@ class MessageBubble extends StatelessWidget {
                             ? Colors.black
                             : Theme.of(context).accentTextTheme.title.color,
                       ),
-                      textAlign: isMe ? TextAlign.end : TextAlign.start,
+                      textAlign: TextAlign.start,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.008,

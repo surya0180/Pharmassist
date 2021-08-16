@@ -68,7 +68,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       "street": "",
       "town": "",
       "district": "",
-      "state": "andhra pradesh",
+      "state": "maharashtra",
       "displayName": displayName,
     });
   }

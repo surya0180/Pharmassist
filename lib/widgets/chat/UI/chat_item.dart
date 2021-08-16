@@ -20,7 +20,7 @@ class ChatItem extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: Colors.white,
         border: Border(
           bottom: BorderSide(width: 1.0, color: Colors.black26),
         ),
@@ -65,12 +65,12 @@ class ChatItem extends StatelessWidget {
                       ),
                       number != 0
                           ? Text(
-                              message.length > 30 ? message.substring(0, 30) + '. . . .' : message,
+                              message.length > 20 ? message.substring(0, 20) + '. . . .' : message,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.blue),
                             )
-                          : Text(message.length > 30 ? message.substring(0, 30) + '. . . .' : message,),
+                          : Text(message.length > 25 ? message.substring(0, 25) + '. . . .' : message,),
                     ],
                   ),
                 ],

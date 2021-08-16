@@ -68,7 +68,7 @@ class MapScreenState extends State<ProfilePage>
   @override
   void initState() {
     dateinput.text = "";
-    dropdownValue = "andhra pradesh";
+    dropdownValue = "maharashtra";
 
     fullname.text = "";
     registrationNo.text = "";

@@ -40,7 +40,7 @@ class MapScreenState extends State<StoreDetailScreen>
   void initState() {
     // TODO: implement initState
     dateinput.text = "";
-    dropdownValue = "andhra pradesh";
+    dropdownValue = "maharashtra";
     isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     super.initState();

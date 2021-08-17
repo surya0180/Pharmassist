@@ -51,6 +51,7 @@ class _NewMessageState extends State<NewMessage> {
       'userId': user.uid,
       'username': userData.data()['fullName'],
       'sentAt': hmstamp.toIso8601String(),
+      'owner': widget.userId,
     });
     var _isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
@@ -6,6 +7,7 @@ import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/auth/user.dart';
+import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/widgets/UI/BottomNavBar.dart';
 import 'package:provider/provider.dart';
 
@@ -65,16 +67,31 @@ class _TabScreenState extends State<TabScreen> {
     final fbm = FirebaseMessaging.instance;
     fbm.requestPermission();
     FirebaseMessaging.onMessage.listen((message) {
-      print(message);
+      if (_selectedIndex != 4) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.green,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: Duration(seconds: 2),
+            content:
+                Text('${message.notification.title} messaged you just now'),
+          ),
+        );
+      }
       print("i am in the messaging part1");
       return;
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       print("i am in the messaging part2");
+      Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
+        'name': message.notification.title,
+        'userId': message.notification.bodyLocArgs[0],
+        'uidX': message.notification.bodyLocArgs[1],
+      });
       print(message);
       return;
     });
-    // fbm.subscribeToTopic('chat');
     super.initState();
   }
 
@@ -91,7 +108,16 @@ class _TabScreenState extends State<TabScreen> {
           _isInit = false;
           Provider.of<AdminProvider>(context, listen: false)
               .getAdminData()
-              .then((value) {});
+              .then((value) {
+            print('I am here lol');
+            FirebaseFirestore.instance
+                .collection('Chat')
+                .doc(FirebaseAuth.instance.currentUser.uid)
+                .update({
+              "uidX": Provider.of<AdminProvider>(context, listen: false)
+                  .getAdminUid,
+            });
+          });
           Provider.of<NotificationProvider>(context, listen: false)
               .calculateTotalUnreadMessages()
               .then((value) {

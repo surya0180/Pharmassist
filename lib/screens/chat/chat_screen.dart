@@ -16,6 +16,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String userName;
   String userId;
+  String uidX;
   int _unreadMsg;
   bool _isSent;
   String _timestamp;
@@ -39,6 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     userName = routeArgs['name'];
     userId = routeArgs['userId'];
+    uidX = routeArgs['uidX'];
     print(userName);
     print(userId);
     if (userId == FirebaseAuth.instance.currentUser.uid) {
@@ -100,7 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: Messages(userId, _unreadMsg, _isSent, _timestamp),
             ),
-            NewMessage(userId, setIsSent, setTimestamp),
+            NewMessage(userId, uidX, setIsSent, setTimestamp),
           ],
         ),
       ),

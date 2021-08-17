@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
@@ -33,6 +33,8 @@ class GoogleSignInProvider extends ChangeNotifier {
             signedUser.displayName);
         createChatData();
         createStoreData();
+      } else {
+        updateUserData(signedUser.uid);
       }
     } catch (e) {
       print(e.toString());
@@ -54,22 +56,38 @@ class GoogleSignInProvider extends ChangeNotifier {
     return FirebaseAuth.instance.signOut();
   }
 
-  Future<void> createUserData(
-      String uid, String email, String photoUrl, String displayName) async {
-    return await users.doc(uid).set({
-      'uid': uid,
-      "email": email,
-      "PhotoUrl": photoUrl,
-      "fullName": "",
-      "isAdmin": false,
-      "isAdded": false,
-      "registrationNo": "",
-      "renewalDate": "",
-      "street": "",
-      "town": "",
-      "district": "",
-      "state": "maharashtra",
-      "displayName": displayName,
+  void createUserData(
+      String uid, String email, String photoUrl, String displayName) {
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    fbm.getToken().then((value) {
+      return users.doc(uid).set({
+        "uid": uid,
+        "deviceToken": value,
+        "email": email,
+        "PhotoUrl": photoUrl,
+        "fullName": "",
+        "isAdmin": false,
+        "isAdded": false,
+        "registrationNo": "",
+        "renewalDate": "",
+        "street": "",
+        "town": "",
+        "district": "",
+        "state": "maharashtra",
+        "displayName": displayName,
+      });
+    });
+  }
+
+  void updateUserData(String uid) {
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    fbm.getToken().then((value) {
+      return users.doc(uid).update({
+        "uid": uid,
+        "deviceToken": value,
+      });
     });
   }
 
@@ -86,6 +104,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       "name": "",
       "timestamp": null,
       "uid": signedUser.uid,
+      "uidX": "",
     });
   }
 

@@ -48,6 +48,7 @@ class _AdminChatListState extends State<AdminChatList> {
                 listDocs[index]['latestMessage'],
                 listDocs[index]['hostA'],
                 listDocs[index]['uid'],
+                listDocs[index]['uidX'],
               );
             }
             return SizedBox(

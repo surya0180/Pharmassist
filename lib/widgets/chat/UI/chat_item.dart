@@ -4,7 +4,7 @@ import '../../../helpers/string_extension.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem(
-      this.name, this.profilePic, this.message, this.number, this.uid,
+      this.name, this.profilePic, this.message, this.number, this.uid, this.uidX,
       {Key key})
       : super(key: key);
 
@@ -12,6 +12,7 @@ class ChatItem extends StatelessWidget {
   final String message;
   final int number;
   final String uid;
+  final String uidX;
   final String profilePic;
 
   @override
@@ -33,6 +34,7 @@ class ChatItem extends StatelessWidget {
             arguments: {
               'name': name.capitalize(),
               'userId': uid,
+              'uidX': uidX,
             },
           );
         },

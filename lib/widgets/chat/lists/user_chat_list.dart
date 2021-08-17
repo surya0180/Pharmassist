@@ -52,6 +52,7 @@ class _UserChatListState extends State<UserChatList> {
                     listDocs['latestMessage'],
                     listDocs['hostB'],
                     listDocs['uid'],
+                    listDocs['uidX']
                   ),
                 ],
               );

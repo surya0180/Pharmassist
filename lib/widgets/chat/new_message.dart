@@ -6,10 +6,11 @@ import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage(this.userId, this.setIsSent, this.setTimestamp, {Key key})
+  const NewMessage(this.userId, this.uidX, this.setIsSent, this.setTimestamp, {Key key})
       : super(key: key);
 
   final String userId;
+  final String uidX;
   final Function setIsSent;
   final Function setTimestamp;
 
@@ -32,7 +33,7 @@ class _NewMessageState extends State<NewMessage> {
         .collection('users')
         .doc(user.uid)
         .get();
-    final adminUserData = await FirebaseFirestore.instance
+    final realUserData = await FirebaseFirestore.instance
         .collection('users')
         .doc(widget.userId)
         .get();
@@ -40,6 +41,12 @@ class _NewMessageState extends State<NewMessage> {
         .collection('Chat')
         .doc(widget.userId)
         .get();
+    final adminData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uidX)
+        .get();
+    var _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     FirebaseFirestore.instance
         .collection('Chat')
         .doc(widget.userId)
@@ -51,10 +58,9 @@ class _NewMessageState extends State<NewMessage> {
       'userId': user.uid,
       'username': userData.data()['fullName'],
       'sentAt': hmstamp.toIso8601String(),
-      'owner': widget.userId,
+      'notificationArgs': [widget.userId, widget.uidX],
+      'token': _isAdmin ? realUserData.data()['deviceToken'] : adminData.data()['deviceToken'],
     });
-    var _isAdmin =
-        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     if (_isAdmin) {
       await FirebaseFirestore.instance
           .collection('Chat')
@@ -62,8 +68,8 @@ class _NewMessageState extends State<NewMessage> {
           .update({
         'timestamp': timestamp,
         'latestMessage': _enteredMessage.trim(),
-        'name': adminUserData.data()['fullName'],
-        'profilePic': adminUserData.data()['PhotoUrl'],
+        'name': realUserData.data()['fullName'],
+        'profilePic': realUserData.data()['PhotoUrl'],
         'hostB': chatData.data()['hostB'] + 1,
       }).then((value) {
         widget.setIsSent(true);

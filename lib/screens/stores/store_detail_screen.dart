@@ -8,6 +8,7 @@ import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/providers/store.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
+import '../../helpers/string_extension.dart';
 
 class StoreDetailScreen extends StatefulWidget {
   static final routeName = "/add-store-page";
@@ -236,16 +237,18 @@ class MapScreenState extends State<StoreDetailScreen>
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
                                           validator: (value) {
+                                            print("hello world");
                                             if (value.trim().length == 0) {
                                               return 'This field is required';
                                             }
-                                            if (!isAlphanumeric(
-                                                value.replaceAll(' ', ''))) {
-                                              return 'Please Enter Valid Value';
-                                            }
+                                            // if (!isAlpha(
+                                            //     value.replaceAll(' ', ''))) {
+                                            //   return 'Please Enter Valid Value';
+                                            // }
                                             return null;
                                           },
-                                          initialValue: _name,
+                                          initialValue:
+                                              _name.toString().capitalize(),
                                           decoration: const InputDecoration(
                                             hintText: "Enter Store Name",
                                           ),
@@ -285,7 +288,529 @@ class MapScreenState extends State<StoreDetailScreen>
                                       new Flexible(
                                         child: new TextFormField(
                                           readOnly: true,
-                                          initialValue: userName,
+                                          initialValue:
+                                              userName.toString().capitalize(),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            'Firm Id',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Flexible(
+                                        child: new TextFormField(
+                                          onSaved: (value) {
+                                            setState(() {
+                                              _firmId = value;
+                                            });
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            if (!isAlphanumeric(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
+                                            }
+                                            return null;
+                                          },
+                                          initialValue: _firmId,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter Firm Id"),
+                                          enabled: !_status,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            "Establishment Year",
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Flexible(
+                                        child: new TextFormField(
+                                          onSaved: (value) {
+                                            setState(() {
+                                              _establishmentYear = value;
+                                            });
+                                          },
+                                          readOnly: true,
+                                          onTap: () async {
+                                            DateTime pickedDate =
+                                                await showDatePicker(
+                                                    context:
+                                                        context, //context of current state
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(
+                                                        1980), //DateTime.now() - not to allow to choose before today.
+                                                    lastDate: DateTime(2101));
+
+                                            if (pickedDate != null) {
+                                              print(
+                                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                              String formattedDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(pickedDate);
+                                              print(
+                                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                                              setState(() {
+                                                _establishmentYear =
+                                                    formattedDate;
+                                                dateinput.text = formattedDate;
+                                              });
+                                            } else {
+                                              print("Date is not selected");
+                                            }
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
+                                          controller: dateinput,
+                                          decoration: const InputDecoration(
+                                              hintText:
+                                                  "Enter Establishment Year"),
+                                          enabled: !_status,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Container(
+                                          child: new Text(
+                                            'Street',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          child: new Text(
+                                            'Town',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(right: 10.0),
+                                          child: new TextFormField(
+                                            onSaved: (value) {
+                                              setState(() {
+                                                _street = value;
+                                              });
+                                            },
+                                            keyboardType: TextInputType.text,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              print(value.replaceAll(' ', ''));
+                                              if (value.trim().length == 0) {
+                                                return 'This field is required';
+                                              }
+                                              if (!isAlpha(
+                                                  value.replaceAll(' ', ''))) {
+                                                return 'Please Enter Valid Value';
+                                              }
+                                              return null;
+                                            },
+                                            initialValue:
+                                                _street.toString().capitalize(),
+                                            decoration: const InputDecoration(
+                                                hintText: "Enter Street"),
+                                            enabled: !_status,
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                      Flexible(
+                                        child: new TextFormField(
+                                          onSaved: (value) {
+                                            setState(() {
+                                              _town = value;
+                                            });
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            if (!isAlphanumeric(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
+                                            }
+                                            return null;
+                                          },
+                                          initialValue:
+                                              _town.toString().capitalize(),
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter Town"),
+                                          enabled: !_status,
+                                        ),
+                                        flex: 2,
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Container(
+                                          child: new Text(
+                                            'District',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          child: new Text(
+                                            'State',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(right: 10.0),
+                                          child: new TextFormField(
+                                            onSaved: (value) {
+                                              setState(() {
+                                                _district = value;
+                                              });
+                                            },
+                                            keyboardType: TextInputType.text,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            validator: (value) {
+                                              if (value.trim().length == 0) {
+                                                return 'This field is required';
+                                              }
+                                              if (!isAlpha(
+                                                  value.replaceAll(' ', ''))) {
+                                                return 'Please Enter Valid Value';
+                                              }
+                                              return null;
+                                            },
+                                            initialValue: _district
+                                                .toString()
+                                                .capitalize(),
+                                            decoration: const InputDecoration(
+                                                hintText: "Enter District"),
+                                            enabled: !_status,
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                      Flexible(
+                                        child: IgnorePointer(
+                                          ignoring: _status,
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                DropdownButtonFormField<String>(
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      _state = value;
+                                                    });
+                                                  },
+                                                  isExpanded: true,
+                                                  value: dropdownValue,
+                                                  onChanged: (String newValue) {
+                                                    setState(() {
+                                                      dropdownValue = newValue;
+                                                    });
+                                                  },
+                                                  items: statesItems,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                    ],
+                                  )),
+                              !_status
+                                  ? _getActionButtons(_isNew)
+                                  : new Container(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
+    return WillPopScope(
+      onWillPop: () async {
+        if (_status) {
+          return true;
+        }
+        final value = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(
+                  'Are you sure you want to discard the changes?',
+                  style: TextStyle(fontFamily: 'poppins', fontSize: 16),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'No',
+                      style: TextStyle(fontFamily: 'poppins', fontSize: 12),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Yes, exit',
+                      style: TextStyle(fontFamily: 'poppins', fontSize: 12),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                ],
+              );
+            });
+
+        return value == true;
+      },
+      child: new Scaffold(
+          appBar: AppBar(
+            title: _name == "" ? Text(_name) : Text("New Store"),
+          ),
+          body: new Container(
+            color: Colors.white,
+            child: new ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    new Container(
+                      color: Color(0xffFFFFFF),
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 25.0),
+                        child: Form(
+                          key: _formKey,
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            'Store Information',
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              _status
+                                                  ? _uid !=
+                                                          FirebaseAuth.instance
+                                                              .currentUser.uid
+                                                      ? new Container()
+                                                      : _getEditIcon()
+                                                  : new Container(),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              !_isNew
+                                                  ? _status
+                                                      ? _uid !=
+                                                              FirebaseAuth
+                                                                  .instance
+                                                                  .currentUser
+                                                                  .uid
+                                                          ? new Container()
+                                                          : _getDeleteIcon()
+                                                      : new Container()
+                                                  : new Container(),
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Text(
+                                            'Store Name',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 2.0),
+                                  child: new Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      new Flexible(
+                                        child: new TextFormField(
+                                          onSaved: (value) {
+                                            setState(() {
+                                              _name = value;
+                                            });
+                                          },
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.next,
+                                          validator: (value) {
+                                            if (value.trim().length == 0) {
+                                              return 'This field is required';
+                                            }
+                                            if (!isAlphanumeric(
+                                                value.replaceAll(' ', ''))) {
+                                              return 'Please Enter Valid Value';
+                                            }
+                                            return null;
+                                          },
+                                          initialValue:
+                                              _name.toString().capitalize(),
+                                          decoration: const InputDecoration(
+                                            hintText: "Enter Store Name",
+                                          ),
+                                          enabled: !_status,
+                                          autofocus: !_status,
                                         ),
                                       ),
                                     ],
@@ -483,7 +1008,8 @@ class MapScreenState extends State<StoreDetailScreen>
                                               }
                                               return null;
                                             },
-                                            initialValue: _street,
+                                            initialValue:
+                                                _street.toString().capitalize(),
                                             decoration: const InputDecoration(
                                                 hintText: "Enter Street"),
                                             enabled: !_status,
@@ -510,7 +1036,8 @@ class MapScreenState extends State<StoreDetailScreen>
                                             }
                                             return null;
                                           },
-                                          initialValue: _town,
+                                          initialValue:
+                                              _town.toString().capitalize(),
                                           decoration: const InputDecoration(
                                               hintText: "Enter Town"),
                                           enabled: !_status,
@@ -579,7 +1106,9 @@ class MapScreenState extends State<StoreDetailScreen>
                                               }
                                               return null;
                                             },
-                                            initialValue: _district,
+                                            initialValue: _district
+                                                .toString()
+                                                .capitalize(),
                                             decoration: const InputDecoration(
                                                 hintText: "Enter District"),
                                             enabled: !_status,
@@ -629,477 +1158,9 @@ class MapScreenState extends State<StoreDetailScreen>
                   ],
                 ),
               ],
-            );
-          },
-        ),
-      );
-    }
-    return new Scaffold(
-        appBar: AppBar(
-          title: _name == "" ? Text(_name) : Text("New Store"),
-        ),
-        body: new Container(
-          color: Colors.white,
-          child: new ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  new Container(
-                    color: Color(0xffFFFFFF),
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 25.0),
-                      child: Form(
-                        key: _formKey,
-                        child: new Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          'Store Information',
-                                          style: TextStyle(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    new Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            _status
-                                                ? _uid !=
-                                                        FirebaseAuth.instance
-                                                            .currentUser.uid
-                                                    ? new Container()
-                                                    : _getEditIcon()
-                                                : new Container(),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            !_isNew
-                                                ? _status
-                                                    ? _uid !=
-                                                            FirebaseAuth
-                                                                .instance
-                                                                .currentUser
-                                                                .uid
-                                                        ? new Container()
-                                                        : _getDeleteIcon()
-                                                    : new Container()
-                                                : new Container(),
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          'Store Name',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          setState(() {
-                                            _name = value;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          if (!isAlphanumeric(value)) {
-                                            return 'Please Enter Valid Value';
-                                          }
-                                          return null;
-                                        },
-                                        initialValue: _name,
-                                        decoration: const InputDecoration(
-                                          hintText: "Enter Store Name",
-                                        ),
-                                        enabled: !_status,
-                                        autofocus: !_status,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          'Firm Id',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          setState(() {
-                                            _firmId = value;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          if (!isAlphanumeric(value)) {
-                                            return 'Please Enter Valid Value';
-                                          }
-                                          return null;
-                                        },
-                                        initialValue: _firmId,
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter Firm Id"),
-                                        enabled: !_status,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Text(
-                                          "Establishment Year",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    new Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          setState(() {
-                                            _establishmentYear = value;
-                                          });
-                                        },
-                                        readOnly: true,
-                                        onTap: () async {
-                                          DateTime pickedDate =
-                                              await showDatePicker(
-                                                  context:
-                                                      context, //context of current state
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(
-                                                      1980), //DateTime.now() - not to allow to choose before today.
-                                                  lastDate: DateTime(2101));
-
-                                          if (pickedDate != null) {
-                                            print(
-                                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                            String formattedDate =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                            print(
-                                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                                            setState(() {
-                                              _establishmentYear =
-                                                  formattedDate;
-                                              dateinput.text = formattedDate;
-                                            });
-                                          } else {
-                                            print("Date is not selected");
-                                          }
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          return null;
-                                        },
-                                        controller: dateinput,
-                                        decoration: const InputDecoration(
-                                            hintText:
-                                                "Enter Establishment Year"),
-                                        enabled: !_status,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'Street',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'Town',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _street = value;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            if (!isAlphanumeric(value)) {
-                                              return 'Please Enter Valid Value';
-                                            }
-                                            return null;
-                                          },
-                                          initialValue: _street,
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Street"),
-                                          enabled: !_status,
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Flexible(
-                                      child: new TextFormField(
-                                        onSaved: (value) {
-                                          setState(() {
-                                            _town = value;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.text,
-                                        textInputAction: TextInputAction.next,
-                                        validator: (value) {
-                                          if (value.trim().length == 0) {
-                                            return 'This field is required';
-                                          }
-                                          if (!isAlphanumeric(value)) {
-                                            return 'Please Enter Valid Value';
-                                          }
-                                          return null;
-                                        },
-                                        initialValue: _town,
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter Town"),
-                                        enabled: !_status,
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'District',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'State',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _district = value;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            if (!isAlpha(value)) {
-                                              return 'Please Enter Valid Value';
-                                            }
-                                            return null;
-                                          },
-                                          initialValue: _district,
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter District"),
-                                          enabled: !_status,
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Flexible(
-                                      child: IgnorePointer(
-                                        ignoring: _status,
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              DropdownButtonFormField<String>(
-                                                onSaved: (value) {
-                                                  setState(() {
-                                                    _state = value;
-                                                  });
-                                                },
-                                                isExpanded: true,
-                                                value: dropdownValue,
-                                                onChanged: (String newValue) {
-                                                  setState(() {
-                                                    dropdownValue = newValue;
-                                                  });
-                                                },
-                                                items: statesItems,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                            !_status
-                                ? _getActionButtons(_isNew)
-                                : new Container(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ));
+            ),
+          )),
+    );
   }
 
   @override

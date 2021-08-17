@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/helpers/NavList.dart';
 import 'package:pharmassist/providers/auth/admin-provider.dart';
@@ -61,6 +62,19 @@ class _TabScreenState extends State<TabScreen> {
   void initState() {
     _selectedIndex = 2;
     _pageController = PageController(initialPage: 2);
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message);
+      print("i am in the messaging part1");
+      return;
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print("i am in the messaging part2");
+      print(message);
+      return;
+    });
+    // fbm.subscribeToTopic('chat');
     super.initState();
   }
 
@@ -71,7 +85,6 @@ class _TabScreenState extends State<TabScreen> {
       setState(() {
         _isLoading = true;
       });
-
       Provider.of<UserProvider>(context, listen: false).getData().then((value) {
         if (value) {
           print("i am in line 52");

@@ -7,6 +7,7 @@ import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/auth/user.dart';
+import 'package:pharmassist/screens/admin/admin_requests_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/widgets/UI/BottomNavBar.dart';
 import 'package:provider/provider.dart';
@@ -92,6 +93,19 @@ class _TabScreenState extends State<TabScreen> {
       print(message);
       return;
     });
+
+    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    //   print("i am in the messaging part2");
+    //   final route = message.data["route"];
+    //   if (route == AdminRequestScreen.routeName) {
+    //     Navigator.of(context).pushNamed(AdminRequestScreen.routeName);
+    //     print(message);
+    //     return;
+    //   }
+
+    //   return;
+    // });
+
     super.initState();
   }
 

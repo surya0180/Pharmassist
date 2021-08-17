@@ -21,7 +21,11 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
   String _title;
   String _request;
 
-  void _saveForm() {
+  void _saveForm() async {
+    var admidId =
+        Provider.of<AdminProvider>(context, listen: false).getAdminUid;
+    final adminData =
+        await FirebaseFirestore.instance.collection('users').doc(admidId).get();
     _form.currentState.save();
     var uid = FirebaseAuth.instance.currentUser.uid;
     var timeStamp = DateTime.now();
@@ -40,6 +44,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
       'username': userData.fullname,
       'PhotoUrl': userData.photoUrl,
       'isDeleted': false,
+      'token': adminData.data()['deviceToken'],
     }).then((value) {
       int count = 0;
       Navigator.of(context).popUntil((_) => count++ >= 2);

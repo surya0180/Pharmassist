@@ -24,6 +24,7 @@ import 'package:pharmassist/widgets/feed/new_feed_form.dart';
 import 'package:provider/provider.dart';
 import 'providers/store.dart';
 import 'providers/auth/user.dart';
+import 'screens/admin/admin_requests_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
           Dashboard.routeName: (ctx) => Dashboard(),
           RequestDetailScreen.routeName: (ctx) => RequestDetailScreen(),
           RequestScreen.routeName: (ctx) => RequestScreen(),
+          AdminRequestScreen.routeName: (ctx) => AdminRequestScreen(),
         },
       ),
     );

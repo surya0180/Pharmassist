@@ -313,7 +313,7 @@ class MapScreenState extends State<ProfilePage>
                                         onSaved: (value) {
                                           _editedUser = User(
                                             isAdded: _editedUser.isAdded,
-                                            fullname: value,
+                                            fullname: value.trim(),
                                             registrationNo:
                                                 _editedUser.registrationNo,
                                             renewalDate:
@@ -349,7 +349,8 @@ class MapScreenState extends State<ProfilePage>
                                     ),
                                   ],
                                 )),
-                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult &&
+                                    registrationNo.text != "")
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
@@ -371,7 +372,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult && registrationNo.text != "")
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
@@ -384,7 +385,7 @@ class MapScreenState extends State<ProfilePage>
                                             _editedUser = User(
                                               isAdded: _editedUser.isAdded,
                                               fullname: _editedUser.fullname,
-                                              registrationNo: value,
+                                              registrationNo: value.trim(),
                                               renewalDate:
                                                   _editedUser.renewalDate,
                                               street: _editedUser.street,
@@ -397,7 +398,7 @@ class MapScreenState extends State<ProfilePage>
                                           textInputAction: TextInputAction.next,
                                           validator: (value) {
                                             if (value.trim().length == 0) {
-                                              return 'This field is required';
+                                              return null;
                                             }
                                             if (!isAlphanumeric(
                                                 value.replaceAll(' ', ''))) {
@@ -417,7 +418,8 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult &&
+                                    dateinput.text != "" )
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
@@ -439,7 +441,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                     ],
                                   )),
-                            if (!_isAdmin || _isSearchResult != null && _isSearchResult)
+                            if (!_isAdmin || _isSearchResult != null && _isSearchResult && dateinput.text != "")
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
@@ -492,9 +494,9 @@ class MapScreenState extends State<ProfilePage>
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
                                           validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
+                                            // if (value.trim().length == 0) {
+                                            //   return 'This field is required';
+                                            // }
                                             return null;
                                           },
                                           controller: dateinput,
@@ -555,7 +557,7 @@ class MapScreenState extends State<ProfilePage>
                                                   _editedUser.registrationNo,
                                               renewalDate:
                                                   _editedUser.renewalDate,
-                                              street: value,
+                                              street: value.trim(),
                                               town: _editedUser.town,
                                               district: _editedUser.district,
                                               state: _editedUser.state,
@@ -592,7 +594,7 @@ class MapScreenState extends State<ProfilePage>
                                             renewalDate:
                                                 _editedUser.renewalDate,
                                             street: _editedUser.street,
-                                            town: value,
+                                            town: value.trim(),
                                             district: _editedUser.district,
                                             state: _editedUser.state,
                                           );
@@ -670,7 +672,7 @@ class MapScreenState extends State<ProfilePage>
                                                   _editedUser.renewalDate,
                                               street: _editedUser.street,
                                               town: _editedUser.town,
-                                              district: value,
+                                              district: value.trim(),
                                               state: _editedUser.state,
                                             );
                                           },
@@ -717,7 +719,7 @@ class MapScreenState extends State<ProfilePage>
                                                     town: _editedUser.town,
                                                     district:
                                                         _editedUser.district,
-                                                    state: value,
+                                                    state: value.trim(),
                                                   );
                                                 },
                                                 isExpanded: true,

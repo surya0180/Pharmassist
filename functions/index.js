@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
@@ -40,6 +41,25 @@ exports.sendRequest = functions.firestore
       });
       return;
     });
+exports.sendRequestMedic = functions.firestore
+    .document("medical requests/{reqId}")
+    .onCreate((snapshot, context) => {
+      console.log(snapshot.data());
+      admin.messaging().sendToDevice(snapshot.data().token, {
+        notification: {
+          tag: "request",
+          title: snapshot.data().username,
+          body: snapshot.data().about,
+          bodyLocArgs: JSON.stringify([
+            snapshot.data().userId,
+            snapshot.data().createdOn,
+            snapshot.data().request,
+            snapshot.data().PhotoUrl,
+          ]),
+        },
+      });
+      return;
+    });
 
 exports.feedPosts = functions.firestore
     .document("feed/{feedId}")
@@ -49,7 +69,7 @@ exports.feedPosts = functions.firestore
         notification: {
           tag: "feed",
           title: "New feed posted",
-          body: "Title: "+snapshot.data().title,
+          body: "Title: " + snapshot.data().title,
           bodyLocArgs: JSON.stringify([
             snapshot.data().id,
             snapshot.data().title,

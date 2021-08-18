@@ -13,6 +13,7 @@ import 'package:pharmassist/widgets/UI/BottomNavBar.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/UI/SideDrawer.dart';
+import 'admin/request_detail_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key key}) : super(key: key);
@@ -68,6 +69,14 @@ class _TabScreenState extends State<TabScreen> {
     final fbm = FirebaseMessaging.instance;
     fbm.requestPermission();
     FirebaseMessaging.onMessage.listen((message) {
+      final route = message.notification.android.tag;
+      print(route);
+      if (route == "request") {
+        // Navigator.of(context).pushNamed(AdminRequestScreen.routeName);
+        print("onmessage");
+        print(message);
+        return;
+      }
       if (_selectedIndex != 4) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -84,6 +93,27 @@ class _TabScreenState extends State<TabScreen> {
       return;
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final route = message.notification.android.tag;
+      print(route);
+      if (route == "request") {
+        Navigator.of(context)
+            .pushNamed(RequestDetailScreen.routeName, arguments: {
+          'userName': message.notification.title,
+          'uid': message.notification.bodyLocArgs[0],
+          'createdOn': message.notification.bodyLocArgs[1],
+          'title': message.notification.body,
+          'detail': message.notification.bodyLocArgs[2],
+          'photoUrl': message.notification.bodyLocArgs[3],
+        });
+        // setState(() {
+        //   _selectedIndex = 1;
+        //   _pageController = PageController(initialPage: _selectedIndex);
+        // });
+          
+        print(message);
+        print("i am in requests");
+        return;
+      }
       print("i am in the messaging part2");
       Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
         'name': message.notification.title,
@@ -94,17 +124,7 @@ class _TabScreenState extends State<TabScreen> {
       return;
     });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    //   print("i am in the messaging part2");
-    //   final route = message.data["route"];
-    //   if (route == AdminRequestScreen.routeName) {
-    //     Navigator.of(context).pushNamed(AdminRequestScreen.routeName);
-    //     print(message);
-    //     return;
-    //   }
-
-    //   return;
-    // });
+    
 
     super.initState();
   }

@@ -412,7 +412,7 @@ class MapScreenState extends State<ProfilePage>
                                           //     : _initValues["registrationNo"],
                                           decoration: const InputDecoration(
                                               hintText:
-                                                  "Enter registration no"),
+                                                  "Enter registration number (Optional)"),
                                           enabled: !_status,
                                         ),
                                       ),
@@ -501,7 +501,7 @@ class MapScreenState extends State<ProfilePage>
                                           },
                                           controller: dateinput,
                                           decoration: const InputDecoration(
-                                              hintText: "Enter renewal date"),
+                                              hintText: "Enter renewal date (Optional)"),
                                           enabled: !_status,
                                         ),
                                       ),

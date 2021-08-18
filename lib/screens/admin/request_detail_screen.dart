@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/screens/tabs/profile_screen.dart';
@@ -88,107 +89,115 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(ChatScreen.routeName,
-                  arguments: {'name': userName, 'userId': uid});
+              print("uid $uid");
+              Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
+                'name': userName,
+                'userId': uid,
+                'uidX': FirebaseAuth.instance.currentUser.uid,
+              });
             },
             icon: Icon(Icons.chat),
             iconSize: 23,
           ),
         ],
       ),
-      body: _isLoading ? Center(child: CircularProgressIndicator(),) : SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Card(
-                color: Colors.white,
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                        child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            new Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                new Text(
-                                  'About',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-                        child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            new Flexible(
-                              child: new TextFormField(
-                                initialValue: title,
-                                enabled: false,
-                              ),
-                            ),
-                          ],
-                        )),
+                    Card(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      new Text(
+                                        'About',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Flexible(
+                                    child: new TextFormField(
+                                      initialValue: title,
+                                      enabled: false,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      new Text(
+                                        'Request',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: new Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  new Flexible(
+                                    child: new TextFormField(
+                                      minLines: 3,
+                                      maxLines: 100,
+                                      initialValue: detail,
+                                      enabled: false,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-              Card(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                        child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            new Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                new Text(
-                                  'Request',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-                        child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            new Flexible(
-                              child: new TextFormField(
-                                minLines: 3,
-                                maxLines: 100,
-                                initialValue: detail,
-                                enabled: false,
-                              ),
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

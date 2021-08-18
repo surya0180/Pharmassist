@@ -8,6 +8,7 @@ import 'medic_req_screen.dart';
 import 'pharm_req_screen.dart';
 
 class AdminRequestScreen extends StatefulWidget {
+  static const routeName = '/admin-request-screen';
   @override
   _AdminRequestScreenState createState() => _AdminRequestScreenState();
 }

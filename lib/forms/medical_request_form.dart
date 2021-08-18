@@ -21,7 +21,11 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
   String _title;
   String _request;
 
-  void _saveForm() {
+  void _saveForm() async {
+    var admidId =
+        Provider.of<AdminProvider>(context, listen: false).getAdminUid;
+    final adminData =
+        await FirebaseFirestore.instance.collection('users').doc(admidId).get();
     _form.currentState.save();
     int count = 0;
     Navigator.of(context).popUntil((_) => count++ >= 2);
@@ -51,6 +55,7 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
       'username': userData.fullname,
       'PhotoUrl': userData.photoUrl,
       'isDeleted': false,
+      'token': adminData.data()['deviceToken'],
     });
 
     final _count =

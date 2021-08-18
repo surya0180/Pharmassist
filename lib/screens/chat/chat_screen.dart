@@ -59,6 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .doc(userId)
           .get()
           .then((value) {
+            print(userId);
         print('i am in admin setState');
         setState(() {
           print(value.data()['hostA']);

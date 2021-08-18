@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,8 +8,8 @@ import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/auth/user.dart';
-import 'package:pharmassist/screens/admin/admin_requests_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
+import 'package:pharmassist/screens/feeds/feed_detail_screeen.dart';
 import 'package:pharmassist/widgets/UI/BottomNavBar.dart';
 import 'package:provider/provider.dart';
 
@@ -68,29 +69,48 @@ class _TabScreenState extends State<TabScreen> {
     _pageController = PageController(initialPage: 2);
     final fbm = FirebaseMessaging.instance;
     fbm.requestPermission();
+    fbm.subscribeToTopic("feed");
     FirebaseMessaging.onMessage.listen((message) {
       final route = message.notification.android.tag;
       print(route);
       if (route == "request") {
-        // Navigator.of(context).pushNamed(AdminRequestScreen.routeName);
         print("onmessage");
         print(message);
         return;
       }
-      if (_selectedIndex != 4) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.green,
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-            duration: Duration(seconds: 2),
-            content:
-                Text('${message.notification.title} messaged you just now'),
-          ),
-        );
+      if (route == "chat") {
+        if (_selectedIndex != 4) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              duration: Duration(seconds: 2),
+              content:
+                  Text('${message.notification.title} messaged you just now'),
+            ),
+          );
+        }
+        print("i am in the messaging part1");
+        return;
       }
-      print("i am in the messaging part1");
-      return;
+      if (route == "feed") {
+        print(message.notification.bodyLocArgs[4]);
+        print("Above is the list of likedUsers");
+        if (message.notification.bodyLocArgs[5] !=
+            FirebaseAuth.instance.currentUser.uid) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.green,
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              duration: Duration(seconds: 2),
+              content: Text('New feed available'),
+            ),
+          );
+        }
+        print("i am in feed notification");
+      }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       final route = message.notification.android.tag;
@@ -105,27 +125,50 @@ class _TabScreenState extends State<TabScreen> {
           'detail': message.notification.bodyLocArgs[2],
           'photoUrl': message.notification.bodyLocArgs[3],
         });
-        // setState(() {
-        //   _selectedIndex = 1;
-        //   _pageController = PageController(initialPage: _selectedIndex);
-        // });
-          
         print(message);
         print("i am in requests");
         return;
       }
-      print("i am in the messaging part2");
-      Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
-        'name': message.notification.title,
-        'userId': message.notification.bodyLocArgs[0],
-        'uidX': message.notification.bodyLocArgs[1],
-      });
-      print(message);
-      return;
+      if (route == "chat") {
+        print("i am in the messaging part2");
+        if (message.notification.bodyLocArgs[0] ==
+            FirebaseAuth.instance.currentUser.uid) {
+          FirebaseFirestore.instance
+              .collection('Chat')
+              .doc(message.notification.bodyLocArgs[0])
+              .update({'hostB': 0});
+        } else {
+          print(' i am in the chat screen');
+          FirebaseFirestore.instance
+              .collection('Chat')
+              .doc(message.notification.bodyLocArgs[0])
+              .update({'hostA': 0});
+        }
+        Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
+          'name': message.notification.title,
+          'userId': message.notification.bodyLocArgs[0],
+          'uidX': message.notification.bodyLocArgs[1],
+        });
+        print(message);
+        return;
+      }
+      if (route == "feed") {
+        print("I am in the feed notification");
+        if (message.notification.bodyLocArgs[5] !=
+            FirebaseAuth.instance.currentUser.uid) {
+          Navigator.of(context).pushNamed(
+            FeedDetailScreen.routeName,
+            arguments: {
+              'id': message.notification.bodyLocArgs[0],
+              'title': message.notification.bodyLocArgs[1],
+              'content': message.notification.bodyLocArgs[2],
+              'likes': int.parse(message.notification.bodyLocArgs[3]),
+              'likedUsers': jsonDecode(message.notification.bodyLocArgs[4]),
+            },
+          );
+        }
+      }
     });
-
-    
-
     super.initState();
   }
 
@@ -139,7 +182,6 @@ class _TabScreenState extends State<TabScreen> {
       Provider.of<UserProvider>(context, listen: false).getData().then((value) {
         if (value) {
           print("i am in line 52");
-          _isInit = false;
           Provider.of<AdminProvider>(context, listen: false)
               .getAdminData()
               .then((value) {
@@ -157,6 +199,7 @@ class _TabScreenState extends State<TabScreen> {
               .then((value) {
             setState(() {
               _isLoading = false;
+              _isInit = false;
             });
           });
         } else {

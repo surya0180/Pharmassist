@@ -16,6 +16,7 @@ class FeedProvider with ChangeNotifier {
       'color': feed.color.toString(),
       'createdOn': feed.createdOn,
       'createdBy': feed.createdBy,
+      'uid': FirebaseAuth.instance.currentUser.uid,
       'profilePic': feed.profilePic,
       'isDeleted': false,
       'likedUsers': {

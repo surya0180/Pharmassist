@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -34,40 +33,57 @@ class _NewFeedFormState extends State<NewFeedForm> {
     _formKey.currentState.save();
     var timeStamp = DateTime.now();
     if (_id == '') {
-      Provider.of<FeedProvider>(context, listen: false).addFeed(
-          Feed(
-            id: timeStamp.toIso8601String(),
-            title: _title,
-            content: _description,
-            likes: 0,
-            color: _generateRandomColor(),
-            createdOn: DateFormat.yMd().format(timeStamp),
-            createdBy:
-                Provider.of<UserProvider>(context, listen: false).user.fullname,
-            profilePic:
-                Provider.of<UserProvider>(context, listen: false).user.photoUrl,
+      Navigator.of(context).pop(true);
+      Provider.of<FeedProvider>(context, listen: false)
+          .addFeed(
+              Feed(
+                id: timeStamp.toIso8601String(),
+                title: _title,
+                content: _description,
+                likes: 0,
+                color: _generateRandomColor(),
+                createdOn: DateFormat.yMd().format(timeStamp),
+                createdBy: Provider.of<UserProvider>(context, listen: false)
+                    .user
+                    .fullname,
+                profilePic: Provider.of<UserProvider>(context, listen: false)
+                    .user
+                    .photoUrl,
+              ),
+              timeStamp.toIso8601String())
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.black,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: Duration(seconds: 2),
+            content: Text('Added feed sucessfully'),
           ),
-          timeStamp.toIso8601String());
+        );
+        Navigator.of(context).pop(true);
+      });
       Provider.of<CommentProvider>(context, listen: false).createCommentSection(
         timeStamp.toIso8601String(),
       );
     } else {
       var timeStamp = DateTime.now();
+      Navigator.of(context).pop(true);
       Provider.of<FeedProvider>(context, listen: false)
-          .updateFeed(_id, _title, _description, timeStamp);
+          .updateFeed(_id, _title, _description, timeStamp).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.black,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: Duration(seconds: 2),
+            content: Text('Updated feed sucessfully'),
+          ),
+        );
+        Navigator.of(context).pop(true);
+          });
     }
     print('hey there');
-    int count = 0;
-    Navigator.of(context).popUntil((_) => count++ >= 2);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.black,
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-        duration: Duration(seconds: 2),
-        content: Text('Added feed sucessfully'),
-      ),
-    );
   }
 
   @override

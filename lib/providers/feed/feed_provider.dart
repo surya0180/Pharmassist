@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:pharmassist/providers/feed/feed.dart';
 
 class FeedProvider with ChangeNotifier {
-  void addFeed(Feed feed, String id) {
+  Future<void> addFeed(Feed feed, String id) {
     var uid = FirebaseAuth.instance.currentUser.uid;
-    FirebaseFirestore.instance.collection('feed/').doc(id).set({
+    return FirebaseFirestore.instance.collection('feed/').doc(id).set({
       'id': feed.id,
       'title': feed.title,
       'content': feed.content,
@@ -28,8 +28,8 @@ class FeedProvider with ChangeNotifier {
     });
   }
 
-  void updateFeed(String id, String title, String content, DateTime updatedOn) {
-    FirebaseFirestore.instance.collection('feed/').doc(id).update({
+  Future<void> updateFeed(String id, String title, String content, DateTime updatedOn) {
+    return FirebaseFirestore.instance.collection('feed/').doc(id).update({
       'title': title,
       'content': content,
       'id': id,

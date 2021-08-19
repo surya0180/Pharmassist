@@ -50,10 +50,29 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout(BuildContext context) async {
-    Provider.of<up.UserProvider>(context, listen: false).clearState();
-    Provider.of<ProfileEditStatus>(context, listen: false).clearState();
-    await googleSignIn.disconnect();
-    return FirebaseAuth.instance.signOut();
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(Provider.of<up.UserProvider>(context, listen: false).user.uid)
+        .get()
+        .then((snapShot) async {
+      final fbm = FirebaseMessaging.instance;
+      fbm.requestPermission();
+      fbm.getToken().then((value) {
+        var deviceData = snapShot.data()['deviceToken'];
+        deviceData.remove(value);
+        print(deviceData);
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser.uid)
+            .update({
+          "deviceToken": deviceData,
+        });
+      });
+      Provider.of<up.UserProvider>(context, listen: false).clearState();
+      Provider.of<ProfileEditStatus>(context, listen: false).clearState();
+      await googleSignIn.disconnect();
+      return FirebaseAuth.instance.signOut();
+    });
   }
 
   void createUserData(
@@ -63,7 +82,7 @@ class GoogleSignInProvider extends ChangeNotifier {
     fbm.getToken().then((value) {
       return users.doc(uid).set({
         "uid": uid,
-        "deviceToken": value,
+        "deviceToken": [value],
         "email": email,
         "PhotoUrl": photoUrl,
         "fullName": "",
@@ -81,12 +100,21 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   void updateUserData(String uid) {
-    final fbm = FirebaseMessaging.instance;
-    fbm.requestPermission();
-    fbm.getToken().then((value) {
-      return users.doc(uid).update({
-        "uid": uid,
-        "deviceToken": value,
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((snapShot) {
+      final fbm = FirebaseMessaging.instance;
+      fbm.requestPermission();
+      fbm.getToken().then((value) {
+        var deviceData = snapShot.data()['deviceToken'];
+        deviceData.add(value);
+        print(deviceData);
+        return users.doc(uid).update({
+          "uid": uid,
+          "deviceToken": deviceData,
+        });
       });
     });
   }

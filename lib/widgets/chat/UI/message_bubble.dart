@@ -61,11 +61,11 @@ class MessageBubble extends StatelessWidget {
                   minWidth: MediaQuery.of(context).size.width * 0.3,
                   maxWidth: MediaQuery.of(context).size.width * 0.85,
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 16,
                 ),
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   vertical: 1,
                   horizontal: 8,
                 ),
@@ -74,7 +74,7 @@ class MessageBubble extends StatelessWidget {
                   children: [
                     Text(
                       username,
-                      style: TextStyle(
+                      style:  TextStyle(
                         fontWeight: FontWeight.bold,
                         color: isMe
                             ? Colors.black
@@ -96,7 +96,7 @@ class MessageBubble extends StatelessWidget {
                     ),
                     Text(
                       '$chatTime',
-                      style: TextStyle(fontSize: 12, color: Colors.black38),
+                      style: const TextStyle(fontSize: 12, color: Colors.black38),
                     ),
                   ],
                 ),

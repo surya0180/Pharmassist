@@ -20,10 +20,10 @@ class ChatItem extends StatelessWidget {
     print(uid);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.black26),
+        border: const Border(
+          bottom: const BorderSide(width: 1.0, color: Colors.black26),
         ),
       ),
       child: InkWell(
@@ -42,7 +42,7 @@ class ChatItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         child: Container(
           height: MediaQuery.of(context).size.height*0.1,
-          padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,7 +68,7 @@ class ChatItem extends StatelessWidget {
                       number != 0
                           ? Text(
                               message.length > 20 ? message.substring(0, 20) + '. . . .' : message,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.blue),
                             )
@@ -83,14 +83,14 @@ class ChatItem extends StatelessWidget {
                       backgroundColor: Colors.green[300],
                       child: Text(
                         '$number',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 13,
                         ),
                       ),
                     )
-                  : SizedBox(
+                  : const SizedBox(
                       height: 0,
                       width: 0,
                     ),

@@ -67,9 +67,9 @@ class _FeedLikesState extends State<FeedLikes> {
                     SnackBar(
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: Colors.black,
-                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-                      duration: Duration(seconds: 2),
-                      content: Text('Please complete your profile'),
+                      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                      duration: const Duration(seconds: 2),
+                      content:const Text('Please complete your profile'),
                     ),
                   );
                 } else {
@@ -100,10 +100,10 @@ class _FeedLikesState extends State<FeedLikes> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
+                    content: const Text(
                       'Please check your network connection',
                     ),
-                    duration: Duration(seconds: 1, milliseconds: 200),
+                    duration:const Duration(seconds: 1, milliseconds: 200),
                   ),
                 );
               }
@@ -113,7 +113,7 @@ class _FeedLikesState extends State<FeedLikes> {
         ),
         Text(
           '$_likes',
-          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+          style:const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
         ),
       ],
     );

@@ -73,15 +73,15 @@ class _MessagesState extends State<Messages> {
             },
           );
           return widget.unreadMessages == null
-              ? Center(
-                  child: CircularProgressIndicator(),
+              ? const Center(
+                  child: const CircularProgressIndicator(),
                 )
               : MyListView;
         } catch (e) {
           print("Hello");
         }
         print('0: 1: yes i am that one');
-        return SizedBox(
+        return const SizedBox(
           height: 0,
         );
       },

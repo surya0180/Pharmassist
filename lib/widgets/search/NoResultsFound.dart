@@ -12,15 +12,15 @@ class NoResultsFound extends StatelessWidget {
           SizedBox(
             height: device.height*0.26,
           ),
-          Icon(
+          const Icon(
             Icons.no_accounts,
             size: 70,
           ),
           SizedBox(height: device.height*0.02,),
-          Center(
-            child: Text(
+          const Center(
+            child: const  Text(
               'No results found',
-              style: TextStyle(fontSize: 18),
+              style:const TextStyle(fontSize: 18),
             ),
           ),
         ],

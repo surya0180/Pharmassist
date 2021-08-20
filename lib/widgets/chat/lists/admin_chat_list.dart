@@ -32,8 +32,8 @@ class _AdminChatListState extends State<AdminChatList> {
       initialData: "ture",
       builder: (ctx, listSnapShot) {
         if (listSnapShot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return const Center(
+            child: const CircularProgressIndicator(),
           );
         }
         final listDocs = listSnapShot.data.docs;
@@ -51,7 +51,7 @@ class _AdminChatListState extends State<AdminChatList> {
                 listDocs[index]['uidX'],
               );
             }
-            return SizedBox(
+            return const SizedBox(
               height: 0,
             );
           },

@@ -21,13 +21,13 @@ class _SearchBarState extends State<SearchBar> {
     final device = MediaQuery.of(context).size;
     return Container(
       height: device.height * 0.075,
-      margin: EdgeInsets.only(top: 0, bottom: 20, left: 10, right: 10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(top: 0, bottom: 20, left: 10, right: 10),
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(6),
         ),
-        boxShadow: [
+        boxShadow: const[
           BoxShadow(
             blurRadius: 1,
             color: Colors.black12,
@@ -54,23 +54,23 @@ class _SearchBarState extends State<SearchBar> {
                       });
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
+                        const SnackBar(
+                          content: const Text(
                             'Please check your network connection',
                           ),
-                          duration: Duration(seconds: 1, milliseconds: 200),
+                          duration: const Duration(seconds: 1, milliseconds: 200),
                         ),
                       );
                     }
                   });
                 },
                 icon: _category == null
-                    ? Icon(Icons.category)
+                    ? const Icon(Icons.category)
                     : _category == 'noFilter'
-                        ? Icon(Icons.category)
+                        ? const Icon(Icons.category)
                         : _category == 'pharms'
-                            ? Icon(Icons.local_pharmacy)
-                            : Icon(Icons.store),
+                            ? const Icon(Icons.local_pharmacy)
+                            : const Icon(Icons.store),
                 itemBuilder: (BuildContext ctx) => [
                   const PopupMenuItem(
                     value: 'noFilter',
@@ -113,12 +113,12 @@ class _SearchBarState extends State<SearchBar> {
             child: TextField(
               controller: _controller,
               style: TextStyle(fontSize: 18),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(bottom: 10),
+              decoration: const InputDecoration(
+                contentPadding:const EdgeInsets.only(bottom: 10),
                 border: InputBorder.none,
                 labelText: 'Search here',
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                labelStyle: TextStyle(
+                labelStyle:const TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 17,
                 ),
@@ -196,7 +196,7 @@ class _SearchBarState extends State<SearchBar> {
                       widget.setQuery(_query, _category, null);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text(
                             'Please check your network connection',
                           ),
@@ -207,7 +207,7 @@ class _SearchBarState extends State<SearchBar> {
                   });
                   FocusScope.of(context).unfocus();
                 },
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
               ),
             ],
           ),

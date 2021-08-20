@@ -9,7 +9,6 @@ class FeedDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final device = MediaQuery.of(context).size;
     final _feedData =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     return Scaffold(
@@ -19,7 +18,7 @@ class FeedDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -32,7 +31,7 @@ class FeedDetailScreen extends StatelessWidget {
                           Flexible(
                             child: Text(
                               _feedData['title'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -43,12 +42,12 @@ class FeedDetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: device.height*0.031,
+                      const SizedBox(
+                        height: 20,
                       ),
                       Text(_feedData['content']),
-                      SizedBox(
-                        height: device.height*0.031,
+                      const SizedBox(
+                        height: 20,
                       ),
                       CommentScreen(_feedData['id']),
                     ],

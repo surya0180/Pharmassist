@@ -23,7 +23,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       onRefresh: Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: _isAdmin ? AdminChatList() : UserChatList(),
+        body: _isAdmin ? const AdminChatList() : const UserChatList(),
       ),
     );
   }

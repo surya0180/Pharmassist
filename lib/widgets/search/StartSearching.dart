@@ -27,8 +27,8 @@ class StartSearching extends StatelessWidget {
                   .snapshots(),
       builder: (ctx, snapShot) {
         if (snapShot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return const Center(
+            child: const CircularProgressIndicator(),
           );
         }
         final docs = snapShot.data.docs;

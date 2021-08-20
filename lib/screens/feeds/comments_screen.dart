@@ -38,11 +38,11 @@ class _CommentScreenState extends State<CommentScreen> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 10),
-          padding: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 10),
+          decoration: const BoxDecoration(
             color: Colors.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 1,
                 color: Colors.black12,
@@ -50,14 +50,14 @@ class _CommentScreenState extends State<CommentScreen> {
                 spreadRadius: 1,
               ),
             ],
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
           ),
           child: ListTile(
             title: TextField(
               controller: _controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Comment here',
                 floatingLabelBehavior: FloatingLabelBehavior.never,
               ),
@@ -100,7 +100,7 @@ class _CommentScreenState extends State<CommentScreen> {
               },
               icon: Align(
                 alignment: Alignment(0, 1.8),
-                child: Icon(
+                child: const Icon(
                   Icons.send,
                   color: Colors.black,
                 ),
@@ -118,13 +118,13 @@ class _CommentScreenState extends State<CommentScreen> {
               .snapshots(),
           builder: (ctx, commentSnapShot) {
             if (commentSnapShot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
             final commentDocs = commentSnapShot.data.docs;
             return commentDocs.length == 0
-                ? Center(
+                ? const Center(
                     child: Text('No comments so far!'),
                   )
                 : ListView.builder(

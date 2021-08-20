@@ -99,8 +99,8 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8, bottom: 12),
-      padding: EdgeInsets.all(8),
+      margin:const EdgeInsets.only(top: 8, bottom: 12),
+      padding:const EdgeInsets.all(8),
       child: Row(
         children: [
           SizedBox(
@@ -111,13 +111,13 @@ class _NewMessageState extends State<NewMessage> {
               maxLines: 2,
               controller: _controller,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding:const EdgeInsets.all(10),
                 fillColor: Colors.grey[300],
                 filled: true,
                 labelText: 'Type a message',
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                border:const OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
               ),
               onChanged: (value) {
@@ -145,17 +145,17 @@ class _NewMessageState extends State<NewMessage> {
                   } else {
                     Navigator.of(context).pop(true);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
+                      const SnackBar(
+                        content: const Text(
                           'Please check your network connection',
                         ),
-                        duration: Duration(seconds: 1, milliseconds: 200),
+                        duration:const Duration(seconds: 1, milliseconds: 200),
                       ),
                     );
                   }
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.send,
                 color: Colors.white,
               ),

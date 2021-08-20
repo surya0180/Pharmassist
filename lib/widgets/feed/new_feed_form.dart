@@ -57,9 +57,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
           SnackBar(
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.black,
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-            duration: Duration(seconds: 2),
-            content: Text('Added feed sucessfully'),
+            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: const Duration(seconds: 2),
+            content: const Text('Added feed sucessfully'),
           ),
         );
         Navigator.of(context).pop(true);
@@ -77,9 +77,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
           SnackBar(
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.black,
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-            duration: Duration(seconds: 2),
-            content: Text('Updated feed sucessfully'),
+            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: const Duration(seconds: 2),
+            content: const Text('Updated feed sucessfully'),
           ),
         );
         Navigator.of(context).pop(true);
@@ -113,24 +113,26 @@ class _NewFeedFormState extends State<NewFeedForm> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text(
+                content: const Text(
                   'Are you sure you want to leave the form?',
-                  style: TextStyle(fontFamily: 'poppins', fontSize: 16),
+                  style: const TextStyle(fontFamily: 'poppins', fontSize: 16),
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'No',
-                      style: TextStyle(fontFamily: 'poppins', fontSize: 12),
+                      style:
+                          const TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'Yes, exit',
-                      style: TextStyle(fontFamily: 'poppins', fontSize: 12),
+                      style:
+                          const TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop(true);
@@ -144,7 +146,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add Feed"),
+          title: const Text("Add Feed"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -160,16 +162,16 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         textCapitalization: TextCapitalization.sentences,
                         enableSuggestions: true,
                         initialValue: _title,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Title',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          prefixIcon: Icon(Icons.account_circle),
-                          border: OutlineInputBorder(
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          prefixIcon: const Icon(Icons.account_circle),
+                          border: const OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                const BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20.0,
                           height: 1.5,
                           color: Colors.black,
@@ -203,22 +205,22 @@ class _NewFeedFormState extends State<NewFeedForm> {
                         minLines: 4,
                         maxLines: 6,
                         keyboardType: TextInputType.multiline,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20.0,
                           height: 1.5,
                           color: Colors.black,
                         ),
                         textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
+                        decoration: const InputDecoration(
+                          prefixIcon: const Padding(
                             padding: const EdgeInsets.only(bottom: 100),
-                            child: Icon(Icons.description),
+                            child: const Icon(Icons.description),
                           ),
                           hintText: 'Description',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: OutlineInputBorder(
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          border: const OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                const BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                         validator: (value) {
@@ -249,16 +251,16 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    content: Text(
+                                    content: const Text(
                                       'Are you sure you want to submit this form',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: 'poppins', fontSize: 16),
                                     ),
                                     actions: <Widget>[
                                       FlatButton(
-                                        child: Text(
+                                        child: const Text(
                                           'Check once again',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 12),
                                         ),
@@ -267,9 +269,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                         },
                                       ),
                                       FlatButton(
-                                        child: Text(
+                                        child: const Text(
                                           'I am good to go',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 12),
                                         ),
@@ -290,10 +292,10 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  content: Text(
+                                                  content: const Text(
                                                     'Please check your network connection',
                                                   ),
-                                                  duration: Duration(
+                                                  duration: const Duration(
                                                       seconds: 1,
                                                       milliseconds: 200),
                                                 ),
@@ -306,7 +308,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                   );
                                 });
                           },
-                          child: Text("submit"),
+                          child: const Text("submit"),
                         ),
                       ),
                     ],

@@ -37,8 +37,8 @@ class _UserChatListState extends State<UserChatList> {
                 .snapshots(),
             builder: (ctx, listSnapShot) {
               if (listSnapShot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return const Center(
+                  child: const CircularProgressIndicator(),
                 );
               }
               final listDocs = listSnapShot.data;
@@ -62,7 +62,7 @@ class _UserChatListState extends State<UserChatList> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.account_box,
                   size: 58,
                   color: Colors.black38,
@@ -72,9 +72,9 @@ class _UserChatListState extends State<UserChatList> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(
+                  child: const Text(
                     'Please complete your profile to access this page',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black38,
                     ),
                   ),

@@ -18,7 +18,7 @@ class RequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final device = MediaQuery.of(context).size;
     return Card(
-      margin: EdgeInsets.all(25),
+      margin: const EdgeInsets.all(25),
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
@@ -31,14 +31,14 @@ class RequestCard extends StatelessWidget {
           splashColor: Theme.of(context).canvasColor,
           child: Container(
             height: device.height*0.34,
-            padding: EdgeInsets.only(left: 20),
+            padding:const EdgeInsets.only(left: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style:const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),

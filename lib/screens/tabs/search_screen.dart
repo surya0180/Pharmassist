@@ -59,7 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Theme.of(context).canvasColor,
           bottom: PreferredSize(
             child: SearchBar(_setQuery, _setCategory, _setFilter),
-            preferredSize: Size.fromHeight(kMinInteractiveDimensionCupertino),
+            preferredSize:const Size.fromHeight(kMinInteractiveDimensionCupertino),
           ),
         ),
         body: Provider.of<NetworkNotifier>(context).getIsConnected
@@ -94,8 +94,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           ).snapshots(),
                     builder: (ctx, snapShot) {
                       if (snapShot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
+                        return const Center(
+                          child:const CircularProgressIndicator(),
                         );
                       }
                       final docs = snapShot.data.docs;
@@ -150,10 +150,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   )
             : ListView(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 220,
                   ),
-                  Center(
+                  const Center(
                     child: Text("Something went wrong!  Please try again"),
                   )
                 ],

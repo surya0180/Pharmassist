@@ -51,10 +51,10 @@ class _FeedScreenState extends State<FeedScreen> {
                   final feedDocs = feedSnapShot.data.docs;
                   return feedDocs.length == 0
                       ? _isAdmin
-                          ? Center(
+                          ? const Center(
                               child: Text('No feed posts yet! Create one?'),
                             )
-                          : Center(
+                          : const Center(
                               child: Text('No feed posts published'),
                             )
                       : ListView.builder(
@@ -83,10 +83,10 @@ class _FeedScreenState extends State<FeedScreen> {
               )
             : ListView(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 320,
                   ),
-                  Center(
+                  const Center(
                     child: Text("Something went wrong!  Please try again"),
                   )
                 ],
@@ -97,7 +97,7 @@ class _FeedScreenState extends State<FeedScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamed(NewFeedForm.routeName);
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             )
           : null,
     );

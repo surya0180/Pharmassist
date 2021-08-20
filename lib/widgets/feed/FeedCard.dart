@@ -55,10 +55,10 @@ class _FeedCardState extends State<FeedCard> {
         Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
 
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.only(left: 10, right: 10),
+      decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.black26),
+          bottom: const BorderSide(width: 1.0, color: Colors.black26),
         ),
       ),
       child: InkWell(
@@ -95,7 +95,7 @@ class _FeedCardState extends State<FeedCard> {
                         Flexible(
                           child: Text(
                             widget.title,
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -103,14 +103,14 @@ class _FeedCardState extends State<FeedCard> {
                   ),
                   if (_isAdmin)
                     DropdownButton(
-                      icon: Icon(Icons.more_vert),
+                      icon: const Icon(Icons.more_vert),
                       underline: Container(),
-                      items: [
+                      items: const [
                         DropdownMenuItem(
                           value: 'delete',
-                          child: Text(
+                          child: const Text(
                             'Delete feed',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'poppins',
                               fontSize: 12,
                             ),
@@ -118,9 +118,9 @@ class _FeedCardState extends State<FeedCard> {
                         ),
                         DropdownMenuItem(
                           value: 'edit',
-                          child: Text(
+                          child: const Text(
                             'Edit feed',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'poppins',
                               fontSize: 12,
                             ),
@@ -132,19 +132,19 @@ class _FeedCardState extends State<FeedCard> {
                           showDialog(
                             context: context,
                             builder: (ctx) => AlertDialog(
-                              title: Text('Are you sure?'),
-                              content: Text(
+                              title: const Text('Are you sure?'),
+                              content: const Text(
                                 'Do you want to delete this feed ?',
                               ),
                               actions: <Widget>[
                                 FlatButton(
-                                  child: Text('No'),
+                                  child: const Text('No'),
                                   onPressed: () {
                                     Navigator.of(context).pop(false);
                                   },
                                 ),
                                 FlatButton(
-                                  child: Text('Yes'),
+                                  child: const Text('Yes'),
                                   onPressed: () {
                                     Navigator.of(context).pop(true);
                                     Provider.of<NetworkNotifier>(context,
@@ -164,12 +164,12 @@ class _FeedCardState extends State<FeedCard> {
                                               behavior:
                                                   SnackBarBehavior.floating,
                                               backgroundColor: Colors.black,
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   left: 10,
                                                   right: 10,
                                                   bottom: 40),
-                                              duration: Duration(seconds: 2),
-                                              content: Text(
+                                              duration: const Duration(seconds: 2),
+                                              content: const Text(
                                                 'Deleted feed sucessfully',
                                               ),
                                             ),
@@ -179,10 +179,10 @@ class _FeedCardState extends State<FeedCard> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            content: Text(
+                                            content: const Text(
                                               'Please check your network connection',
                                             ),
-                                            duration: Duration(
+                                            duration: const Duration(
                                                 seconds: 1, milliseconds: 200),
                                           ),
                                         );
@@ -209,11 +209,11 @@ class _FeedCardState extends State<FeedCard> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
+                                  content: const Text(
                                     'Please check your network connection',
                                   ),
                                   duration:
-                                      Duration(seconds: 1, milliseconds: 200),
+                                      const Duration(seconds: 1, milliseconds: 200),
                                 ),
                               );
                             }
@@ -233,7 +233,7 @@ class _FeedCardState extends State<FeedCard> {
                       widget.content.length > 28
                           ? widget.content.substring(0, 28) + '. . . .'
                           : widget.content,
-                      style: TextStyle(color: Colors.black54),
+                      style: const TextStyle(color: Colors.black54),
                     ),
                   ),
                 ],
@@ -245,14 +245,15 @@ class _FeedCardState extends State<FeedCard> {
                     children: [
                       Text(
                         '${widget.createdBy}',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
                         width: device.width * 0.03,
                       ),
                       Text(
                         '${widget.createdOn}',
-                        style: TextStyle(color: Colors.black38, fontSize: 10),
+                        style: const TextStyle(
+                            color: Colors.black38, fontSize: 10),
                       ),
                     ],
                   ),
@@ -277,10 +278,10 @@ class _FeedCardState extends State<FeedCard> {
                               if (!_isAdded) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content:
-                                        Text('Please complete your profile'),
-                                    duration:
-                                        Duration(seconds: 1, milliseconds: 200),
+                                    content: const Text(
+                                        'Please complete your profile'),
+                                    duration: const Duration(
+                                        seconds: 1, milliseconds: 200),
                                   ),
                                 );
                               } else {
@@ -290,11 +291,11 @@ class _FeedCardState extends State<FeedCard> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
+                                  content: const Text(
                                     'Please check your network connection',
                                   ),
-                                  duration:
-                                      Duration(seconds: 1, milliseconds: 200),
+                                  duration: const Duration(
+                                      seconds: 1, milliseconds: 200),
                                 ),
                               );
                             }
@@ -304,7 +305,7 @@ class _FeedCardState extends State<FeedCard> {
                       ),
                       Text(
                         '${widget.likes}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.w500),
                       ),
                     ],

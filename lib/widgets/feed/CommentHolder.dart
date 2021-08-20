@@ -13,9 +13,9 @@ class CommentHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.black26),
+          bottom: const BorderSide(width: 1.0, color: Colors.black26),
         ),
         color: Colors.white,
       ),
@@ -30,11 +30,11 @@ class CommentHolder extends StatelessWidget {
               children: [
                 Text(
                   username,
-                  style: TextStyle(fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(
                   '$createdAt',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 10,
                     color: Colors.black26,

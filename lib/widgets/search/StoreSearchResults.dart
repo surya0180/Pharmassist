@@ -31,7 +31,7 @@ class StoreSearchResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           bottom: BorderSide(width: 1.0, color: Colors.black26),
@@ -55,10 +55,10 @@ class StoreSearchResult extends StatelessWidget {
           });
         },
         splashColor: Theme.of(context).accentColor,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius:  BorderRadius.circular(4),
         child: Container(
           height: 73,
-          padding: EdgeInsets.only(left: 14, right: 10, top: 10),
+          padding:const EdgeInsets.only(left: 14, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -76,7 +76,7 @@ class StoreSearchResult extends StatelessWidget {
                       ),
                       Text(
                         'Establishment-year:  $establishmentYear',
-                        style: TextStyle(fontWeight: FontWeight.w400),
+                        style:const TextStyle(fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),

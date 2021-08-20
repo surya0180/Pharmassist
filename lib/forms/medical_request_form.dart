@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
@@ -24,44 +25,110 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
   void _saveForm() async {
     var admidId =
         Provider.of<AdminProvider>(context, listen: false).getAdminUid;
+    Navigator.of(context).pop();
     final adminData =
         await FirebaseFirestore.instance.collection('users').doc(admidId).get();
-    _form.currentState.save();
-    int count = 0;
-    Navigator.of(context).popUntil((_) => count++ >= 2);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.black,
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-        duration: Duration(seconds: 2),
-        content: Text('Request sent sucessfully'),
-      ),
-    );
-    var uid = FirebaseAuth.instance.currentUser.uid;
-    var timeStamp = DateTime.now();
-    var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
-    var docName = uid + timeStamp.toIso8601String();
-    var userData = Provider.of<UserProvider>(context, listen: false).user;
-    FirebaseFirestore.instance
-        .collection('medical requests')
-        .doc('$docName')
-        .set({
-      'about': _title,
-      'request': _request,
-      'timestamp': timeStamp,
-      'createdOn': createdOn,
-      'userId': userData.uid,
-      'username': userData.fullname,
-      'PhotoUrl': userData.photoUrl,
-      'isDeleted': false,
-      'token': adminData.data()['deviceToken'],
-    });
+    Provider.of<NetworkNotifier>(context, listen: false)
+        .setIsConnected()
+        .then((value) {
+      if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
+        _form.currentState.save();
+        // int count = 0;
+        // Navigator.of(context).popUntil((_) => count++ >= 2);
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.black,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: Duration(seconds: 2),
+            content: Text('Request sent sucessfully'),
+          ),
+        );
+        var uid = FirebaseAuth.instance.currentUser.uid;
+        var timeStamp = DateTime.now();
+        var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
+        var docName = uid + timeStamp.toIso8601String();
+        var userData = Provider.of<UserProvider>(context, listen: false).user;
+        FirebaseFirestore.instance
+            .collection('medical requests')
+            .doc('$docName')
+            .set({
+          'about': _title,
+          'request': _request,
+          'timestamp': timeStamp,
+          'createdOn': createdOn,
+          'userId': userData.uid,
+          'username': userData.fullname,
+          'PhotoUrl': userData.photoUrl,
+          'isDeleted': false,
+          'token': adminData.data()['deviceToken'],
+        }).then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.black,
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              duration: Duration(seconds: 1),
+              content: Text(
+                'Request Sent sucessfully',
+              ),
+            ),
+          );
+        });
 
-    final _count =
-        Provider.of<AdminProvider>(context, listen: false).getAdminReq;
-    Provider.of<AdminProvider>(context, listen: false)
-        .updateRequests(_count + 1);
+        final _count =
+            Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+        Provider.of<AdminProvider>(context, listen: false)
+            .updateRequests(_count + 1);
+      } else {
+        // Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Please check your network connection',
+            ),
+            duration: Duration(seconds: 1, milliseconds: 200),
+          ),
+        );
+      }
+    });
+    // _form.currentState.save();
+    // int count = 0;
+    // Navigator.of(context).popUntil((_) => count++ >= 2);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     behavior: SnackBarBehavior.floating,
+    //     backgroundColor: Colors.black,
+    //     margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+    //     duration: Duration(seconds: 2),
+    //     content: Text('Request sent sucessfully'),
+    //   ),
+    // );
+    // var uid = FirebaseAuth.instance.currentUser.uid;
+    // var timeStamp = DateTime.now();
+    // var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
+    // var docName = uid + timeStamp.toIso8601String();
+    // var userData = Provider.of<UserProvider>(context, listen: false).user;
+    // FirebaseFirestore.instance
+    //     .collection('medical requests')
+    //     .doc('$docName')
+    //     .set({
+    //   'about': _title,
+    //   'request': _request,
+    //   'timestamp': timeStamp,
+    //   'createdOn': createdOn,
+    //   'userId': userData.uid,
+    //   'username': userData.fullname,
+    //   'PhotoUrl': userData.photoUrl,
+    //   'isDeleted': false,
+    //   'token': adminData.data()['deviceToken'],
+    // });
+
+    // final _count =
+    //     Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+    // Provider.of<AdminProvider>(context, listen: false)
+    //     .updateRequests(_count + 1);
 
     print(_title);
     print(_request);

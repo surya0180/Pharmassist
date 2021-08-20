@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/screens/admin/request_detail_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
+import 'package:provider/provider.dart';
 
 class RequestItem extends StatelessWidget {
   final String createdOn;
@@ -133,8 +135,24 @@ class RequestItem extends StatelessWidget {
                   child: Text('Yes'),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
-                    Navigator.of(ctx).pushNamed(ChatScreen.routeName,
-                        arguments: {'name': username, 'userId': uid});
+                    Provider.of<NetworkNotifier>(context, listen: false)
+                        .setIsConnected()
+                        .then((value) {
+                      if (Provider.of<NetworkNotifier>(context, listen: false)
+                          .getIsConnected) {
+                        Navigator.of(ctx).pushNamed(ChatScreen.routeName,
+                            arguments: {'name': username, 'userId': uid});
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Please check your network connection',
+                            ),
+                            duration: Duration(seconds: 1, milliseconds: 200),
+                          ),
+                        );
+                      }
+                    });
                   },
                 ),
               ],
@@ -146,15 +164,31 @@ class RequestItem extends StatelessWidget {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
-          CollectionReference<Map<String, dynamic>> collection;
-          if (requestType == "pharm") {
-            collection =
-                FirebaseFirestore.instance.collection('pharmacist requests');
-          } else {
-            collection =
-                FirebaseFirestore.instance.collection('medical requests');
-          }
-          collection.doc(requestId).update({'isDeleted': true});
+          Provider.of<NetworkNotifier>(context, listen: false)
+              .setIsConnected()
+              .then((value) {
+            if (Provider.of<NetworkNotifier>(context, listen: false)
+                .getIsConnected) {
+              CollectionReference<Map<String, dynamic>> collection;
+              if (requestType == "pharm") {
+                collection = FirebaseFirestore.instance
+                    .collection('pharmacist requests');
+              } else {
+                collection =
+                    FirebaseFirestore.instance.collection('medical requests');
+              }
+              collection.doc(requestId).update({'isDeleted': true});
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Please check your network connection',
+                  ),
+                  duration: Duration(seconds: 1, milliseconds: 200),
+                ),
+              );
+            }
+          });
         }
       },
       child: Card(

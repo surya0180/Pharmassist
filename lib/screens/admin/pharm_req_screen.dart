@@ -20,33 +20,45 @@ class PharmReqScreen extends StatelessWidget {
       padding: const EdgeInsets.all(1.0),
       child: RefreshIndicator(
         onRefresh: Provider.of<NetworkNotifier>(context).setIsConnected,
-        child: StreamBuilder(
-            stream: streamBuilder,
-            builder: (ctx, pharmSnapShot) {
-              if (pharmSnapShot.connectionState == ConnectionState.waiting) {
-                print("line 199");
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-      
-              final pharmReqs = pharmSnapShot.data.docs;
-      
-              return ListView.builder(
-                  itemCount: pharmReqs.length,
-                  itemBuilder: (ctx, i) {
-                    return RequestItem(
-                        pharmReqs[i].data()['createdOn'],
-                        pharmReqs[i].data()['about'],
-                        pharmReqs[i].data()['request'],
-                        pharmReqs[i].data()['userId'],
-                        pharmReqs[i].data()['PhotoUrl'],
-                        pharmReqs[i].data()['username'],
-                        requestType,
-                        pharmReqs[i].id,
-                        isDeleted);
-                  });
-            }),
+        child: Provider.of<NetworkNotifier>(context).getIsConnected
+            ? StreamBuilder(
+                stream: streamBuilder,
+                builder: (ctx, pharmSnapShot) {
+                  if (pharmSnapShot.connectionState ==
+                      ConnectionState.waiting) {
+                    print("line 199");
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  final pharmReqs = pharmSnapShot.data.docs;
+
+                  return ListView.builder(
+                      itemCount: pharmReqs.length,
+                      itemBuilder: (ctx, i) {
+                        return RequestItem(
+                            pharmReqs[i].data()['createdOn'],
+                            pharmReqs[i].data()['about'],
+                            pharmReqs[i].data()['request'],
+                            pharmReqs[i].data()['userId'],
+                            pharmReqs[i].data()['PhotoUrl'],
+                            pharmReqs[i].data()['username'],
+                            requestType,
+                            pharmReqs[i].id,
+                            isDeleted);
+                      });
+                })
+            : ListView(
+                children: [
+                  SizedBox(
+                    height: 220,
+                  ),
+                  Center(
+                    child: Text("Something went wrong!  Please try again"),
+                  )
+                ],
+              ),
       ),
     );
   }

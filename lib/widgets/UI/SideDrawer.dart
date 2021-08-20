@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/auth/google_sign_in.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/screens/admin/dashboard_screen.dart';
-import 'package:pharmassist/screens/stores/store_screen.dart';
-import 'package:pharmassist/screens/tabs/request_screen.dart';
 import 'package:provider/provider.dart';
 
 class SideDrawer extends StatefulWidget {
@@ -103,18 +101,6 @@ class _SideDrawerState extends State<SideDrawer> {
                               );
                             },
                           ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.feedback),
-                  title: Text('Feedback'),
-                  onTap: () {},
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.info),
-                  title: Text('About'),
-                  onTap: () {},
-                ),
               ],
             ),
           );

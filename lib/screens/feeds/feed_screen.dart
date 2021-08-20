@@ -32,8 +32,11 @@ class _FeedScreenState extends State<FeedScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: RefreshIndicator(
-        onRefresh: Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
-        child: StreamBuilder(
+        onRefresh:
+            Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
+        child: Provider.of<NetworkNotifier>(context, listen: false)
+                .getIsConnected
+            ? StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('feed/')
                     .where('isDeleted', isEqualTo: false)
@@ -77,6 +80,16 @@ class _FeedScreenState extends State<FeedScreen> {
                           },
                         );
                 },
+              )
+            : ListView(
+                children: [
+                  SizedBox(
+                    height: 320,
+                  ),
+                  Center(
+                    child: Text("Something went wrong!  Please try again"),
+                  )
+                ],
               ),
       ),
       floatingActionButton: _isAdmin

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/screens/tabs/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class RequestDetailScreen extends StatefulWidget {
   static const routeName = "/rquest-detail-screen";
@@ -58,30 +60,46 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                _isLoading = true;
-              });
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(uid)
-                  .get()
+              Provider.of<NetworkNotifier>(context, listen: false)
+                  .setIsConnected()
                   .then((value) {
-                setState(() {
-                  _isLoading = false;
-                });
-                Navigator.of(context)
-                    .pushNamed(ProfilePage.routeName, arguments: {
-                  'isSearchResult': true,
-                  'profilePic': value.data()['PhotoUrl'],
-                  'fullname': value.data()['fullName'],
-                  'registerationNumber': value.data()['registrationNo'],
-                  'renewalDate': value.data()['renewalDate'],
-                  'street': value.data()['street'],
-                  'town': value.data()['town'],
-                  'district': value.data()['district'],
-                  'state': value.data()['state'],
-                  'uid': value.data()['uid'],
-                });
+                if (Provider.of<NetworkNotifier>(context, listen: false)
+                    .getIsConnected) {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(uid)
+                      .get()
+                      .then((value) {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    Navigator.of(context)
+                        .pushNamed(ProfilePage.routeName, arguments: {
+                      'isSearchResult': true,
+                      'profilePic': value.data()['PhotoUrl'],
+                      'fullname': value.data()['fullName'],
+                      'registerationNumber': value.data()['registrationNo'],
+                      'renewalDate': value.data()['renewalDate'],
+                      'street': value.data()['street'],
+                      'town': value.data()['town'],
+                      'district': value.data()['district'],
+                      'state': value.data()['state'],
+                      'uid': value.data()['uid'],
+                    });
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Please check your network connection',
+                      ),
+                      duration: Duration(seconds: 1, milliseconds: 200),
+                    ),
+                  );
+                }
               });
             },
             icon: Icon(Icons.account_box_rounded),

@@ -40,7 +40,6 @@ class _AdminChatListState extends State<AdminChatList> {
         return ListView.builder(
           itemCount: listDocs.length,
           itemBuilder: (ctx, index) {
-            print(listDocs[index]['latestMessage']);
             if (listDocs[index]['latestMessage'] != '') {
               return ChatItem(
                 listDocs[index]['name'],

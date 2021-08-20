@@ -17,7 +17,6 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(uid);
 
     return Container(
       decoration: const BoxDecoration(
@@ -28,7 +27,6 @@ class ChatItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          print("I tapped this");
           Navigator.of(context).pushNamed(
             ChatScreen.routeName,
             arguments: {

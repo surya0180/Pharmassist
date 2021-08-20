@@ -108,7 +108,6 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
           ),
           IconButton(
             onPressed: () {
-              print("uid $uid");
               Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
                 'name': userName,
                 'userId': uid,

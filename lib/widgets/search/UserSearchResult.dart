@@ -32,7 +32,6 @@ class UserSearchResult extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          print('I am in onTap');
           Navigator.pushNamed(
             context,
             ProfilePage.routeName,

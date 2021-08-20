@@ -15,7 +15,6 @@ class NotificationProvider with ChangeNotifier {
         totalUserUnreadMessages = element.data()['hostB'];
       }
     });
-    print(flag);
     totalUnreadMessages = flag;
     notifyListeners();
   }

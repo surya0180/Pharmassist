@@ -140,7 +140,7 @@ class _NewMessageState extends State<NewMessage> {
                   if (Provider.of<NetworkNotifier>(context, listen: false)
                       .getIsConnected) {
                     _enteredMessage.trim().isEmpty
-                        ? print("Hello")
+                        ? print("")
                         : _sendMessage();
                   } else {
                     Navigator.of(context).pop(true);

@@ -35,14 +35,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void didChangeDependencies() {
-    print('i am in did change dependencies');
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     userName = routeArgs['name'];
     userId = routeArgs['userId'];
     uidX = routeArgs['uidX'];
-    print(userName);
-    print(userId);
     if (userId == FirebaseAuth.instance.currentUser.uid) {
       FirebaseFirestore.instance
           .collection('Chat')
@@ -59,10 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .doc(userId)
           .get()
           .then((value) {
-            print(userId);
-        print('i am in admin setState');
         setState(() {
-          print(value.data()['hostA']);
           _unreadMsg = value.data()['hostA'];
         });
       });
@@ -79,7 +73,6 @@ class _ChatScreenState extends State<ChatScreen> {
           .doc(userId)
           .update({'hostB': 0});
     } else {
-      print(' i am in the chat screen');
       FirebaseFirestore.instance
           .collection('Chat')
           .doc(userId)

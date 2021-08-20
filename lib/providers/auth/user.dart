@@ -54,12 +54,10 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<bool> getData() async {
-    print("i am in get data");
     final _uid = FirebaseAuth.instance.currentUser.uid;
     final _userData =
         await FirebaseFirestore.instance.collection('users/').doc(_uid).get();
     if (_userData.data() == null) {
-      print("false statement");
       return false;
     }
     _user = User(

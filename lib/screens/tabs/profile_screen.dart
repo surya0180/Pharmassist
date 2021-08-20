@@ -193,7 +193,6 @@ class MapScreenState extends State<ProfilePage>
         district.text = _district;
       });
     }
-    print(_isSearchResult);
     return new Scaffold(
         appBar: _isSearchResult != null ? AppBar() : null,
         body: RefreshIndicator(
@@ -511,13 +510,9 @@ class MapScreenState extends State<ProfilePage>
                                                       lastDate: DateTime(2101));
 
                                               if (pickedDate != null) {
-                                                print(
-                                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                                 String formattedDate =
                                                     DateFormat('yyyy-MM-dd')
                                                         .format(pickedDate);
-                                                print(
-                                                    formattedDate); //formatted date output using intl package =>  2021-03-16
                                                 setState(() {
                                                   _initValues["renewalDate"] =
                                                       formattedDate;
@@ -525,7 +520,6 @@ class MapScreenState extends State<ProfilePage>
                                                       formattedDate;
                                                 });
                                               } else {
-                                                print("Date is not selected");
                                               }
                                             },
                                             readOnly: true,
@@ -864,7 +858,6 @@ class MapScreenState extends State<ProfilePage>
                     _status = userinfo.isAdded;
                     _status = true;
                   });
-                  print(_status);
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0)),
@@ -910,8 +903,6 @@ class MapScreenState extends State<ProfilePage>
         ),
       ),
       onTap: () {
-        print(_uid);
-        print('above is the required uid');
         Provider.of<NetworkNotifier>(context, listen: false)
             .setIsConnected()
             .then((value) {

@@ -28,13 +28,11 @@ class _FeedLikesState extends State<FeedLikes> {
     if (widget.likedUsers['$uid'] == null) {
       setState(() {
         _isLiked = false;
-        print('i setted likes in if');
         _likes = widget.likes;
       });
     } else {
       setState(() {
         _isLiked = widget.likedUsers['$uid']['isLiked'];
-        print('i setted likes in else');
         _likes = widget.likes;
       });
     }
@@ -84,12 +82,10 @@ class _FeedLikesState extends State<FeedLikes> {
                   );
                   if (_isLiked) {
                     setState(() {
-                      print('i setted likes in function if');
                       _likes = _likes - 1;
                     });
                   } else {
                     setState(() {
-                      print('i setted likes in function else');
                       _likes = _likes + 1;
                     });
                   }

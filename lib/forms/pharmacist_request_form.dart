@@ -81,9 +81,6 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
         );
       }
     });
-
-    print(_title);
-    print(_request);
   }
 
   @override

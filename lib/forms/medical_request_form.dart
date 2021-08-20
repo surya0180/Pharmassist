@@ -93,45 +93,6 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
         );
       }
     });
-    // _form.currentState.save();
-    // int count = 0;
-    // Navigator.of(context).popUntil((_) => count++ >= 2);
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     behavior: SnackBarBehavior.floating,
-    //     backgroundColor: Colors.black,
-    //     margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-    //     duration: Duration(seconds: 2),
-    //     content: Text('Request sent sucessfully'),
-    //   ),
-    // );
-    // var uid = FirebaseAuth.instance.currentUser.uid;
-    // var timeStamp = DateTime.now();
-    // var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
-    // var docName = uid + timeStamp.toIso8601String();
-    // var userData = Provider.of<UserProvider>(context, listen: false).user;
-    // FirebaseFirestore.instance
-    //     .collection('medical requests')
-    //     .doc('$docName')
-    //     .set({
-    //   'about': _title,
-    //   'request': _request,
-    //   'timestamp': timeStamp,
-    //   'createdOn': createdOn,
-    //   'userId': userData.uid,
-    //   'username': userData.fullname,
-    //   'PhotoUrl': userData.photoUrl,
-    //   'isDeleted': false,
-    //   'token': adminData.data()['deviceToken'],
-    // });
-
-    // final _count =
-    //     Provider.of<AdminProvider>(context, listen: false).getAdminReq;
-    // Provider.of<AdminProvider>(context, listen: false)
-    //     .updateRequests(_count + 1);
-
-    print(_title);
-    print(_request);
   }
 
   @override

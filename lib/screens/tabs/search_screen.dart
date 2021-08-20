@@ -48,9 +48,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final device = MediaQuery.of(context).size;
-    print(_value);
-    print(_category);
-    print(_filter);
     return RefreshIndicator(
       onRefresh: Provider.of<NetworkNotifier>(context).setIsConnected,
       child: Scaffold(

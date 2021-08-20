@@ -186,11 +186,8 @@ class MapScreenState extends State<StoreDetailScreen>
                 child: CircularProgressIndicator(),
               );
             }
-            print(_uid);
             final userDocs = snapshot.data;
-            print(userDocs);
             final userName = userDocs['fullName'];
-            print(userName);
             return ListView(
               children: <Widget>[
                 Column(
@@ -284,14 +281,9 @@ class MapScreenState extends State<StoreDetailScreen>
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
                                           validator: (value) {
-                                            print("hello world");
                                             if (value.trim().length == 0) {
                                               return 'This field is required';
                                             }
-                                            // if (!isAlpha(
-                                            //     value.replaceAll(' ', ''))) {
-                                            //   return 'Please Enter Valid Value';
-                                            // }
                                             return null;
                                           },
                                           initialValue:
@@ -441,20 +433,15 @@ class MapScreenState extends State<StoreDetailScreen>
                                                     lastDate: DateTime(2101));
 
                                             if (pickedDate != null) {
-                                              print(
-                                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                               String formattedDate =
                                                   DateFormat('yyyy-MM-dd')
                                                       .format(pickedDate);
-                                              print(
-                                                  formattedDate); //formatted date output using intl package =>  2021-03-16
                                               setState(() {
                                                 _establishmentYear =
                                                     formattedDate;
                                                 dateinput.text = formattedDate;
                                               });
                                             } else {
-                                              print("Date is not selected");
                                             }
                                           },
                                           keyboardType: TextInputType.text,
@@ -525,7 +512,6 @@ class MapScreenState extends State<StoreDetailScreen>
                                             textInputAction:
                                                 TextInputAction.next,
                                             validator: (value) {
-                                              print(value.replaceAll(' ', ''));
                                               if (value.trim().length == 0) {
                                                 return 'This field is required';
                                               }
@@ -962,20 +948,15 @@ class MapScreenState extends State<StoreDetailScreen>
                                                     lastDate: DateTime(2101));
 
                                             if (pickedDate != null) {
-                                              print(
-                                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                               String formattedDate =
                                                   DateFormat('yyyy-MM-dd')
                                                       .format(pickedDate);
-                                              print(
-                                                  formattedDate); //formatted date output using intl package =>  2021-03-16
                                               setState(() {
                                                 _establishmentYear =
                                                     formattedDate;
                                                 dateinput.text = formattedDate;
                                               });
                                             } else {
-                                              print("Date is not selected");
                                             }
                                           },
                                           keyboardType: TextInputType.text,

@@ -27,7 +27,6 @@ class MedicReqScreen extends StatelessWidget {
                     builder: (ctx, pharmSnapShot) {
                       if (pharmSnapShot.connectionState ==
                           ConnectionState.waiting) {
-                        print("line 199");
                         return Center(
                           child: CircularProgressIndicator(),
                         );

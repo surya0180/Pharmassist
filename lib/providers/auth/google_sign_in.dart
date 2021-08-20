@@ -65,7 +65,6 @@ class GoogleSignInProvider extends ChangeNotifier {
           fbm.getToken().then((value) {
             var deviceData = snapShot.data()['deviceToken'];
             deviceData.remove(value);
-            print(deviceData);
             FirebaseFirestore.instance
                 .collection('users')
                 .doc(FirebaseAuth.instance.currentUser.uid)
@@ -127,7 +126,6 @@ class GoogleSignInProvider extends ChangeNotifier {
       fbm.getToken().then((value) {
         var deviceData = snapShot.data()['deviceToken'];
         deviceData.add(value);
-        print(deviceData);
         return users.doc(uid).update({
           "uid": uid,
           "deviceToken": deviceData,
@@ -141,7 +139,6 @@ class GoogleSignInProvider extends ChangeNotifier {
 
     final CollectionReference chat =
         FirebaseFirestore.instance.collection('Chat');
-    print("create chat is running");
     return await chat.doc(signedUser.uid).set({
       "hostA": 0,
       "hostB": 0,

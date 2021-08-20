@@ -10,7 +10,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    print('I am in welcome screen');
     return Scaffold(
       body: Center(
         child: AnimatedContainer(

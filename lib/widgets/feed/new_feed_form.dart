@@ -85,7 +85,6 @@ class _NewFeedFormState extends State<NewFeedForm> {
         Navigator.of(context).pop(true);
       });
     }
-    print('hey there');
   }
 
   @override

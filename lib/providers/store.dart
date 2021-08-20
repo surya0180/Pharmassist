@@ -121,7 +121,6 @@ class StoreProvider with ChangeNotifier {
 
   Future<void> deleteStore(Store editedStore) {
     final uid = signedUser.uid;
-    print(editedStore.storeId);
 
     FirebaseFirestore.instance
         .collection('stores label')

@@ -20,9 +20,7 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   @override
   Widget build(BuildContext context) {
-    print(widget.userId);
     var currentUserId = FirebaseAuth.instance.currentUser.uid;
-    print('above is the result');
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('Chat')
@@ -39,10 +37,6 @@ class _MessagesState extends State<Messages> {
             reverse: true,
             itemCount: chatDocs.length,
             itemBuilder: (ctx, index) {
-              print(index);
-              print(chatDocs[index]['text']);
-              print(widget.unreadMessages);
-              print('above are the unread messages');
               if (index >= 0 && index < widget.unreadMessages) {
                 return MessageBubble(
                   chatDocs[index]['text'],
@@ -55,8 +49,6 @@ class _MessagesState extends State<Messages> {
                   key: ValueKey(chatDocs[index]['userId']),
                 );
               } else {
-                print(widget.timestamp);
-                print(chatDocs[index]['timestamp']);
                 return MessageBubble(
                   chatDocs[index]['text'],
                   chatDocs[index]['username'],
@@ -80,7 +72,6 @@ class _MessagesState extends State<Messages> {
         } catch (e) {
           print("Hello");
         }
-        print('0: 1: yes i am that one');
         return const SizedBox(
           height: 0,
         );

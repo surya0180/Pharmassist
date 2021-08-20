@@ -73,10 +73,7 @@ class _TabScreenState extends State<TabScreen> {
     fbm.subscribeToTopic("feed");
     FirebaseMessaging.onMessage.listen((message) {
       final route = message.notification.android.tag;
-      print(route);
       if (route == "request") {
-        print("onmessage");
-        print(message);
         return;
       }
       if (route == "chat") {
@@ -92,12 +89,9 @@ class _TabScreenState extends State<TabScreen> {
             ),
           );
         }
-        print("i am in the messaging part1");
         return;
       }
       if (route == "feed") {
-        print(message.notification.bodyLocArgs[4]);
-        print("Above is the list of likedUsers");
         if (message.notification.bodyLocArgs[5] !=
             FirebaseAuth.instance.currentUser.uid) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -110,12 +104,10 @@ class _TabScreenState extends State<TabScreen> {
             ),
           );
         }
-        print("i am in feed notification");
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       final route = message.notification.android.tag;
-      print(route);
       if (route == "request") {
         Navigator.of(context)
             .pushNamed(RequestDetailScreen.routeName, arguments: {
@@ -126,12 +118,9 @@ class _TabScreenState extends State<TabScreen> {
           'detail': message.notification.bodyLocArgs[2],
           'photoUrl': message.notification.bodyLocArgs[3],
         });
-        print(message);
-        print("i am in requests");
         return;
       }
       if (route == "chat") {
-        print("i am in the messaging part2");
         if (message.notification.bodyLocArgs[0] ==
             FirebaseAuth.instance.currentUser.uid) {
           FirebaseFirestore.instance
@@ -139,7 +128,6 @@ class _TabScreenState extends State<TabScreen> {
               .doc(message.notification.bodyLocArgs[0])
               .update({'hostB': 0});
         } else {
-          print(' i am in the chat screen');
           FirebaseFirestore.instance
               .collection('Chat')
               .doc(message.notification.bodyLocArgs[0])
@@ -150,11 +138,9 @@ class _TabScreenState extends State<TabScreen> {
           'userId': message.notification.bodyLocArgs[0],
           'uidX': message.notification.bodyLocArgs[1],
         });
-        print(message);
         return;
       }
       if (route == "feed") {
-        print("I am in the feed notification");
         if (message.notification.bodyLocArgs[5] !=
             FirebaseAuth.instance.currentUser.uid) {
           Navigator.of(context).pushNamed(
@@ -182,11 +168,9 @@ class _TabScreenState extends State<TabScreen> {
       });
       Provider.of<UserProvider>(context, listen: false).getData().then((value) {
         if (value) {
-          print("i am in line 52");
           Provider.of<AdminProvider>(context, listen: false)
               .getAdminData()
               .then((value) {
-            print('I am here lol');
             FirebaseFirestore.instance
                 .collection('Chat')
                 .doc(FirebaseAuth.instance.currentUser.uid)
@@ -208,7 +192,6 @@ class _TabScreenState extends State<TabScreen> {
             });
           });
         } else {
-          print("i am else");
           didChangeDependencies();
         }
       });
@@ -227,8 +210,6 @@ class _TabScreenState extends State<TabScreen> {
   Widget build(BuildContext context) {
     final _isEditingStatus =
         Provider.of<ProfileEditStatus>(context).getIsEditingStatus;
-    print(_isEditingStatus);
-    print('Above is the editing status');
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),

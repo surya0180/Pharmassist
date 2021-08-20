@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
@@ -26,42 +27,61 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
         Provider.of<AdminProvider>(context, listen: false).getAdminUid;
     final adminData =
         await FirebaseFirestore.instance.collection('users').doc(admidId).get();
-    _form.currentState.save();
-    var uid = FirebaseAuth.instance.currentUser.uid;
-    var timeStamp = DateTime.now();
-    var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
-    var docName = uid + timeStamp.toIso8601String();
-    var userData = Provider.of<UserProvider>(context, listen: false).user;
-    FirebaseFirestore.instance
-        .collection('pharmacist requests')
-        .doc('$docName')
-        .set({
-      'about': _title,
-      'request': _request,
-      'timestamp': timeStamp,
-      'createdOn': createdOn,
-      'userId': userData.uid,
-      'username': userData.fullname,
-      'PhotoUrl': userData.photoUrl,
-      'isDeleted': false,
-      'token': adminData.data()['deviceToken'],
-    }).then((value) {
-      int count = 0;
-      Navigator.of(context).popUntil((_) => count++ >= 2);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.black,
-          margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-          duration: Duration(seconds: 2),
-          content: Text('Request sent sucessfully'),
-        ),
-      );
+    Navigator.of(context).pop();
+    Provider.of<NetworkNotifier>(context, listen: false)
+        .setIsConnected()
+        .then((value) {
+      if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
+        _form.currentState.save();
+        var uid = FirebaseAuth.instance.currentUser.uid;
+        var timeStamp = DateTime.now();
+        var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
+        var docName = uid + timeStamp.toIso8601String();
+        var userData = Provider.of<UserProvider>(context, listen: false).user;
+        FirebaseFirestore.instance
+            .collection('pharmacist requests')
+            .doc('$docName')
+            .set({
+          'about': _title,
+          'request': _request,
+          'timestamp': timeStamp,
+          'createdOn': createdOn,
+          'userId': userData.uid,
+          'username': userData.fullname,
+          'PhotoUrl': userData.photoUrl,
+          'isDeleted': false,
+          'token': adminData.data()['deviceToken'],
+        }).then((value) {
+          // int count = 0;
+          // Navigator.of(context).popUntil((_) => count++ >= 2);
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.black,
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              duration: Duration(seconds: 2),
+              content: Text('Request sent sucessfully'),
+            ),
+          );
+        });
+        final _count =
+            Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+        Provider.of<AdminProvider>(context, listen: false)
+            .updateRequests(_count + 1);
+      } else {
+        // Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Please check your network connection',
+            ),
+            duration: Duration(seconds: 1, milliseconds: 200),
+          ),
+        );
+      }
     });
-    final _count =
-        Provider.of<AdminProvider>(context, listen: false).getAdminReq;
-    Provider.of<AdminProvider>(context, listen: false)
-        .updateRequests(_count + 1);
+
     print(_title);
     print(_request);
   }

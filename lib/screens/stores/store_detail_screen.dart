@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/helpers/states.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/providers/store.dart';
@@ -40,6 +41,7 @@ class MapScreenState extends State<StoreDetailScreen>
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<NetworkNotifier>(context, listen: false).setIsConnected();
     dateinput.text = "";
     dropdownValue = "maharashtra";
     isAdmin =
@@ -85,40 +87,84 @@ class MapScreenState extends State<StoreDetailScreen>
     if (!isValid) {
       return;
     }
-
-    _formKey.currentState.save();
-    if (_isNew == true) {
-      Provider.of<StoreProvider>(context, listen: false).createStore(
-        Store(
-          name: _name,
-          firmId: _firmId,
-          establishmentYear: _establishmentYear,
-          street: _street,
-          town: _town,
-          district: _district,
-          state: _state,
-          isNew: _isNew,
-          timestamp: Timestamp.now(),
-        ),
-      );
-    } else {
-      Provider.of<StoreProvider>(context, listen: false).updateStore(
-        Store(
-          name: _name,
-          firmId: _firmId,
-          establishmentYear: _establishmentYear,
-          street: _street,
-          town: _town,
-          district: _district,
-          state: _state,
-          isNew: _isNew,
-          timestamp: _timestamp,
-          uid: _uid,
-          storeId: _storeId,
-        ),
-      );
-    }
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
+    Provider.of<NetworkNotifier>(context, listen: false)
+        .setIsConnected()
+        .then((value) {
+      if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
+        _formKey.currentState.save();
+        if (_isNew == true) {
+          Provider.of<StoreProvider>(context, listen: false)
+              .createStore(
+            Store(
+              name: _name,
+              firmId: _firmId,
+              establishmentYear: _establishmentYear,
+              street: _street,
+              town: _town,
+              district: _district,
+              state: _state,
+              isNew: _isNew,
+              timestamp: Timestamp.now(),
+            ),
+          )
+              .then((value) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.black,
+                margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                duration: Duration(seconds: 1),
+                content: Text(
+                  'Created Store sucessfully',
+                ),
+              ),
+            );
+          });
+        } else {
+          Provider.of<StoreProvider>(context, listen: false)
+              .updateStore(
+            Store(
+              name: _name,
+              firmId: _firmId,
+              establishmentYear: _establishmentYear,
+              street: _street,
+              town: _town,
+              district: _district,
+              state: _state,
+              isNew: _isNew,
+              timestamp: _timestamp,
+              uid: _uid,
+              storeId: _storeId,
+            ),
+          )
+              .then((value) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.black,
+                margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                duration: Duration(seconds: 2),
+                content: Text(
+                  'Updated Store sucessfully',
+                ),
+              ),
+            );
+          });
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Please check your network connection',
+            ),
+            duration: Duration(seconds: 1, milliseconds: 200),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -1287,37 +1333,55 @@ class MapScreenState extends State<StoreDetailScreen>
               FlatButton(
                 child: Text('Yes'),
                 onPressed: () {
-                  int count = 0;
-
-                  Provider.of<StoreProvider>(context, listen: false)
-                      .deleteStore(
-                    Store(
-                      storeId: _storeId,
-                      uid: _uid,
-                      name: _name,
-                      firmId: _firmId,
-                      establishmentYear: _establishmentYear,
-                      street: _street,
-                      town: _town,
-                      district: _district,
-                      state: _state,
-                      isNew: _isNew,
-                      timestamp: _timestamp,
-                      isDeletd: true,
-                    ),
-                  )
+                  Navigator.of(context).pop();
+                  Provider.of<NetworkNotifier>(context, listen: false)
+                      .setIsConnected()
                       .then((value) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.black,
-                        margin:
-                            EdgeInsets.only(left: 10, right: 10, bottom: 40),
-                        duration: Duration(seconds: 2),
-                        content: Text('Deleted store sucessfully'),
-                      ),
-                    );
-                    Navigator.of(context).popUntil((_) => count++ >= 2);
+                    if (Provider.of<NetworkNotifier>(context, listen: false)
+                        .getIsConnected) {
+                      int count = 0;
+                      Provider.of<StoreProvider>(context, listen: false)
+                          .deleteStore(
+                        Store(
+                          storeId: _storeId,
+                          uid: _uid,
+                          name: _name,
+                          firmId: _firmId,
+                          establishmentYear: _establishmentYear,
+                          street: _street,
+                          town: _town,
+                          district: _district,
+                          state: _state,
+                          isNew: _isNew,
+                          timestamp: _timestamp,
+                          isDeletd: true,
+                        ),
+                      )
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.black,
+                            margin: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 40),
+                            duration: Duration(seconds: 2),
+                            content: Text('Deleted store sucessfully'),
+                          ),
+                        );
+                        // Navigator.of(context).popUntil((_) => count++ >= 2);
+                        Navigator.of(context).pop();
+                      });
+                    } else {
+                      //  Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Please check your network connection',
+                          ),
+                          duration: Duration(seconds: 1, milliseconds: 200),
+                        ),
+                      );
+                    }
                   });
                 },
               ),

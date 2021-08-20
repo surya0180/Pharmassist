@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
 
@@ -146,6 +146,7 @@ class _NewMessageState extends State<NewMessage> {
                     Navigator.of(context).pop(true);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
+                        backgroundColor: Colors.red,
                         content: const Text(
                           'Please check your network connection',
                         ),

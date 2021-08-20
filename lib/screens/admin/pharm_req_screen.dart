@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/widgets/requests/request_item.dart';
 import 'package:provider/provider.dart';
 

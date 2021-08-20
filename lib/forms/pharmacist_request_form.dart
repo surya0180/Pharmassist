@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +58,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.red,
               margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 2),
               content: Text('Request sent sucessfully'),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
@@ -100,6 +100,7 @@ class _FeedLikesState extends State<FeedLikes> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
+                    backgroundColor: Colors.red,
                     content: const Text(
                       'Please check your network connection',
                     ),

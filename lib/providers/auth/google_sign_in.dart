@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/auth/user.dart' as up;
 import 'package:provider/provider.dart';
@@ -50,28 +51,44 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout(BuildContext context) async {
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(Provider.of<up.UserProvider>(context, listen: false).user.uid)
-        .get()
-        .then((snapShot) async {
-      final fbm = FirebaseMessaging.instance;
-      fbm.requestPermission();
-      fbm.getToken().then((value) {
-        var deviceData = snapShot.data()['deviceToken'];
-        deviceData.remove(value);
-        print(deviceData);
-        FirebaseFirestore.instance
+    return Provider.of<NetworkNotifier>(context, listen: false)
+        .setIsConnected()
+        .then((value) {
+      if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
+        return FirebaseFirestore.instance
             .collection('users')
-            .doc(FirebaseAuth.instance.currentUser.uid)
-            .update({
-          "deviceToken": deviceData,
+            .doc(Provider.of<up.UserProvider>(context, listen: false).user.uid)
+            .get()
+            .then((snapShot) async {
+          final fbm = FirebaseMessaging.instance;
+          fbm.requestPermission();
+          fbm.getToken().then((value) {
+            var deviceData = snapShot.data()['deviceToken'];
+            deviceData.remove(value);
+            print(deviceData);
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser.uid)
+                .update({
+              "deviceToken": deviceData,
+            });
+          });
+          Provider.of<up.UserProvider>(context, listen: false).clearState();
+          Provider.of<ProfileEditStatus>(context, listen: false).clearState();
+          await googleSignIn.disconnect();
+          return FirebaseAuth.instance.signOut();
         });
-      });
-      Provider.of<up.UserProvider>(context, listen: false).clearState();
-      Provider.of<ProfileEditStatus>(context, listen: false).clearState();
-      await googleSignIn.disconnect();
-      return FirebaseAuth.instance.signOut();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+            duration: Duration(seconds: 2),
+            content: Text('Please check your connection'),
+          ),
+        );
+      }
     });
   }
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/screens/tabs/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +93,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      backgroundColor: Colors.red,
                       content: Text(
                         'Please check your network connection',
                       ),

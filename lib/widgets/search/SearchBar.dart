@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
@@ -55,6 +55,7 @@ class _SearchBarState extends State<SearchBar> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
+                          backgroundColor: Colors.red,
                           content: const Text(
                             'Please check your network connection',
                           ),
@@ -197,6 +198,7 @@ class _SearchBarState extends State<SearchBar> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
+                          backgroundColor: Colors.red,
                           content: Text(
                             'Please check your network connection',
                           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/chat/lists/admin_chat_list.dart';
 import 'package:pharmassist/widgets/chat/lists/user_chat_list.dart';

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/widgets/search/NoResultsFound.dart';
 import 'package:pharmassist/widgets/search/SearchBar.dart';
 import 'package:pharmassist/widgets/search/StartSearching.dart';

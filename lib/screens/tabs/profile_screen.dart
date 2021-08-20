@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/widgets/UI/getting_started.dart';
 import 'package:pharmassist/providers/profileEditStatus.dart';
 import 'package:pharmassist/providers/auth/user.dart';
@@ -153,6 +153,7 @@ class MapScreenState extends State<ProfilePage>
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.red,
             content: Text(
               'Please check your network connection',
             ),
@@ -921,6 +922,7 @@ class MapScreenState extends State<ProfilePage>
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                backgroundColor: Colors.red,
                 content: Text(
                   'Please check your network connection',
                 ),

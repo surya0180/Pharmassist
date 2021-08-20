@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/helpers/theme/Colors.dart';
 import 'package:pharmassist/providers/comments/comment_provider.dart';
 import 'package:pharmassist/providers/feed/feed.dart';
@@ -292,6 +292,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
+                                                  backgroundColor: Colors.red,
                                                   content: const Text(
                                                     'Please check your network connection',
                                                   ),

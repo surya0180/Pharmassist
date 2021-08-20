@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/screens/feeds/feed_detail_screeen.dart';
@@ -163,7 +163,6 @@ class _FeedCardState extends State<FeedCard> {
                                             SnackBar(
                                               behavior:
                                                   SnackBarBehavior.floating,
-                                              backgroundColor: Colors.black,
                                               margin: const EdgeInsets.only(
                                                   left: 10,
                                                   right: 10,
@@ -179,6 +178,7 @@ class _FeedCardState extends State<FeedCard> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
+                                            backgroundColor: Colors.red,
                                             content: const Text(
                                               'Please check your network connection',
                                             ),
@@ -209,6 +209,7 @@ class _FeedCardState extends State<FeedCard> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
+                                  backgroundColor: Colors.red,
                                   content: const Text(
                                     'Please check your network connection',
                                   ),
@@ -291,6 +292,7 @@ class _FeedCardState extends State<FeedCard> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
+                                  backgroundColor: Colors.red,
                                   content: const Text(
                                     'Please check your network connection',
                                   ),

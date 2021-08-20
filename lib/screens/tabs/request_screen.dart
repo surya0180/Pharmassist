@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/requests/RequestCard.dart';
 import 'package:provider/provider.dart';
 
-class RequestScreen extends StatelessWidget {
+class RequestScreen extends StatefulWidget {
   const RequestScreen({Key key}) : super(key: key);
 
   static const routeName = '/request-screen';
+
+  @override
+  _RequestScreenState createState() => _RequestScreenState();
+}
+
+class _RequestScreenState extends State<RequestScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<NetworkNotifier>(context, listen: false).setIsConnected();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +31,40 @@ class RequestScreen extends StatelessWidget {
 
     return _isAdded
         ? Scaffold(
-            body: Container(
-              child: ListView(
-                children: [
-                  RequestCard(
-                    title: 'Medical',
-                    description:
-                        'Send a request to admin if you want to join a medical shop as pharmacist',
-                    cardColor: Colors.cyanAccent[100],
-                    route: MedicalRequestForm.routeName,
-                  ),
-                  RequestCard(
-                    title: 'Pharmacist',
-                    description:
-                        'Send a request to admin if you are searching for some pharmacists',
-                    cardColor: Colors.lightGreenAccent[100],
-                    route: PharmacistRequestForm.routeName,
-                  ),
-                ],
-              ),
+            body: RefreshIndicator(
+              onRefresh: Provider.of<NetworkNotifier>(context).setIsConnected,
+              child: Provider.of<NetworkNotifier>(context).getIsConnected
+                  ? Container(
+                      child: ListView(
+                        children: [
+                          RequestCard(
+                            title: 'Medical',
+                            description:
+                                'Send a request to admin if you want to join a medical shop as pharmacist',
+                            cardColor: Colors.cyanAccent[100],
+                            route: MedicalRequestForm.routeName,
+                          ),
+                          RequestCard(
+                            title: 'Pharmacist',
+                            description:
+                                'Send a request to admin if you are searching for some pharmacists',
+                            cardColor: Colors.lightGreenAccent[100],
+                            route: PharmacistRequestForm.routeName,
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView(
+                      children: [
+                        SizedBox(
+                          height: 320,
+                        ),
+                        Center(
+                          child:
+                              Text("Something went wrong!  Please try again"),
+                        )
+                      ],
+                    ),
             ),
           )
         : Center(

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/forms/medical_request_form.dart';
 import 'package:pharmassist/forms/pharmacist_request_form.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/helpers/theme/MyThemeData.dart';
 import 'package:pharmassist/providers/auth/admin-provider.dart';
 import 'package:pharmassist/providers/comments/comment_provider.dart';
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => ProfileEditStatus(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => NetworkNotifier(),
         ),
       ],
       child: MaterialApp(

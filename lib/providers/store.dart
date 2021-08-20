@@ -37,7 +37,7 @@ class StoreProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
   var signedUser = FirebaseAuth.instance.currentUser;
 
-  void createStore(Store editedStore) {
+  Future<void> createStore(Store editedStore) {
     final uid = signedUser.uid;
 
     final document = FirebaseFirestore.instance
@@ -62,7 +62,7 @@ class StoreProvider with ChangeNotifier {
       'isDeleted': false,
       'timeStamp': editedStore.timestamp,
     });
-    document2.set({
+    return document2.set({
       'storeId': document.id,
       'uid': uid,
       'name': editedStore.name.toLowerCase(),
@@ -78,7 +78,7 @@ class StoreProvider with ChangeNotifier {
     });
   }
 
-  void updateStore(Store editedStore) {
+  Future<void> updateStore(Store editedStore) {
     final uid = signedUser.uid;
 
     FirebaseFirestore.instance
@@ -100,7 +100,7 @@ class StoreProvider with ChangeNotifier {
       'isDeleted': false,
       'timeStamp': editedStore.timestamp,
     });
-    FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('stores label')
         .doc(editedStore.storeId)
         .update({

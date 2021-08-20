@@ -126,11 +126,40 @@ class MapScreenState extends State<ProfilePage>
     if (!isValid) {
       return;
     }
-    _formKey.currentState.save();
-    Provider.of<UserProvider>(context, listen: false).updateUser(_editedUser);
-    setState(() {
-      _status = true;
-      FocusScope.of(context).requestFocus(new FocusNode());
+    Provider.of<NetworkNotifier>(context, listen: false)
+        .setIsConnected()
+        .then((value) {
+      if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
+        _formKey.currentState.save();
+        Provider.of<UserProvider>(context, listen: false)
+            .updateUser(_editedUser)
+            .then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.black,
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              duration: Duration(seconds: 1),
+              content: Text(
+                'Updated profile sucessfully',
+              ),
+            ),
+          );
+        });
+        setState(() {
+          _status = true;
+          FocusScope.of(context).requestFocus(new FocusNode());
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Please check your network connection',
+            ),
+            duration: Duration(seconds: 1, milliseconds: 200),
+          ),
+        );
+      }
     });
   }
 

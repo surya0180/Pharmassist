@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar(this.setQuery, this.setCategory, this.setFilter, {Key key})
@@ -18,7 +20,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     final device = MediaQuery.of(context).size;
     return Container(
-      height: device.height*0.075,
+      height: device.height * 0.075,
       margin: EdgeInsets.only(top: 0, bottom: 20, left: 10, right: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -41,9 +43,25 @@ class _SearchBarState extends State<SearchBar> {
             children: [
               PopupMenuButton(
                 onSelected: (value) {
-                  setState(() {
-                    _category = value;
-                    widget.setCategory(value);
+                  Provider.of<NetworkNotifier>(context, listen: false)
+                      .setIsConnected()
+                      .then((snap) {
+                    if (Provider.of<NetworkNotifier>(context, listen: false)
+                        .getIsConnected) {
+                      setState(() {
+                        _category = value;
+                        widget.setCategory(value);
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Please check your network connection',
+                          ),
+                          duration: Duration(seconds: 1, milliseconds: 200),
+                        ),
+                      );
+                    }
                   });
                 },
                 icon: _category == null
@@ -87,7 +105,7 @@ class _SearchBarState extends State<SearchBar> {
                 ],
               ),
               SizedBox(
-                width: device.width*0.03,
+                width: device.width * 0.03,
               ),
             ],
           ),
@@ -167,10 +185,26 @@ class _SearchBarState extends State<SearchBar> {
               // ),
               IconButton(
                 onPressed: () {
-                  setState(() {
-                    _query = _controller.text;
+                  Provider.of<NetworkNotifier>(context, listen: false)
+                      .setIsConnected()
+                      .then((snap) {
+                    if (Provider.of<NetworkNotifier>(context, listen: false)
+                        .getIsConnected) {
+                      setState(() {
+                        _query = _controller.text;
+                      });
+                      widget.setQuery(_query, _category, null);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Please check your network connection',
+                          ),
+                          duration: Duration(seconds: 1, milliseconds: 200),
+                        ),
+                      );
+                    }
                   });
-                  widget.setQuery(_query, _category, null);
                   FocusScope.of(context).unfocus();
                 },
                 icon: Icon(Icons.search),

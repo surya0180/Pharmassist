@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/screens/feeds/feed_detail_screeen.dart';
@@ -146,23 +147,46 @@ class _FeedCardState extends State<FeedCard> {
                                   child: Text('Yes'),
                                   onPressed: () {
                                     Navigator.of(context).pop(true);
-                                    Provider.of<FeedProvider>(context,
+                                    Provider.of<NetworkNotifier>(context,
                                             listen: false)
-                                        .deleteFeed(widget.id)
+                                        .setIsConnected()
                                         .then((value) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: Colors.black,
-                                          margin: EdgeInsets.only(
-                                              left: 10, right: 10, bottom: 40),
-                                          duration: Duration(seconds: 2),
-                                          content: Text(
-                                            'Deleted feed sucessfully',
+                                      if (Provider.of<NetworkNotifier>(context,
+                                              listen: false)
+                                          .getIsConnected) {
+                                        Provider.of<FeedProvider>(context,
+                                                listen: false)
+                                            .deleteFeed(widget.id)
+                                            .then((value) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              backgroundColor: Colors.black,
+                                              margin: EdgeInsets.only(
+                                                  left: 10,
+                                                  right: 10,
+                                                  bottom: 40),
+                                              duration: Duration(seconds: 2),
+                                              content: Text(
+                                                'Deleted feed sucessfully',
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Please check your network connection',
+                                            ),
+                                            duration: Duration(
+                                                seconds: 1, milliseconds: 200),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
                                     });
                                   },
                                 ),
@@ -170,11 +194,29 @@ class _FeedCardState extends State<FeedCard> {
                             ),
                           );
                         } else {
-                          Navigator.of(context)
-                              .pushNamed(NewFeedForm.routeName, arguments: {
-                            'id': widget.id,
-                            'title': widget.title,
-                            'content': widget.content,
+                          Provider.of<NetworkNotifier>(context, listen: false)
+                              .setIsConnected()
+                              .then((value) {
+                            if (Provider.of<NetworkNotifier>(context,
+                                    listen: false)
+                                .getIsConnected) {
+                              Navigator.of(context)
+                                  .pushNamed(NewFeedForm.routeName, arguments: {
+                                'id': widget.id,
+                                'title': widget.title,
+                                'content': widget.content,
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Please check your network connection',
+                                  ),
+                                  duration:
+                                      Duration(seconds: 1, milliseconds: 200),
+                                ),
+                              );
+                            }
                           });
                         }
                       },
@@ -226,18 +268,37 @@ class _FeedCardState extends State<FeedCard> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          if (!_isAdded) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Please complete your profile'),
-                                duration:
-                                    Duration(seconds: 1, milliseconds: 200),
-                              ),
-                            );
-                          } else {
-                            feed.addToLikedUsers(!_isLiked, widget.id,
-                                widget.likes, widget.likedUsers);
-                          }
+                          Provider.of<NetworkNotifier>(context, listen: false)
+                              .setIsConnected()
+                              .then((value) {
+                            if (Provider.of<NetworkNotifier>(context,
+                                    listen: false)
+                                .getIsConnected) {
+                              if (!_isAdded) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('Please complete your profile'),
+                                    duration:
+                                        Duration(seconds: 1, milliseconds: 200),
+                                  ),
+                                );
+                              } else {
+                                feed.addToLikedUsers(!_isLiked, widget.id,
+                                    widget.likes, widget.likedUsers);
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Please check your network connection',
+                                  ),
+                                  duration:
+                                      Duration(seconds: 1, milliseconds: 200),
+                                ),
+                              );
+                            }
+                          });
                         },
                         color: Theme.of(context).accentColor,
                       ),

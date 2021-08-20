@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage(this.userId, this.uidX, this.setIsSent, this.setTimestamp, {Key key})
+  const NewMessage(this.userId, this.uidX, this.setIsSent, this.setTimestamp,
+      {Key key})
       : super(key: key);
 
   final String userId;
@@ -59,7 +61,9 @@ class _NewMessageState extends State<NewMessage> {
       'username': userData.data()['fullName'],
       'sentAt': hmstamp.toIso8601String(),
       'notificationArgs': [widget.userId, widget.uidX],
-      'token': _isAdmin ? realUserData.data()['deviceToken'] : adminData.data()['deviceToken'],
+      'token': _isAdmin
+          ? realUserData.data()['deviceToken']
+          : adminData.data()['deviceToken'],
     });
     if (_isAdmin) {
       await FirebaseFirestore.instance
@@ -129,7 +133,28 @@ class _NewMessageState extends State<NewMessage> {
           CircleAvatar(
             backgroundColor: Theme.of(context).buttonColor,
             child: IconButton(
-              onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,
+              onPressed: () {
+                Provider.of<NetworkNotifier>(context, listen: false)
+                    .setIsConnected()
+                    .then((value) {
+                  if (Provider.of<NetworkNotifier>(context, listen: false)
+                      .getIsConnected) {
+                    _enteredMessage.trim().isEmpty
+                        ? print("Hello")
+                        : _sendMessage();
+                  } else {
+                    Navigator.of(context).pop(true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Please check your network connection',
+                        ),
+                        duration: Duration(seconds: 1, milliseconds: 200),
+                      ),
+                    );
+                  }
+                });
+              },
               icon: Icon(
                 Icons.send,
                 color: Colors.white,

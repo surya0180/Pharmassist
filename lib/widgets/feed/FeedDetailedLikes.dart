@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/feed/feed_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:provider/provider.dart';
@@ -56,41 +57,57 @@ class _FeedLikesState extends State<FeedLikes> {
             color: Colors.black,
           ),
           onPressed: () {
-            if (!_isAdded) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.black,
-                  margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
-                  duration: Duration(seconds: 2),
-                  content: Text('Please complete your profile'),
-                ),
-              );
-            } else {
-              Provider.of<FeedProvider>(
-                context,
-                listen: false,
-              ).addToLikedUsers(
-                !_isLiked,
-                widget.id,
-                _likes,
-                widget.likedUsers,
-              );
-              if (_isLiked) {
-                setState(() {
-                  print('i setted likes in function if');
-                  _likes = _likes - 1;
-                });
+            Provider.of<NetworkNotifier>(context, listen: false)
+                .setIsConnected()
+                .then((value) {
+              if (Provider.of<NetworkNotifier>(context, listen: false)
+                  .getIsConnected) {
+                if (!_isAdded) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.black,
+                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                      duration: Duration(seconds: 2),
+                      content: Text('Please complete your profile'),
+                    ),
+                  );
+                } else {
+                  Provider.of<FeedProvider>(
+                    context,
+                    listen: false,
+                  ).addToLikedUsers(
+                    !_isLiked,
+                    widget.id,
+                    _likes,
+                    widget.likedUsers,
+                  );
+                  if (_isLiked) {
+                    setState(() {
+                      print('i setted likes in function if');
+                      _likes = _likes - 1;
+                    });
+                  } else {
+                    setState(() {
+                      print('i setted likes in function else');
+                      _likes = _likes + 1;
+                    });
+                  }
+                  setState(() {
+                    _isLiked = !_isLiked;
+                  });
+                }
               } else {
-                setState(() {
-                  print('i setted likes in function else');
-                  _likes = _likes + 1;
-                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Please check your network connection',
+                    ),
+                    duration: Duration(seconds: 1, milliseconds: 200),
+                  ),
+                );
               }
-              setState(() {
-                _isLiked = !_isLiked;
-              });
-            }
+            });
           },
           color: Theme.of(context).accentColor,
         ),

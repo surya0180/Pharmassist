@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/providers/comments/comment_provider.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/feed/CommentHolder.dart';
@@ -67,17 +68,33 @@ class _CommentScreenState extends State<CommentScreen> {
             ),
             trailing: IconButton(
               onPressed: () {
-                setState(() {
-                  _comment = _controller.text;
+                Provider.of<NetworkNotifier>(context, listen: false)
+                    .setIsConnected()
+                    .then((value) {
+                  if (Provider.of<NetworkNotifier>(context, listen: false)
+                      .getIsConnected) {
+                    setState(() {
+                      _comment = _controller.text;
+                    });
+                    var timestamp = DateTime.now();
+                    _commentsData.addComment(
+                      widget.feedId,
+                      timestamp.toIso8601String(),
+                      _comment,
+                      _username,
+                      DateFormat.yMd().format(timestamp),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Please check your network connection',
+                        ),
+                        duration: Duration(seconds: 1, milliseconds: 200),
+                      ),
+                    );
+                  }
                 });
-                var timestamp = DateTime.now();
-                _commentsData.addComment(
-                  widget.feedId,
-                  timestamp.toIso8601String(),
-                  _comment,
-                  _username,
-                  DateFormat.yMd().format(timestamp),
-                );
                 _controller.clear();
                 FocusScope.of(context).unfocus();
               },

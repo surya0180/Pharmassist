@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:pharmassist/helpers/HasNetwork.dart';
 import 'package:pharmassist/helpers/theme/Colors.dart';
 import 'package:pharmassist/providers/comments/comment_provider.dart';
 import 'package:pharmassist/providers/feed/feed.dart';
@@ -70,8 +71,9 @@ class _NewFeedFormState extends State<NewFeedForm> {
       var timeStamp = DateTime.now();
       Navigator.of(context).pop(true);
       Provider.of<FeedProvider>(context, listen: false)
-          .updateFeed(_id, _title, _description, timeStamp).then((value) {
-            ScaffoldMessenger.of(context).showSnackBar(
+          .updateFeed(_id, _title, _description, timeStamp)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.black,
@@ -81,7 +83,7 @@ class _NewFeedFormState extends State<NewFeedForm> {
           ),
         );
         Navigator.of(context).pop(true);
-          });
+      });
     }
     print('hey there');
   }
@@ -273,7 +275,31 @@ class _NewFeedFormState extends State<NewFeedForm> {
                                         ),
                                         onPressed: () {
                                           FocusScope.of(context).unfocus();
-                                          _submit();
+                                          Provider.of<NetworkNotifier>(context,
+                                                  listen: false)
+                                              .setIsConnected()
+                                              .then((value) {
+                                            if (Provider.of<NetworkNotifier>(
+                                                    context,
+                                                    listen: false)
+                                                .getIsConnected) {
+                                              _submit();
+                                            } else {
+                                              Navigator.of(context).pop(true);
+                                              Navigator.of(context).pop(true);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Please check your network connection',
+                                                  ),
+                                                  duration: Duration(
+                                                      seconds: 1,
+                                                      milliseconds: 200),
+                                                ),
+                                              );
+                                            }
+                                          });
                                         },
                                       ),
                                     ],

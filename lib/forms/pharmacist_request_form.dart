@@ -57,7 +57,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
             SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.red,
-              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 2),
               content: const Text('Request sent sucessfully'),
             ),
@@ -153,7 +153,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   enableSuggestions: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12),
+                    contentPadding: const EdgeInsets.only(left: 12),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,
@@ -193,7 +193,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   decoration: InputDecoration(
                     labelStyle: TextStyle(),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12, top: 25),
+                    contentPadding: const EdgeInsets.only(left: 12, top: 25),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,

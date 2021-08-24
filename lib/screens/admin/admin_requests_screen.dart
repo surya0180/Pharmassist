@@ -27,45 +27,6 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
     super.initState();
   }
 
-  final List<Map<String, Object>> _pages = [
-    {'page': PharmReqScreen(false), 'title': 'Pharmassists'},
-    {'page': MedicReqScreen(false), 'title': 'Medicals'},
-  ];
-  int _selectedPageIndex = 0;
-  void _selectPage(int index) {
-    setValue(index);
-    setState(() {
-      _selectedPageIndex = index;
-    });
-  }
-
-  var streamBuilder = FirebaseFirestore.instance
-      .collection('pharmacist requests')
-      .orderBy('timestamp', descending: true)
-      .where('isDeleted', isEqualTo: false)
-      .snapshots();
-  void setValue(value) {
-    if (value == 0) {
-      setState(() {
-        RequestType = "pharm";
-        streamBuilder = FirebaseFirestore.instance
-            .collection('pharmacist requests')
-            .orderBy('timestamp', descending: true)
-            .where('isDeleted', isEqualTo: false)
-            .snapshots();
-      });
-    } else {
-      setState(() {
-        RequestType = "medic";
-        streamBuilder = FirebaseFirestore.instance
-            .collection('medical requests')
-            .orderBy('timestamp', descending: true)
-            .where('isDeleted', isEqualTo: false)
-            .snapshots();
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -79,12 +40,10 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
               bottom: TabBar(
                 indicatorColor: Colors.red,
                 tabs: [
-                  Tab(
-                    // icon: Icon(Icons.account_circle),
+                   const Tab(
                     text: "Pharmassists",
                   ),
-                  Tab(
-                    // icon: Icon(Icons.store),
+                   const Tab(
                     text: "Medicals",
                   ),
                 ],
@@ -96,50 +55,5 @@ class _AdminRequestScreenState extends State<AdminRequestScreen> {
             MedicReqScreen(false),
           ]),
         ));
-  }
-}
-
-class Requsts extends StatelessWidget {
-  const Requsts({
-    Key key,
-    @required this.streamBuilder,
-    @required this.requestType,
-  }) : super(key: key);
-
-  final Stream<QuerySnapshot<Map<String, dynamic>>> streamBuilder;
-  final String requestType;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: StreamBuilder(
-          stream: streamBuilder,
-          builder: (ctx, pharmSnapShot) {
-            if (pharmSnapShot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            final pharmReqs = pharmSnapShot.data.docs;
-
-            return ListView.builder(
-                itemCount: pharmReqs.length,
-                itemBuilder: (ctx, i) {
-                  return RequestItem(
-                    pharmReqs[i].data()['createdOn'],
-                    pharmReqs[i].data()['about'],
-                    pharmReqs[i].data()['request'],
-                    pharmReqs[i].data()['userId'],
-                    pharmReqs[i].data()['PhotoUrl'],
-                    pharmReqs[i].data()['username'],
-                    requestType,
-                    pharmReqs[i].id,
-                    true,
-                  );
-                });
-          }),
-    );
   }
 }

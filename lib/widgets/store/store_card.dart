@@ -61,7 +61,7 @@ class StoreCard extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Add Store"),
+                      const Text("Add Store"),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),

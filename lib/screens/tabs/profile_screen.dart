@@ -138,9 +138,9 @@ class MapScreenState extends State<ProfilePage>
             SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.black,
-              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 1),
-              content: Text(
+              content: const Text(
                 'Updated profile sucessfully',
               ),
             ),
@@ -154,7 +154,7 @@ class MapScreenState extends State<ProfilePage>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.red,
-            content: Text(
+            content: const Text(
               'Please check your network connection',
             ),
             duration: Duration(seconds: 1, milliseconds: 200),
@@ -210,19 +210,19 @@ class MapScreenState extends State<ProfilePage>
                       child: new Column(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: Center(
                               child: Text(
                                 _isSearchResult != null
                                     ? _fullname
                                     : userinfo.fullname,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: new Stack(
                                 fit: StackFit.loose,
                                 children: <Widget>[
@@ -234,9 +234,6 @@ class MapScreenState extends State<ProfilePage>
                                       new Container(
                                           width: device.height * 0.18,
                                           height: device.height * 0.18,
-                                          // child: Image.network(_isSearchResult != null
-                                          //     ? _profilePic
-                                          //     : userinfo.photoUrl),
                                           decoration: new BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: new DecorationImage(
@@ -257,7 +254,7 @@ class MapScreenState extends State<ProfilePage>
                     new Container(
                       color: Color(0xffFFFFFF),
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 25.0),
+                        padding: const EdgeInsets.only(bottom: 25.0),
                         child: Form(
                           key: _formKey,
                           child: new Column(
@@ -265,7 +262,7 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisAlignment:
@@ -277,7 +274,7 @@ class MapScreenState extends State<ProfilePage>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Personal Information',
                                             style: TextStyle(
                                                 fontSize: 18.0,
@@ -288,14 +285,13 @@ class MapScreenState extends State<ProfilePage>
                                       new Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        // mainAxisSize: MainAxisSize.max,
                                         children: <Widget>[
                                           _status
                                               ? _isSearchResult != null
                                                   ? new Container()
                                                   : _getEditIcon()
                                               : new Container(),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           _status
@@ -319,7 +315,7 @@ class MapScreenState extends State<ProfilePage>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -329,7 +325,7 @@ class MapScreenState extends State<ProfilePage>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Full Name',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -340,7 +336,7 @@ class MapScreenState extends State<ProfilePage>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -374,9 +370,6 @@ class MapScreenState extends State<ProfilePage>
                                             return null;
                                           },
                                           controller: fullname,
-                                          // initialValue: _isSearchResult != null
-                                          //     ? _fullname
-                                          //     : _initValues["fullName"],
                                           decoration: const InputDecoration(
                                             hintText: "Enter Your Name",
                                           ),
@@ -391,7 +384,7 @@ class MapScreenState extends State<ProfilePage>
                                       _isSearchResult &&
                                       registrationNo.text != "")
                                 Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 25.0, right: 25.0, top: 25.0),
                                     child: new Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -401,7 +394,7 @@ class MapScreenState extends State<ProfilePage>
                                               MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            new Text(
+                                            const Text(
                                               'Registration Number',
                                               style: TextStyle(
                                                   fontSize: 16.0,
@@ -416,7 +409,7 @@ class MapScreenState extends State<ProfilePage>
                                       _isSearchResult &&
                                       registrationNo.text != "")
                                 Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 25.0, right: 25.0, top: 2.0),
                                     child: new Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -450,9 +443,6 @@ class MapScreenState extends State<ProfilePage>
                                               return null;
                                             },
                                             controller: registrationNo,
-                                            // initialValue: _isSearchResult != null
-                                            //     ? _registerationNumber
-                                            //     : _initValues["registrationNo"],
                                             decoration: const InputDecoration(
                                                 hintText:
                                                     "Enter registration number (Optional)"),
@@ -466,7 +456,7 @@ class MapScreenState extends State<ProfilePage>
                                       _isSearchResult &&
                                       dateinput.text != "")
                                 Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 25.0, right: 25.0, top: 25.0),
                                     child: new Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -476,7 +466,7 @@ class MapScreenState extends State<ProfilePage>
                                               MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            new Text(
+                                            const Text(
                                               "Renewal Date",
                                               style: TextStyle(
                                                   fontSize: 16.0,
@@ -491,7 +481,7 @@ class MapScreenState extends State<ProfilePage>
                                       _isSearchResult &&
                                       dateinput.text != "")
                                 Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 25.0, right: 25.0, top: 2.0),
                                     child: new Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -519,8 +509,7 @@ class MapScreenState extends State<ProfilePage>
                                                   dateinput.text =
                                                       formattedDate;
                                                 });
-                                              } else {
-                                              }
+                                              } else {}
                                             },
                                             readOnly: true,
                                             onSaved: (value) {
@@ -540,9 +529,6 @@ class MapScreenState extends State<ProfilePage>
                                             textInputAction:
                                                 TextInputAction.next,
                                             validator: (value) {
-                                              // if (value.trim().length == 0) {
-                                              //   return 'This field is required';
-                                              // }
                                               return null;
                                             },
                                             controller: dateinput,
@@ -555,7 +541,7 @@ class MapScreenState extends State<ProfilePage>
                                       ],
                                     )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -563,7 +549,7 @@ class MapScreenState extends State<ProfilePage>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Street',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -574,7 +560,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Town',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -586,7 +572,7 @@ class MapScreenState extends State<ProfilePage>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -594,7 +580,8 @@ class MapScreenState extends State<ProfilePage>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
                                             onSaved: (value) {
                                               _editedUser = User(
@@ -669,7 +656,7 @@ class MapScreenState extends State<ProfilePage>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -677,7 +664,7 @@ class MapScreenState extends State<ProfilePage>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'District',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -688,7 +675,7 @@ class MapScreenState extends State<ProfilePage>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'State',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -700,7 +687,7 @@ class MapScreenState extends State<ProfilePage>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -708,7 +695,8 @@ class MapScreenState extends State<ProfilePage>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
                                             onSaved: (value) {
                                               _editedUser = User(
@@ -819,10 +807,10 @@ class MapScreenState extends State<ProfilePage>
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: Container(
                   child: new RaisedButton(
-                child: new Text("Save"),
+                child: const Text("Save"),
                 textColor: Colors.white,
                 color: Colors.green,
                 onPressed: _onSubmit,
@@ -834,10 +822,10 @@ class MapScreenState extends State<ProfilePage>
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 10.0),
               child: Container(
                   child: new RaisedButton(
-                child: new Text("Cancel"),
+                child: const Text("Cancel"),
                 textColor: Colors.white,
                 color: Colors.red,
                 onPressed: () {
@@ -872,10 +860,10 @@ class MapScreenState extends State<ProfilePage>
 
   Widget _getEditIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.red,
         radius: 20.0,
-        child: new Icon(
+        child: Icon(
           Icons.edit,
           color: Colors.white,
           size: 18.0,
@@ -893,10 +881,10 @@ class MapScreenState extends State<ProfilePage>
 
   Widget _getMessageIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.green,
         radius: 20.0,
-        child: new Icon(
+        child: Icon(
           Icons.chat,
           color: Colors.white,
           size: 18.0,
@@ -914,7 +902,7 @@ class MapScreenState extends State<ProfilePage>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red,
-                content: Text(
+                content: const Text(
                   'Please check your network connection',
                 ),
                 duration: Duration(seconds: 1, milliseconds: 200),

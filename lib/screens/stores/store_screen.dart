@@ -30,10 +30,8 @@ class _StoreScreenState extends State<StoreScreen> {
     return _isAdded
         ? Scaffold(
             body: RefreshIndicator(
-              onRefresh: Provider.of<NetworkNotifier>(context)
-                  .setIsConnected,
-              child: Provider.of<NetworkNotifier>(context)
-                      .getIsConnected
+              onRefresh: Provider.of<NetworkNotifier>(context).setIsConnected,
+              child: Provider.of<NetworkNotifier>(context).getIsConnected
                   ? StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('stores')
@@ -92,7 +90,7 @@ class _StoreScreenState extends State<StoreScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.account_box,
                   size: 58,
                   color: Colors.black38,
@@ -102,7 +100,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 ),
                 Container(
                   width: device.width * 0.6,
-                  child: Text(
+                  child: const Text(
                     'Please complete your profile to access this page',
                     style: TextStyle(
                       color: Colors.black38,

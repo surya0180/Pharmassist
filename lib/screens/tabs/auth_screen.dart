@@ -48,10 +48,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         SnackBar(
                           behavior: SnackBarBehavior.floating,
                           backgroundColor: Colors.red,
-                          margin:
-                              EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                          margin: const EdgeInsets.only(
+                              left: 10, right: 10, bottom: 40),
                           duration: Duration(seconds: 2),
-                          content: Text('Please check your connection'),
+                          content: const Text('Please check your connection'),
                         ),
                       );
                     }

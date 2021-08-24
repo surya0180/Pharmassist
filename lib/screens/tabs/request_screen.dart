@@ -55,7 +55,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       ),
                     )
                   : ListView(
-                      children: [
+                      children: const [
                         SizedBox(
                           height: 320,
                         ),
@@ -71,7 +71,7 @@ class _RequestScreenState extends State<RequestScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.account_box,
                   size: 58,
                   color: Colors.black38,
@@ -81,7 +81,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 ),
                 Container(
                   width: device.width * 0.6,
-                  child: Text(
+                  child: const Text(
                     'Please complete your profile to access this page',
                     style: TextStyle(
                       color: Colors.black38,

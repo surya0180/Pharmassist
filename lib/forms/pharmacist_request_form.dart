@@ -52,16 +52,14 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
           'isDeleted': false,
           'token': adminData.data()['deviceToken'],
         }).then((value) {
-          // int count = 0;
-          // Navigator.of(context).popUntil((_) => count++ >= 2);
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.red,
-              margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 2),
-              content: Text('Request sent sucessfully'),
+              content: const Text('Request sent sucessfully'),
             ),
           );
         });
@@ -70,10 +68,9 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
         Provider.of<AdminProvider>(context, listen: false)
             .updateRequests(_count + 1);
       } else {
-        // Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
+            content: const Text(
               'Please check your network connection',
             ),
             duration: Duration(seconds: 1, milliseconds: 200),
@@ -91,13 +88,13 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text(
+                content: const Text(
                   'Are you sure you want to leave the form?',
                   style: TextStyle(fontFamily: 'poppins', fontSize: 16),
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
@@ -106,7 +103,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                     },
                   ),
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'Yes, exit',
                       style: TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
@@ -122,7 +119,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Pharmacist form'),
+          title: const Text('Pharmacist form'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -140,7 +137,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
-                Text(
+                const Text(
                   'Title  :',
                   style: TextStyle(
                     fontSize: 14,
@@ -156,7 +153,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   enableSuggestions: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12),
+                    contentPadding: const EdgeInsets.only(left: 12),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,
@@ -177,7 +174,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
-                Text(
+                const Text(
                   'Request details  :',
                   style: TextStyle(
                     fontSize: 14,
@@ -196,7 +193,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                   decoration: InputDecoration(
                     labelStyle: TextStyle(),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(left: 12, top: 25),
+                    contentPadding: const EdgeInsets.only(left: 12, top: 25),
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: InputBorder.none,
@@ -226,14 +223,14 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            content: Text(
+                            content: const Text(
                               'Are you sure you want to submit this form',
                               style: TextStyle(
                                   fontFamily: 'poppins', fontSize: 16),
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'Check once again',
                                   style: TextStyle(
                                       fontFamily: 'poppins', fontSize: 12),
@@ -243,7 +240,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                                 },
                               ),
                               FlatButton(
-                                child: Text(
+                                child: const Text(
                                   'I am good to go',
                                   style: TextStyle(
                                       fontFamily: 'poppins', fontSize: 12),
@@ -257,7 +254,7 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
                           );
                         });
                   },
-                  child: Text(
+                  child: const Text(
                     'Send request',
                     style: TextStyle(
                       color: Colors.white,

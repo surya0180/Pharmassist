@@ -50,10 +50,10 @@ class PharmReqScreen extends StatelessWidget {
                 })
             : ListView(
                 children: [
-                  SizedBox(
+                   const SizedBox(
                     height: 220,
                   ),
-                  Center(
+                  const Center(
                     child: Text("Something went wrong!  Please try again"),
                   )
                 ],

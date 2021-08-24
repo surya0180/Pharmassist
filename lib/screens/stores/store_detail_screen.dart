@@ -114,9 +114,9 @@ class MapScreenState extends State<StoreDetailScreen>
               SnackBar(
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.black,
-                margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
                 duration: Duration(seconds: 1),
-                content: Text(
+                content: const Text(
                   'Created Store sucessfully',
                 ),
               ),
@@ -145,9 +145,9 @@ class MapScreenState extends State<StoreDetailScreen>
               SnackBar(
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.black,
-                margin: EdgeInsets.only(left: 10, right: 10, bottom: 40),
+                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
                 duration: Duration(seconds: 2),
-                content: Text(
+                content: const Text(
                   'Updated Store sucessfully',
                 ),
               ),
@@ -158,7 +158,7 @@ class MapScreenState extends State<StoreDetailScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.red,
-            content: Text(
+            content: const Text(
               'Please check your network connection',
             ),
             duration: Duration(seconds: 1, milliseconds: 200),
@@ -215,7 +215,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Store Information',
                                             style: TextStyle(
                                                 fontSize: 18.0,
@@ -245,7 +245,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -255,7 +255,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Store Name',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -266,31 +266,15 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
                                       new Flexible(
                                         child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _name = value;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            return null;
-                                          },
                                           initialValue:
                                               _name.toString().capitalize(),
-                                          decoration: const InputDecoration(
-                                            hintText: "Enter Store Name",
-                                          ),
                                           enabled: !_status,
                                           autofocus: !_status,
                                         ),
@@ -298,7 +282,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -308,7 +292,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Store Owner Name',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -319,7 +303,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -334,7 +318,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -344,7 +328,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Firm Id',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -355,40 +339,21 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
                                       new Flexible(
                                         child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _firmId = value;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            if (!isAlphanumeric(
-                                                value.replaceAll(' ', ''))) {
-                                              return 'Please Enter Valid Value';
-                                            }
-                                            return null;
-                                          },
                                           initialValue: _firmId,
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Firm Id"),
                                           enabled: !_status,
                                         ),
                                       ),
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -398,7 +363,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             "Establishment Year",
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -409,60 +374,22 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
                                       new Flexible(
                                         child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _establishmentYear = value;
-                                            });
-                                          },
                                           readOnly: true,
-                                          onTap: () async {
-                                            DateTime pickedDate =
-                                                await showDatePicker(
-                                                    context:
-                                                        context, //context of current state
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(
-                                                        1980), //DateTime.now() - not to allow to choose before today.
-                                                    lastDate: DateTime(2101));
-
-                                            if (pickedDate != null) {
-                                              String formattedDate =
-                                                  DateFormat('yyyy-MM-dd')
-                                                      .format(pickedDate);
-                                              setState(() {
-                                                _establishmentYear =
-                                                    formattedDate;
-                                                dateinput.text = formattedDate;
-                                              });
-                                            } else {
-                                            }
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            return null;
-                                          },
                                           controller: dateinput,
-                                          decoration: const InputDecoration(
-                                              hintText:
-                                                  "Enter Establishment Year"),
                                           enabled: !_status,
                                         ),
                                       ),
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -470,7 +397,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Street',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -481,7 +408,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Town',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -493,7 +420,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -501,30 +428,11 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
-                                            onSaved: (value) {
-                                              setState(() {
-                                                _street = value;
-                                              });
-                                            },
-                                            keyboardType: TextInputType.text,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            validator: (value) {
-                                              if (value.trim().length == 0) {
-                                                return 'This field is required';
-                                              }
-                                              if (!isAlpha(
-                                                  value.replaceAll(' ', ''))) {
-                                                return 'Please Enter Valid Value';
-                                              }
-                                              return null;
-                                            },
                                             initialValue:
                                                 _street.toString().capitalize(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter Street"),
                                             enabled: !_status,
                                           ),
                                         ),
@@ -532,27 +440,8 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                       Flexible(
                                         child: new TextFormField(
-                                          onSaved: (value) {
-                                            setState(() {
-                                              _town = value;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.text,
-                                          textInputAction: TextInputAction.next,
-                                          validator: (value) {
-                                            if (value.trim().length == 0) {
-                                              return 'This field is required';
-                                            }
-                                            if (!isAlphanumeric(
-                                                value.replaceAll(' ', ''))) {
-                                              return 'Please Enter Valid Value';
-                                            }
-                                            return null;
-                                          },
                                           initialValue:
                                               _town.toString().capitalize(),
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Town"),
                                           enabled: !_status,
                                         ),
                                         flex: 2,
@@ -560,7 +449,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -568,7 +457,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'District',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -579,7 +468,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'State',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -591,7 +480,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -599,31 +488,12 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
-                                            onSaved: (value) {
-                                              setState(() {
-                                                _district = value;
-                                              });
-                                            },
-                                            keyboardType: TextInputType.text,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            validator: (value) {
-                                              if (value.trim().length == 0) {
-                                                return 'This field is required';
-                                              }
-                                              if (!isAlpha(
-                                                  value.replaceAll(' ', ''))) {
-                                                return 'Please Enter Valid Value';
-                                              }
-                                              return null;
-                                            },
                                             initialValue: _district
                                                 .toString()
                                                 .capitalize(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter District"),
                                             enabled: !_status,
                                           ),
                                         ),
@@ -660,9 +530,6 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                     ],
                                   )),
-                              !_status
-                                  ? _getActionButtons(_isNew)
-                                  : new Container(),
                             ],
                           ),
                         ),
@@ -685,13 +552,13 @@ class MapScreenState extends State<StoreDetailScreen>
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text(
+                content: const Text(
                   'Are you sure you want to discard the changes?',
                   style: TextStyle(fontFamily: 'poppins', fontSize: 16),
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
@@ -700,7 +567,7 @@ class MapScreenState extends State<StoreDetailScreen>
                     },
                   ),
                   FlatButton(
-                    child: Text(
+                    child: const Text(
                       'Yes, exit',
                       style: TextStyle(fontFamily: 'poppins', fontSize: 12),
                     ),
@@ -727,7 +594,7 @@ class MapScreenState extends State<StoreDetailScreen>
                     new Container(
                       color: Color(0xffFFFFFF),
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 25.0),
+                        padding: const EdgeInsets.only(bottom: 25.0),
                         child: Form(
                           key: _formKey,
                           child: new Column(
@@ -735,7 +602,7 @@ class MapScreenState extends State<StoreDetailScreen>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisAlignment:
@@ -747,7 +614,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Store Information',
                                             style: TextStyle(
                                                 fontSize: 18.0,
@@ -792,7 +659,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -802,7 +669,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Store Name',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -813,7 +680,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -849,7 +716,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -859,7 +726,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             'Firm Id',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -870,7 +737,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -903,7 +770,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -913,7 +780,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                             MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
+                                          const Text(
                                             "Establishment Year",
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -924,7 +791,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -956,8 +823,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                                     formattedDate;
                                                 dateinput.text = formattedDate;
                                               });
-                                            } else {
-                                            }
+                                            } else {}
                                           },
                                           keyboardType: TextInputType.text,
                                           textInputAction: TextInputAction.next,
@@ -977,7 +843,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -985,7 +851,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Street',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -996,7 +862,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'Town',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -1008,7 +874,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -1016,7 +882,8 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
                                             onSaved: (value) {
                                               setState(() {
@@ -1075,7 +942,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 25.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -1083,7 +950,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'District',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -1094,7 +961,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                       ),
                                       Expanded(
                                         child: Container(
-                                          child: new Text(
+                                          child: const Text(
                                             'State',
                                             style: TextStyle(
                                                 fontSize: 16.0,
@@ -1106,7 +973,7 @@ class MapScreenState extends State<StoreDetailScreen>
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
                                   child: new Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -1114,7 +981,8 @@ class MapScreenState extends State<StoreDetailScreen>
                                     children: <Widget>[
                                       Flexible(
                                         child: Padding(
-                                          padding: EdgeInsets.only(right: 10.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
                                           child: new TextFormField(
                                             onSaved: (value) {
                                               setState(() {
@@ -1207,10 +1075,10 @@ class MapScreenState extends State<StoreDetailScreen>
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: Container(
                   child: new RaisedButton(
-                child: new Text("Save"),
+                child: const Text("Save"),
                 textColor: Colors.white,
                 color: Colors.green,
                 onPressed: _onSubmit,
@@ -1222,10 +1090,10 @@ class MapScreenState extends State<StoreDetailScreen>
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 10.0),
               child: Container(
                   child: new RaisedButton(
-                child: new Text("Cancel"),
+                child: const Text("Cancel"),
                 textColor: Colors.white,
                 color: Colors.red,
                 onPressed: () {
@@ -1250,10 +1118,10 @@ class MapScreenState extends State<StoreDetailScreen>
 
   Widget _getEditIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.green,
         radius: 16.0,
-        child: new Icon(
+        child: Icon(
           Icons.edit,
           color: Colors.white,
           size: 18.0,
@@ -1269,29 +1137,27 @@ class MapScreenState extends State<StoreDetailScreen>
 
   Widget _getChatIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.green,
         radius: 16.0,
-        child: new Icon(
+        child: Icon(
           Icons.chat,
           color: Colors.white,
           size: 18.0,
         ),
       ),
       onTap: () {
-        // setState(() {
-        //   _status = false;
-        // });
+        // pending
       },
     );
   }
 
   Widget _getDeleteIcon() {
     return new GestureDetector(
-      child: new CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.red,
         radius: 16.0,
-        child: new Icon(
+        child: Icon(
           Icons.delete,
           color: Colors.white,
           size: 18.0,
@@ -1301,19 +1167,19 @@ class MapScreenState extends State<StoreDetailScreen>
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text('Are you sure?'),
-            content: Text(
+            title: const Text('Are you sure?'),
+            content: const Text(
               'Do you want to delete this Store ?',
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('No'),
+                child: const Text('No'),
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
               ),
               FlatButton(
-                child: Text('Yes'),
+                child: const Text('Yes'),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Provider.of<NetworkNotifier>(context, listen: false)
@@ -1344,10 +1210,10 @@ class MapScreenState extends State<StoreDetailScreen>
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
                             backgroundColor: Colors.black,
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 40),
                             duration: Duration(seconds: 2),
-                            content: Text('Deleted store sucessfully'),
+                            content: const Text('Deleted store sucessfully'),
                           ),
                         );
                         // Navigator.of(context).popUntil((_) => count++ >= 2);
@@ -1358,7 +1224,7 @@ class MapScreenState extends State<StoreDetailScreen>
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red,
-                          content: Text(
+                          content: const Text(
                             'Please check your network connection',
                           ),
                           duration: Duration(seconds: 1, milliseconds: 200),

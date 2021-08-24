@@ -33,12 +33,12 @@ class RequestItem extends StatelessWidget {
     if (isDeleted) {
       return Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 5,
           vertical: 2,
         ),
         child: Padding(
-          padding: EdgeInsets.all(4),
+          padding: const EdgeInsets.all(4),
           child: ListTile(
             onTap: () {
               Navigator.of(context)
@@ -64,28 +64,28 @@ class RequestItem extends StatelessWidget {
       key: ValueKey(createdOn),
       secondaryBackground: Container(
         color: Theme.of(context).errorColor,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
           size: 40,
         ),
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(
+        padding: const EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
       ),
       background: Container(
         color: Colors.green,
-        child: Icon(
+        child: const Icon(
           Icons.chat,
           color: Colors.white,
           size: 40,
         ),
         alignment: Alignment.centerLeft,
-        padding: EdgeInsets.only(left: 20),
-        margin: EdgeInsets.symmetric(
+        padding: const EdgeInsets.only(left: 20),
+        margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
@@ -96,19 +96,19 @@ class RequestItem extends StatelessWidget {
           return showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-              title: Text('Are you sure?'),
-              content: Text(
+              title: const Text('Are you sure?'),
+              content: const Text(
                 'Confirm to delete the request?',
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('No'),
+                  child: const Text('No'),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
                   },
                 ),
                 FlatButton(
-                  child: Text('Yes'),
+                  child: const Text('Yes'),
                   onPressed: () {
                     Navigator.of(ctx).pop(true);
                   },
@@ -120,19 +120,19 @@ class RequestItem extends StatelessWidget {
           return showDialog(
             context: context,
             builder: (ctx) => AlertDialog(
-              title: Text('Are you sure?'),
-              content: Text(
+              title: const Text('Are you sure?'),
+              content: const Text(
                 'Do you want to chat with this person about the request',
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('No'),
+                  child: const Text('No'),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
                   },
                 ),
                 FlatButton(
-                  child: Text('Yes'),
+                  child: const Text('Yes'),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
                     Provider.of<NetworkNotifier>(context, listen: false)
@@ -146,7 +146,7 @@ class RequestItem extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text(
+                            content: const Text(
                               'Please check your network connection',
                             ),
                             duration: Duration(seconds: 1, milliseconds: 200),
@@ -183,7 +183,7 @@ class RequestItem extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.red,
-                  content: Text(
+                  content: const Text(
                     'Please check your network connection',
                   ),
                   duration: Duration(seconds: 1, milliseconds: 200),
@@ -195,7 +195,7 @@ class RequestItem extends StatelessWidget {
       },
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 5,
           vertical: 2,
         ),

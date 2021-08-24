@@ -94,7 +94,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: Colors.red,
-                      content: Text(
+                      content: const Text(
                         'Please check your network connection',
                       ),
                       duration: Duration(seconds: 1, milliseconds: 200),
@@ -103,7 +103,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 }
               });
             },
-            icon: Icon(Icons.account_box_rounded),
+            icon: const Icon(Icons.account_box_rounded),
             iconSize: 24,
           ),
           IconButton(
@@ -114,14 +114,14 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 'uidX': FirebaseAuth.instance.currentUser.uid,
               });
             },
-            icon: Icon(Icons.chat),
+            icon: const Icon(Icons.chat),
             iconSize: 23,
           ),
         ],
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: const CircularProgressIndicator(),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -133,7 +133,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                       child: Column(
                         children: [
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 25.0),
                               child: new Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -142,7 +142,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      new Text(
+                                      const Text(
                                         'About',
                                         style: TextStyle(
                                             fontSize: 16.0,
@@ -153,7 +153,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                                 ],
                               )),
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 2.0),
                               child: new Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -174,7 +174,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                       child: Column(
                         children: [
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 25.0),
                               child: new Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -183,7 +183,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      new Text(
+                                      const Text(
                                         'Request',
                                         style: TextStyle(
                                             fontSize: 16.0,
@@ -194,7 +194,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                                 ],
                               )),
                           Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 2.0),
                               child: new Row(
                                 mainAxisSize: MainAxisSize.max,

@@ -103,7 +103,7 @@ class AuthPage extends StatelessWidget {
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text("something went wrong"),
+                child: const Text("something went wrong"),
               );
             } else if (snapshot.hasData) {
               return TabScreen();

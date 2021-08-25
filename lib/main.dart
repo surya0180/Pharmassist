@@ -27,6 +27,8 @@ import 'providers/store.dart';
 import 'providers/auth/user.dart';
 import 'screens/admin/admin_requests_screen.dart';
 
+// Changing the chat now
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

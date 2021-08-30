@@ -47,7 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
     userId = routeArgs['uid'];
     bucketId = routeArgs['bucketId'];
     participants = routeArgs['participants'];
-    unreadMessages = routeArgs['unreadMessages'];
+    unreadMessages = routeArgs['unreadMessages'].runtimeType == String
+        ? int.parse(routeArgs['unreadMessages'])
+        : routeArgs['unreadMessages'];
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<NotificationProvider>(context, listen: false)
           .setTotalUnreadMessages(unreadMessages);
@@ -103,6 +105,7 @@ class _ChatScreenState extends State<ChatScreen> {
               userId,
               bucketId,
               participants,
+              unreadMessages,
               setIsSent,
               setTimestamp,
             ),

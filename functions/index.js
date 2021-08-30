@@ -5,7 +5,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 exports.chatMessage = functions.firestore
-    .document("Chat/{uid}/messages/{msgId}")
+    .document("chatMessages/{bucketId}/messages/{msgId}")
     .onCreate((snapshot, context) => {
       console.log(snapshot.data());
       admin.messaging().sendToDevice(snapshot.data().token, {
@@ -14,11 +14,11 @@ exports.chatMessage = functions.firestore
           title: snapshot.data().username,
           body: snapshot.data().text,
           bodyLocArgs: JSON.stringify([
-            snapshot.data().participants[0],
-            snapshot.data().participants[1],
-            snapshot.data().bucketId,
-            snapshot.data().uid,
-            snapshot.data().unreadMessages,
+            snapshot.data().notificationArgs[2],
+            snapshot.data().notificationArgs[3],
+            snapshot.data().notificationArgs[1],
+            snapshot.data().notificationArgs[0],
+            snapshot.data().notificationArgs[4],
           ]),
         },
       });

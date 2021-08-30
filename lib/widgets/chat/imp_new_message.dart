@@ -11,6 +11,7 @@ class ImpNewMessage extends StatefulWidget {
     this.userId,
     this.bucketId,
     this.participants,
+    this.unreadMessages,
     this.setisSent,
     this.setTimestamp, {
     Key key,
@@ -19,6 +20,7 @@ class ImpNewMessage extends StatefulWidget {
   final String userId;
   final String bucketId;
   final List participants;
+  final int unreadMessages;
   final Function setisSent;
   final Function setTimestamp;
 
@@ -62,57 +64,64 @@ class _ImpNewMessageState extends State<ImpNewMessage> {
       'userId': user.uid,
       'username': userData.data()['fullName'],
       'sentAt': hmstamp.toIso8601String(),
-      'notificationArgs': [widget.userId, widget.bucketId],
+      'notificationArgs': [
+        widget.userId,
+        widget.bucketId,
+        widget.participants[0],
+        widget.participants[1],
+        widget.unreadMessages
+      ],
       'token': token.data()['deviceToken']
+    }).then((value) async {
+      if (widget.participants[0] == user.uid) {
+        print("I am in the if case");
+        await FirebaseFirestore.instance
+            .collection('chat')
+            .doc(widget.participants[1])
+            .collection('chatList')
+            .doc(widget.participants[0])
+            .update({
+          'timestamp': timestamp,
+          'latestMessage': _enteredMessage.trim(),
+          'username': userData.data()['fullName'],
+          'profilePic': userData.data()['PhotoUrl'],
+          'unreadMessages': chatData.data()['unreadMessages'] + 1,
+        });
+        await FirebaseFirestore.instance
+            .collection('chat')
+            .doc(widget.participants[0])
+            .collection('chatList')
+            .doc(widget.participants[1])
+            .update({
+          'timestamp': timestamp,
+          'latestMessage': _enteredMessage.trim(),
+        });
+      } else {
+        print("I am in the else case");
+        await FirebaseFirestore.instance
+            .collection('chat')
+            .doc(widget.participants[0])
+            .collection('chatList')
+            .doc(widget.participants[1])
+            .update({
+          'timestamp': timestamp,
+          'latestMessage': _enteredMessage.trim(),
+          'username': userData.data()['fullName'],
+          'profilePic': userData.data()['PhotoUrl'],
+          'unreadMessages': chatData.data()['unreadMessages'] + 1,
+        });
+        await FirebaseFirestore.instance
+            .collection('chat')
+            .doc(widget.participants[1])
+            .collection('chatList')
+            .doc(widget.participants[0])
+            .update({
+          'timestamp': timestamp,
+          'latestMessage': _enteredMessage.trim(),
+        });
+      }
+      widget.setisSent(true);
     });
-    if (widget.participants[0] == user.uid) {
-      print("I am in the if case");
-      await FirebaseFirestore.instance
-          .collection('chat')
-          .doc(widget.participants[1])
-          .collection('chatList')
-          .doc(widget.participants[0])
-          .update({
-        'timestamp': timestamp,
-        'latestMessage': _enteredMessage.trim(),
-        'username': userData.data()['fullName'],
-        'profilePic': userData.data()['PhotoUrl'],
-        'unreadMessages': chatData.data()['unreadMessages'] + 1,
-      });
-      await FirebaseFirestore.instance
-          .collection('chat')
-          .doc(widget.participants[0])
-          .collection('chatList')
-          .doc(widget.participants[1])
-          .update({
-        'timestamp': timestamp,
-        'latestMessage': _enteredMessage.trim(),
-      });
-    } else {
-      print("I am in the else case");
-      await FirebaseFirestore.instance
-          .collection('chat')
-          .doc(widget.participants[0])
-          .collection('chatList')
-          .doc(widget.participants[1])
-          .update({
-        'timestamp': timestamp,
-        'latestMessage': _enteredMessage.trim(),
-        'username': userData.data()['fullName'],
-        'profilePic': userData.data()['PhotoUrl'],
-        'unreadMessages': chatData.data()['unreadMessages'] + 1,
-      });
-      await FirebaseFirestore.instance
-          .collection('chat')
-          .doc(widget.participants[1])
-          .collection('chatList')
-          .doc(widget.participants[0])
-          .update({
-        'timestamp': timestamp,
-        'latestMessage': _enteredMessage.trim(),
-      });
-    }
-    widget.setisSent(true);
   }
 
   final _controller = new TextEditingController();

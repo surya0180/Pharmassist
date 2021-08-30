@@ -26,7 +26,7 @@ class NotificationProvider with ChangeNotifier {
   }
 
   void setTotalUnreadMessages(int unreadMessages) {
-    totalUnreadMessages = totalUnreadMessages - unreadMessages;
+    totalUnreadMessages = totalUnreadMessages != 0 ? totalUnreadMessages - unreadMessages : 0;
     notifyListeners();
   }
 }

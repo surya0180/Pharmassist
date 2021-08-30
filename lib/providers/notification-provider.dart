@@ -7,14 +7,16 @@ class NotificationProvider with ChangeNotifier {
   int totalUserUnreadMessages;
 
   Future<void> calculateTotalUnreadMessages() async {
-    final chatData = await FirebaseFirestore.instance.collection('Chat').get();
+    final chatData = await FirebaseFirestore.instance
+        .collection('chat')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('chatList')
+        .get();
     int flag = 0;
     chatData.docs.forEach((element) {
-      flag = flag + element.data()['hostA'];
-      if(element.data()['uid'] == FirebaseAuth.instance.currentUser.uid) {
-        totalUserUnreadMessages = element.data()['hostB'];
-      }
+      flag = flag + element.data()['unreadMessages'];
     });
+
     totalUnreadMessages = flag;
     notifyListeners();
   }
@@ -23,17 +25,8 @@ class NotificationProvider with ChangeNotifier {
     return totalUnreadMessages;
   }
 
-  int get getTotalUserUnreadMessages {
-    return totalUserUnreadMessages;
-  }
-
-  void setTotalUnreadMessages() {
-    totalUnreadMessages = 0;
-    notifyListeners();
-  }
-
-  void setTotalUserUnreadMessages() {
-    totalUserUnreadMessages = 0;
+  void setTotalUnreadMessages(int unreadMessages) {
+    totalUnreadMessages = totalUnreadMessages - unreadMessages;
     notifyListeners();
   }
 }

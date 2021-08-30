@@ -5,6 +5,7 @@ import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:pharmassist/screens/tabs/profile_screen.dart';
 import 'package:provider/provider.dart';
+import '../../helpers/string_extension.dart';
 
 class RequestDetailScreen extends StatefulWidget {
   static const routeName = "/rquest-detail-screen";
@@ -20,6 +21,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   String detail;
   String createdOn;
   String uid;
+  Map<String, dynamic> chatData;
 
   var _isLoading;
 
@@ -43,6 +45,9 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
       detail = routeArgs['detail'];
       createdOn = routeArgs['createdOn'];
       uid = routeArgs['uid'];
+      chatData = routeArgs['chatData'];
+      print(userName);
+      print(chatData);
     }
     return Scaffold(
       appBar: AppBar(
@@ -108,11 +113,17 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
-                'name': userName,
-                'userId': uid,
-                'uidX': FirebaseAuth.instance.currentUser.uid,
-              });
+              print("I am here");
+              Navigator.of(context).pushNamed(
+                ChatScreen.routeName,
+                arguments: {
+                  'username': chatData['username'].toString().capitalize(),
+                  'uid': chatData['uid'],
+                  'bucketId': chatData['bucketId'],
+                  'participants': chatData['participants'],
+                  'unreadMessages': chatData['unreadMessages'],
+                },
+              );
             },
             icon: const Icon(Icons.chat),
             iconSize: 23,

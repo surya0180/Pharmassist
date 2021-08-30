@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/auth/user.dart';
 import 'package:pharmassist/widgets/chat/lists/admin_chat_list.dart';
+import 'package:pharmassist/widgets/chat/lists/chat_list.dart';
 import 'package:pharmassist/widgets/chat/lists/user_chat_list.dart';
 import 'package:provider/provider.dart';
 
@@ -17,13 +18,45 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
-    var _isAdmin = Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    var _isAdmin =
+        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
+    var _isAdded =
+        Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
+
+    final device = MediaQuery.of(context).size;
 
     return RefreshIndicator(
-      onRefresh: Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
+      onRefresh:
+          Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: _isAdmin ? const AdminChatList() : const UserChatList(),
+        // body: _isAdmin ? const AdminChatList() : const UserChatList(),
+        body: _isAdded
+            ? ChatList()
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.account_box,
+                      size: 58,
+                      color: Colors.black38,
+                    ),
+                    SizedBox(
+                      height: device.height * 0.02,
+                    ),
+                    Container(
+                      width: device.width * 0.6,
+                      child: const Text(
+                        'Please complete your profile to access this page',
+                        style: TextStyle(
+                          color: Colors.black38,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

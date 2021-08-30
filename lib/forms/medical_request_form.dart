@@ -28,22 +28,18 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
     Navigator.of(context).pop();
     final adminData =
         await FirebaseFirestore.instance.collection('users').doc(admidId).get();
+    final chatData = await FirebaseFirestore.instance
+        .collection('chat')
+        .doc(admidId)
+        .collection('chatList')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get();
     Provider.of<NetworkNotifier>(context, listen: false)
         .setIsConnected()
         .then((value) {
       if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
         _form.currentState.save();
-
         Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red,
-            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
-            duration: Duration(seconds: 2),
-            content: Text('Request sent sucessfully'),
-          ),
-        );
         var uid = FirebaseAuth.instance.currentUser.uid;
         var timeStamp = DateTime.now();
         var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
@@ -61,6 +57,13 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
           'username': userData.fullname,
           'PhotoUrl': userData.photoUrl,
           'isDeleted': false,
+          'chatData': {
+            'username': chatData.data()['username'],
+            'uid': chatData.data()['uid'],
+            'bucketId': chatData.data()['bucketId'],
+            'participants': chatData.data()['participants'],
+            'unreadMessages': chatData.data()['unreadMessages'],
+          },
           'token': adminData.data()['deviceToken'],
         }).then((value) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -83,6 +86,7 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.red,
             content: const Text(
               'Please check your network connection',
             ),

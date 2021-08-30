@@ -18,9 +18,9 @@ class _UserChatListState extends State<UserChatList> {
   @override
   void initState() {
     // TODO: implement initState
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<NotificationProvider>(context, listen: false).setTotalUserUnreadMessages();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Provider.of<NotificationProvider>(context, listen: false).setTotalUserUnreadMessages();
+    // });
     super.initState();
   }
 

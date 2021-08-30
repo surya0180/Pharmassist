@@ -27,6 +27,12 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
         Provider.of<AdminProvider>(context, listen: false).getAdminUid;
     final adminData =
         await FirebaseFirestore.instance.collection('users').doc(admidId).get();
+    final chatData = await FirebaseFirestore.instance
+        .collection('chat')
+        .doc(admidId)
+        .collection('chatList')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get();
     Navigator.of(context).pop();
     Provider.of<NetworkNotifier>(context, listen: false)
         .setIsConnected()
@@ -50,6 +56,13 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
           'username': userData.fullname,
           'PhotoUrl': userData.photoUrl,
           'isDeleted': false,
+          'chatData': {
+            'username': chatData.data()['username'],
+            'uid': chatData.data()['uid'],
+            'bucketId': chatData.data()['bucketId'],
+            'participants': chatData.data()['participants'],
+            'unreadMessages': chatData.data()['unreadMessages'],
+          },
           'token': adminData.data()['deviceToken'],
         }).then((value) {
           Navigator.of(context).pop();

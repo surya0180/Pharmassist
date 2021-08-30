@@ -15,17 +15,9 @@ class BottomNavBar extends StatelessWidget {
     final count = Provider.of<AdminProvider>(context).requestCount;
     final _isAdmin =
         Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
-    final _adminUnreadMessages =
+    final _unreadMessages =
         Provider.of<NotificationProvider>(context, listen: false)
             .getTotalUnreadMessages;
-    final _userUnreadMessages =
-        Provider.of<NotificationProvider>(context, listen: false)
-            .getTotalUserUnreadMessages;
-    final _unreadMessages = _isAdmin != null
-        ? _isAdmin
-            ? _adminUnreadMessages
-            : _userUnreadMessages
-        : 0;
     return BottomNavigationBar(
       onTap: selectPage,
       elevation: 10,

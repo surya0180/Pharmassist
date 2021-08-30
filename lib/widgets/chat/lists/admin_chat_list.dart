@@ -17,7 +17,7 @@ class _AdminChatListState extends State<AdminChatList> {
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<NotificationProvider>(context, listen: false)
-          .setTotalUnreadMessages();
+          .setTotalUnreadMessages(0);
     });
     super.initState();
   }

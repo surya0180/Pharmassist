@@ -137,16 +137,38 @@ class GoogleSignInProvider extends ChangeNotifier {
   Future<void> createChatData() async {
     User signedUser = FirebaseAuth.instance.currentUser;
 
-    final CollectionReference chat =
-        FirebaseFirestore.instance.collection('Chat');
-    return await chat.doc(signedUser.uid).set({
-      "hostA": 0,
-      "hostB": 0,
-      "latestMessage": "",
-      "name": "",
-      "timestamp": null,
+    final adminData = await FirebaseFirestore.instance
+        .collection('admin')
+        .doc('admin-details')
+        .get();
+
+    final timestamp = DateTime.now();
+    final bucketId = timestamp.toIso8601String();
+
+    FirebaseFirestore.instance
+        .collection('chat')
+        .doc(adminData.data()['uid'])
+        .collection('chatList')
+        .doc(signedUser.uid)
+        .set({
+      "bucketId": bucketId,
       "uid": signedUser.uid,
-      "uidX": "",
+      "username": signedUser.displayName,
+      "participants": [adminData.data()['uid'], signedUser.uid],
+      "timestamp": timestamp,
+    });
+
+    return FirebaseFirestore.instance
+        .collection('chat')
+        .doc(signedUser.uid)
+        .collection('chatList')
+        .doc(adminData.data()['uid'])
+        .set({
+      "bucketId": bucketId,
+      "uid": adminData.data()['uid'],
+      "username": adminData.data()['fullname'],
+      "participants": [adminData.data()['uid'], signedUser.uid],
+      "timestamp": timestamp,
     });
   }
 

@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmassist/providers/notification-provider.dart';
+import 'package:pharmassist/widgets/chat/imp_messages.dart';
+import 'package:pharmassist/widgets/chat/imp_new_message.dart';
 import 'package:pharmassist/widgets/chat/messages.dart';
 import 'package:pharmassist/widgets/chat/new_message.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key key}) : super(key: key);
@@ -17,9 +21,11 @@ class _ChatScreenState extends State<ChatScreen> {
   String userName;
   String userId;
   String uidX;
-  int _unreadMsg;
+  String bucketId;
+  int unreadMessages;
   bool _isSent;
   String _timestamp;
+  List participants;
 
   void setIsSent(bool status) {
     setState(() {
@@ -36,47 +42,38 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void didChangeDependencies() {
     final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
-    userName = routeArgs['name'];
-    userId = routeArgs['userId'];
-    uidX = routeArgs['uidX'];
-    if (userId == FirebaseAuth.instance.currentUser.uid) {
-      FirebaseFirestore.instance
-          .collection('Chat')
-          .doc(userId)
-          .get()
-          .then((value) {
-        setState(() {
-          _unreadMsg = value.data()['hostB'];
-        });
-      });
-    } else {
-      FirebaseFirestore.instance
-          .collection('Chat')
-          .doc(userId)
-          .get()
-          .then((value) {
-        setState(() {
-          _unreadMsg = value.data()['hostA'];
-        });
-      });
-    }
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    userName = routeArgs['username'];
+    userId = routeArgs['uid'];
+    bucketId = routeArgs['bucketId'];
+    participants = routeArgs['participants'];
+    unreadMessages = routeArgs['unreadMessages'];
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<NotificationProvider>(context, listen: false)
+          .setTotalUnreadMessages(unreadMessages);
+    });
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    if (userId == FirebaseAuth.instance.currentUser.uid) {
+    if (participants[0] == FirebaseAuth.instance.currentUser.uid) {
+      print("I am in if chatscreen");
       FirebaseFirestore.instance
-          .collection('Chat')
-          .doc(userId)
-          .update({'hostB': 0});
+          .collection('chat')
+          .doc(participants[0])
+          .collection('chatList')
+          .doc(participants[1])
+          .update({'unreadMessages': 0});
     } else {
+      print("I am in else chatscreen");
       FirebaseFirestore.instance
-          .collection('Chat')
-          .doc(userId)
-          .update({'hostA': 0});
+          .collection('chat')
+          .doc(participants[1])
+          .collection('chatList')
+          .doc(participants[0])
+          .update({'unreadMessages': 0});
     }
     super.dispose();
   }
@@ -94,9 +91,21 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Messages(userId, _unreadMsg, _isSent, _timestamp),
+              child: ImpMessages(
+                userId,
+                bucketId,
+                unreadMessages,
+                _isSent,
+                _timestamp,
+              ),
             ),
-            NewMessage(userId, uidX, setIsSent, setTimestamp),
+            ImpNewMessage(
+              userId,
+              bucketId,
+              participants,
+              setIsSent,
+              setTimestamp,
+            ),
           ],
         ),
       ),

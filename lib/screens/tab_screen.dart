@@ -124,19 +124,28 @@ class _TabScreenState extends State<TabScreen> {
         if (message.notification.bodyLocArgs[0] ==
             FirebaseAuth.instance.currentUser.uid) {
           FirebaseFirestore.instance
-              .collection('Chat')
+              .collection('chat')
               .doc(message.notification.bodyLocArgs[0])
-              .update({'hostB': 0});
+              .collection('chatList')
+              .doc(message.notification.bodyLocArgs[1])
+              .update({'unreadMessages': 0});
         } else {
           FirebaseFirestore.instance
-              .collection('Chat')
+              .collection('chat')
+              .doc(message.notification.bodyLocArgs[1])
+              .collection('chatList')
               .doc(message.notification.bodyLocArgs[0])
-              .update({'hostA': 0});
+              .update({'unreadMessages': 0});
         }
         Navigator.of(context).pushNamed(ChatScreen.routeName, arguments: {
-          'name': message.notification.title,
-          'userId': message.notification.bodyLocArgs[0],
-          'uidX': message.notification.bodyLocArgs[1],
+          'username': message.notification.title,
+          'uid': message.notification.bodyLocArgs[3],
+          'bucketId': message.notification.bodyLocArgs[2],
+          'unreadMessages': message.notification.bodyLocArgs[4],
+          'participants': [
+            message.notification.bodyLocArgs[0],
+            message.notification.bodyLocArgs[1]
+          ],
         });
         return;
       }
@@ -168,17 +177,7 @@ class _TabScreenState extends State<TabScreen> {
       });
       Provider.of<UserProvider>(context, listen: false).getData().then((value) {
         if (value) {
-          Provider.of<AdminProvider>(context, listen: false)
-              .getAdminData()
-              .then((value) {
-            FirebaseFirestore.instance
-                .collection('Chat')
-                .doc(FirebaseAuth.instance.currentUser.uid)
-                .update({
-              "uidX": Provider.of<AdminProvider>(context, listen: false)
-                  .getAdminUid,
-            });
-          });
+          Provider.of<AdminProvider>(context, listen: false).getAdminData();
           Provider.of<NetworkNotifier>(context, listen: false)
               .setIsConnected()
               .then((value) {

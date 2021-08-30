@@ -43,6 +43,7 @@ class PharmReqScreen extends StatelessWidget {
                             pharmReqs[i].data()['userId'],
                             pharmReqs[i].data()['PhotoUrl'],
                             pharmReqs[i].data()['username'],
+                            pharmReqs[i].data()['chatData'],
                             requestType,
                             pharmReqs[i].id,
                             isDeleted);

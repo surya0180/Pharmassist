@@ -14,8 +14,11 @@ exports.chatMessage = functions.firestore
           title: snapshot.data().username,
           body: snapshot.data().text,
           bodyLocArgs: JSON.stringify([
-            snapshot.data().notificationArgs[0],
-            snapshot.data().notificationArgs[1],
+            snapshot.data().participants[0],
+            snapshot.data().participants[1],
+            snapshot.data().bucketId,
+            snapshot.data().uid,
+            snapshot.data().unreadMessages,
           ]),
         },
       });

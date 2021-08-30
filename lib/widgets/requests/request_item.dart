@@ -4,6 +4,7 @@ import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/screens/admin/request_detail_screen.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
+import '../../helpers/string_extension.dart';
 
 class RequestItem extends StatelessWidget {
   final String createdOn;
@@ -15,6 +16,7 @@ class RequestItem extends StatelessWidget {
   final String requestType;
   final String requestId;
   final bool isDeleted;
+  final Map<String, dynamic> chatData;
 
   RequestItem(
     this.createdOn,
@@ -23,6 +25,7 @@ class RequestItem extends StatelessWidget {
     this.uid,
     this.photoUrl,
     this.username,
+    this.chatData,
     this.requestType,
     this.requestId,
     this.isDeleted,
@@ -49,6 +52,7 @@ class RequestItem extends StatelessWidget {
                 'title': about,
                 'detail': request,
                 'photoUrl': photoUrl,
+                'chatData': chatData,
               });
             },
             leading: CircleAvatar(
@@ -140,8 +144,17 @@ class RequestItem extends StatelessWidget {
                         .then((value) {
                       if (Provider.of<NetworkNotifier>(context, listen: false)
                           .getIsConnected) {
-                        Navigator.of(ctx).pushNamed(ChatScreen.routeName,
-                            arguments: {'name': username, 'userId': uid});
+                        Navigator.of(context).pushNamed(
+                          ChatScreen.routeName,
+                          arguments: {
+                            'username':
+                                chatData['username'].toString().capitalize(),
+                            'uid': chatData['uid'],
+                            'bucketId': chatData['bucketId'],
+                            'participants': chatData['participants'],
+                            'unreadMessages': chatData['unreadMessages'],
+                          },
+                        );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -211,6 +224,7 @@ class RequestItem extends StatelessWidget {
                 'title': about,
                 'detail': request,
                 'photoUrl': photoUrl,
+                'chatData': chatData,
               });
             },
             leading: CircleAvatar(

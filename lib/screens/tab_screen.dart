@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/UI/SideDrawer.dart';
 import 'admin/request_detail_screen.dart';
+import '../helpers/string_extension.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key key}) : super(key: key);
@@ -116,6 +117,13 @@ class _TabScreenState extends State<TabScreen> {
           'createdOn': message.notification.bodyLocArgs[1],
           'title': message.notification.body,
           'detail': message.notification.bodyLocArgs[2],
+          'chatData': {
+            'username': message.notification.bodyLocArgs[4].toString().capitalize(),
+            'uid': message.notification.bodyLocArgs[5],
+            'bucketId': message.notification.bodyLocArgs[6],
+            'participants': [message.notification.bodyLocArgs[7], message.notification.bodyLocArgs[8]],
+            'unreadMessages': int.parse(message.notification.bodyLocArgs[9]),
+          },
           'photoUrl': message.notification.bodyLocArgs[3],
         });
         return;

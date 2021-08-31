@@ -3,28 +3,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'UI/message_bubble.dart';
 
-class Messages extends StatefulWidget {
-  const Messages(this.userId, this.unreadMessages, this.isSent, this.timestamp,
-      {Key key})
-      : super(key: key);
+class ImpMessages extends StatefulWidget {
+  const ImpMessages(
+    this.userId,
+    this.bucketId,
+    this.unreadMessages,
+    this.isSent,
+    this.timestamp, {
+    Key key,
+  }) : super(key: key);
 
   final String userId;
   final int unreadMessages;
   final bool isSent;
+  final String bucketId;
   final String timestamp;
 
   @override
-  _MessagesState createState() => _MessagesState();
+  _ImpMessagesState createState() => _ImpMessagesState();
 }
 
-class _MessagesState extends State<Messages> {
+class _ImpMessagesState extends State<ImpMessages> {
   @override
   Widget build(BuildContext context) {
     var currentUserId = FirebaseAuth.instance.currentUser.uid;
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection('Chat')
-          .doc(widget.userId)
+          .collection('chatMessages')
+          .doc(widget.bucketId)
           .collection('messages')
           .orderBy('createdAt', descending: true)
           .snapshots(),
@@ -64,11 +70,7 @@ class _MessagesState extends State<Messages> {
               }
             },
           );
-          return widget.unreadMessages == null
-              ? const Center(
-                  child: const CircularProgressIndicator(),
-                )
-              : MyListView;
+          return MyListView;
         } catch (e) {
           print("Hello");
         }

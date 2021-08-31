@@ -63,6 +63,7 @@ class GoogleSignInProvider extends ChangeNotifier {
           final fbm = FirebaseMessaging.instance;
           fbm.requestPermission();
           fbm.getToken().then((value) {
+            print(value);
             var deviceData = snapShot.data()['deviceToken'];
             deviceData.remove(value);
             FirebaseFirestore.instance
@@ -155,7 +156,7 @@ class GoogleSignInProvider extends ChangeNotifier {
       "uid": signedUser.uid,
       "username": signedUser.displayName,
       "participants": [adminData.data()['uid'], signedUser.uid],
-      "timestamp": timestamp,
+      "timestamp": null,
     });
 
     return FirebaseFirestore.instance

@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:pharmassist/screens/chat/chat_screen.dart';
 import '../../../helpers/string_extension.dart';
 
-class ChatItem extends StatelessWidget {
-  const ChatItem(
-      this.name, this.profilePic, this.message, this.number, this.uid, this.uidX,
-      {Key key})
-      : super(key: key);
+class NewChatItem extends StatelessWidget {
+  const NewChatItem(
+    this.bucketId,
+    this.participants,
+    this.uid,
+    this.username,
+    this.unreadMessages,
+    this.profilePic,
+    this.latestMessage, {
+    Key key,
+  }) : super(key: key);
 
-  final String name;
-  final String message;
-  final int number;
+  final String bucketId;
+  final List participants;
   final String uid;
-  final String uidX;
+  final String username;
+  final int unreadMessages;
   final String profilePic;
+  final String latestMessage;
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -30,16 +36,18 @@ class ChatItem extends StatelessWidget {
           Navigator.of(context).pushNamed(
             ChatScreen.routeName,
             arguments: {
-              'name': name.capitalize(),
-              'userId': uid,
-              'uidX': uidX,
+              'username': username.capitalize(),
+              'uid': uid,
+              'bucketId': bucketId,
+              'participants': participants,
+              'unreadMessages': unreadMessages,
             },
           );
         },
         splashColor: Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(4),
         child: Container(
-          height: MediaQuery.of(context).size.height*0.1,
+          height: MediaQuery.of(context).size.height * 0.1,
           padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,36 +59,43 @@ class ChatItem extends StatelessWidget {
                     backgroundImage: NetworkImage(profilePic),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width*0.05,
+                    width: MediaQuery.of(context).size.width * 0.05,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name.capitalize(),
+                        username.capitalize(),
                         style: Theme.of(context).textTheme.title,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.008,
+                        height: MediaQuery.of(context).size.height * 0.008,
                       ),
-                      number != 0
+                      unreadMessages != 0
                           ? Text(
-                              message.length > 20 ? message.substring(0, 20) + '. . . .' : message,
+                              latestMessage.length > 20
+                                  ? latestMessage.substring(0, 20) + '. . . .'
+                                  : latestMessage,
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue),
+                                fontWeight: FontWeight.w700,
+                                color: Colors.blue,
+                              ),
                             )
-                          : Text(message.length > 25 ? message.substring(0, 25) + '. . . .' : message,),
+                          : Text(
+                              latestMessage.length > 25
+                                  ? latestMessage.substring(0, 25) + '. . . .'
+                                  : latestMessage,
+                            ),
                     ],
                   ),
                 ],
               ),
-              number != 0
+              unreadMessages != 0
                   ? CircleAvatar(
                       minRadius: 12,
                       backgroundColor: Colors.green[300],
                       child: Text(
-                        '$number',
+                        '$unreadMessages',
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,

@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/notification-provider.dart';
-import 'package:pharmassist/widgets/chat/imp_messages.dart';
-import 'package:pharmassist/widgets/chat/imp_new_message.dart';
 import 'package:pharmassist/widgets/chat/messages.dart';
 import 'package:pharmassist/widgets/chat/new_message.dart';
 import 'package:provider/provider.dart';

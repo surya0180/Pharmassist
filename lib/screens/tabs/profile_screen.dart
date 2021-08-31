@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:pharmassist/screens/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 import '../../helpers/states.dart';
 import 'package:string_validator/string_validator.dart';
+import '../../helpers/string_extension.dart';
 
 class ProfilePage extends StatefulWidget {
   static final routeName = "/profile-page";
@@ -896,8 +898,24 @@ class MapScreenState extends State<ProfilePage>
             .then((value) {
           if (Provider.of<NetworkNotifier>(context, listen: false)
               .getIsConnected) {
-            Navigator.of(context).pushNamed(ChatScreen.routeName,
-                arguments: {'name': _fullname, 'userId': _uid});
+            FirebaseFirestore.instance
+                .collection('chat')
+                .doc(fa.FirebaseAuth.instance.currentUser.uid)
+                .collection('chatList')
+                .doc(_uid)
+                .get()
+                .then((chatData) {
+              Navigator.of(context).pushNamed(
+                ChatScreen.routeName,
+                arguments: {
+                  'username': chatData['username'].toString().capitalize(),
+                  'uid': chatData['uid'],
+                  'bucketId': chatData['bucketId'],
+                  'participants': chatData['participants'],
+                  'unreadMessages': chatData['unreadMessages'],
+                },
+              );
+            });
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

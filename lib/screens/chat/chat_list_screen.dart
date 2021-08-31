@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmassist/providers/NetworkNotifier.dart';
 import 'package:pharmassist/providers/auth/user.dart';
-import 'package:pharmassist/widgets/chat/lists/admin_chat_list.dart';
-import 'package:pharmassist/widgets/chat/lists/chat_list.dart';
-import 'package:pharmassist/widgets/chat/lists/user_chat_list.dart';
+import 'package:pharmassist/widgets/chat/UI/chat_list.dart';
 import 'package:provider/provider.dart';
 
 class ChatListScreen extends StatefulWidget {
@@ -18,8 +16,6 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
-    var _isAdmin =
-        Provider.of<UserProvider>(context, listen: false).getIsAdminStatus;
     var _isAdded =
         Provider.of<UserProvider>(context, listen: false).getIsAddedStatus;
 
@@ -30,7 +26,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
           Provider.of<NetworkNotifier>(context, listen: false).setIsConnected,
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        // body: _isAdmin ? const AdminChatList() : const UserChatList(),
         body: _isAdded
             ? ChatList()
             : Center(

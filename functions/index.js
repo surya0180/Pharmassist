@@ -39,6 +39,13 @@ exports.sendRequest = functions.firestore
             snapshot.data().createdOn,
             snapshot.data().request,
             snapshot.data().PhotoUrl,
+            // chatData
+            snapshot.data().chatData["username"],
+            snapshot.data().chatData["uid"],
+            snapshot.data().chatData["bucketId"],
+            snapshot.data().chatData["participants"][0],
+            snapshot.data().chatData["participants"][1],
+            snapshot.data().chatData["unreadMessages"],
           ]),
         },
       });
@@ -58,6 +65,13 @@ exports.sendRequestMedic = functions.firestore
             snapshot.data().createdOn,
             snapshot.data().request,
             snapshot.data().PhotoUrl,
+            // chatData
+            snapshot.data().chatData["username"],
+            snapshot.data().chatData["uid"],
+            snapshot.data().chatData["bucketId"],
+            snapshot.data().chatData["participants"][0],
+            snapshot.data().chatData["participants"][1],
+            snapshot.data().chatData["unreadMessages"],
           ]),
         },
       });

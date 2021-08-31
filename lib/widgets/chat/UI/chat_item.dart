@@ -56,7 +56,7 @@ class NewChatItem extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.blue[200],
-                    backgroundImage: NetworkImage(profilePic),
+                    backgroundImage: profilePic != null ? NetworkImage(profilePic) : null,
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.05,

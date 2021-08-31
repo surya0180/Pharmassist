@@ -155,8 +155,11 @@ class GoogleSignInProvider extends ChangeNotifier {
       "bucketId": bucketId,
       "uid": signedUser.uid,
       "username": signedUser.displayName,
+      "unreadMessages": 0,
+      "latestMessage": "",
       "participants": [adminData.data()['uid'], signedUser.uid],
-      "timestamp": null,
+      "timestamp": "",
+      "profilePic": signedUser.photoURL,
     });
 
     return FirebaseFirestore.instance
@@ -168,8 +171,11 @@ class GoogleSignInProvider extends ChangeNotifier {
       "bucketId": bucketId,
       "uid": adminData.data()['uid'],
       "username": adminData.data()['fullname'],
+      "unreadMessages": 0,
+      "latestMessage": "",
       "participants": [adminData.data()['uid'], signedUser.uid],
-      "timestamp": timestamp,
+      "timestamp": "someTime",
+      "profilePic": adminData.data()['profilePic']
     });
   }
 

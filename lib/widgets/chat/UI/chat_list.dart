@@ -19,7 +19,7 @@ class _ChatListState extends State<ChatList> {
           .doc(FirebaseAuth.instance.currentUser.uid)
           .collection('chatList')
           .orderBy('timestamp', descending: true)
-          .where('timestamp', isNotEqualTo: null)
+          .where('timestamp', isNotEqualTo: "")
           .snapshots(),
       builder: (ctx, listSnapShot) {
         if (listSnapShot.connectionState == ConnectionState.waiting) {

@@ -25,7 +25,6 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
   void _saveForm() async {
     var admidId =
         Provider.of<AdminProvider>(context, listen: false).getAdminUid;
-    Navigator.of(context).pop();
     final adminData =
         await FirebaseFirestore.instance.collection('users').doc(admidId).get();
     final chatData = await FirebaseFirestore.instance
@@ -34,12 +33,12 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
         .collection('chatList')
         .doc(FirebaseAuth.instance.currentUser.uid)
         .get();
+    Navigator.of(context).pop();
     Provider.of<NetworkNotifier>(context, listen: false)
         .setIsConnected()
         .then((value) {
       if (Provider.of<NetworkNotifier>(context, listen: false).getIsConnected) {
         _form.currentState.save();
-        Navigator.of(context).pop();
         var uid = FirebaseAuth.instance.currentUser.uid;
         var timeStamp = DateTime.now();
         var createdOn = DateFormat('yyyy-MM-dd hh:mm').format(timeStamp);
@@ -66,10 +65,15 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
           },
           'token': adminData.data()['deviceToken'],
         }).then((value) {
+          final _count =
+              Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+          Provider.of<AdminProvider>(context, listen: false)
+              .updateRequests(_count + 1);
+          Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.green,
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 1),
               content: const Text(
@@ -78,11 +82,6 @@ class _MedicalRequestFormState extends State<MedicalRequestForm> {
             ),
           );
         });
-
-        final _count =
-            Provider.of<AdminProvider>(context, listen: false).getAdminReq;
-        Provider.of<AdminProvider>(context, listen: false)
-            .updateRequests(_count + 1);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

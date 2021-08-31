@@ -27,8 +27,6 @@ import 'providers/store.dart';
 import 'providers/auth/user.dart';
 import 'screens/admin/admin_requests_screen.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

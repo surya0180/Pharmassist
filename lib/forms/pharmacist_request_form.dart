@@ -65,24 +65,25 @@ class _PharmacistRequestFormState extends State<PharmacistRequestForm> {
           },
           'token': adminData.data()['deviceToken'],
         }).then((value) {
+          final _count =
+              Provider.of<AdminProvider>(context, listen: false).getAdminReq;
+          Provider.of<AdminProvider>(context, listen: false)
+              .updateRequests(_count + 1);
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.green,
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
               duration: Duration(seconds: 2),
               content: const Text('Request sent sucessfully'),
             ),
           );
         });
-        final _count =
-            Provider.of<AdminProvider>(context, listen: false).getAdminReq;
-        Provider.of<AdminProvider>(context, listen: false)
-            .updateRequests(_count + 1);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Colors.red,
             content: const Text(
               'Please check your network connection',
             ),

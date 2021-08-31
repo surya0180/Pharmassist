@@ -72,6 +72,7 @@ class _ImpNewMessageState extends State<ImpNewMessage> {
       ],
       'token': token.data()['deviceToken']
     }).then((value) async {
+      widget.setisSent(true);
       if (widget.participants[0] == user.uid) {
         print("I am in the if case");
         await FirebaseFirestore.instance
@@ -119,7 +120,6 @@ class _ImpNewMessageState extends State<ImpNewMessage> {
           'latestMessage': _enteredMessage.trim(),
         });
       }
-      widget.setisSent(true);
     });
   }
 
